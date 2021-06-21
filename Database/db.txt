@@ -1,0 +1,672 @@
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'StateLookUp') AND TYPEin(N'U'))
+DROP TABLE StateLookUp
+GO
+Create Table StateLookUp
+(
+StateId Int Identity(1,1) NOT NULL
+,StateCode Varchar(10) NOT NULL
+,StateName Varchar(100) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+)
+
+INSERT INTO StateLookUp Values('TG', 'Telangana','Y', getdate(), 'SYSTEM',Getdate(), 'SYSTEM')
+INSERT INTO StateLookUp Values('AP', 'Andhra Pradesh','Y', getdate(), 'SYSTEM',Getdate(), 'SYSTEM')
+INSERT INTO StateLookUp Values('KA', 'Karnataka','Y', getdate(), 'SYSTEM',Getdate(), 'SYSTEM')
+
+GO
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'ParliamentLookUp') AND TYPEin(N'U'))
+DROP TABLE ParliamentLookUp
+GO
+Create Table ParliamentLookUp
+(
+PCId Int Identity(1,1) NOT NULL
+,PCCode Varchar(10) NOT NULL
+,PCName Varchar(100) NOT NULL
+,StateCode Varchar(10) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+)
+
+GO
+
+
+INSERT INTO ParliamentLookUp Values('9', 'Karimnagar','TG','Y', getdate(), 'SYSTEM',Getdate(), 'SYSTEM')
+
+
+
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'AssemblyLookUp') AND TYPEin(N'U'))
+DROP TABLE AssemblyLookUp
+GO
+Create Table AssemblyLookUp
+(
+ACId Int Identity(1,1) NOT NULL
+,ACCode Varchar(10) NOT NULL
+,ACName Varchar(100) NOT NULL
+,PCCode Varchar(10) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+)
+
+GO
+
+
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'MandalLookUp') AND TYPEin(N'U'))
+DROP TABLE MandalLookUp
+GO
+Create Table MandalLookUp
+(
+MDId Int Identity(1,1) NOT NULL
+,MandalCode Varchar(10) NOT NULL
+,MandalName Varchar(100) NOT NULL
+,ACCode Varchar(10) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+)
+
+GO
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'VillageLookUp') AND TYPEin(N'U'))
+DROP TABLE VillageLookUp
+GO
+Create Table VillageLookUp
+(
+VGId Int Identity(1,1) NOT NULL
+,VillageCode Varchar(10) NOT NULL
+,VillageName Varchar(100) NOT NULL
+,MandalCode Varchar(10) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+)
+
+GO
+
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'AssemblyPollingStationLookUp') AND TYPEin(N'U'))
+DROP TABLE AssemblyPollingStationLookUp
+GO
+Create Table AssemblyPollingStationLookUp
+(
+PSId Int Identity(1,1) NOT NULL
+,PSCode Varchar(10) NOT NULL
+,PSName Varchar(100) NULL
+,VillageCode Varchar(10) NOT NULL
+,MandalCode Varchar(10) NOT NULL
+,ACCode Varchar(10) NOT NULL
+,PCCode Varchar(10) NOT NULL
+,StateCode Varchar(10) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+)
+
+GO
+
+
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'MuncipalityLookUp') AND TYPEin(N'U'))
+DROP TABLE MuncipalityLookUp
+GO
+Create Table MuncipalityLookUp
+(
+MuncipalId Int Identity(1,1) NOT NULL
+,MuncipalCode Varchar(10) NOT NULL
+,MuncipalName Varchar(100) NOT NULL
+,ACCode Varchar(10) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+)
+
+GO
+
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'MuncipalPollingStationLookUp') AND TYPEin(N'U'))
+DROP TABLE MuncipalPollingStationLookUp
+GO
+Create Table MuncipalPollingStationLookUp
+(
+MunPSId Int Identity(1,1) NOT NULL
+,MunPSCode Varchar(10) NOT NULL
+,MunPSName Varchar(100) NOT NULL
+,MandalCode Varchar(10) NOT NULL
+,ACCode Varchar(10) NOT NULL
+,PCCode Varchar(10) NOT NULL
+,StateCode Varchar(10) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+)
+
+GO
+
+
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'CommunityLookUp') AND TYPEin(N'U'))
+DROP TABLE CommunityLookUp
+GO
+Create Table CommunityLookUp
+(
+ComId Int Identity(1,1) NOT NULL
+,CommunityCode Varchar(10) NOT NULL
+,CommunityName Varchar(100) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+)
+
+GO
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'SubCasteLookUp') AND TYPEin(N'U'))
+DROP TABLE SubCasteLookUp
+GO
+Create Table SubCasteLookUp
+(
+SubCastId Int Identity(1,1) NOT NULL
+,SubCasteCode Varchar(10) NOT NULL
+,SubCasteName Varchar(100) NOT NULL
+,CommunityCode Varchar(10) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+)
+
+GO
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'GenderLookUp') AND TYPEin(N'U'))
+DROP TABLE GenderLookUp
+GO
+Create Table GenderLookUp
+(
+GenderId Int Identity(1,1) NOT NULL
+,GenderCode Varchar(10) NOT NULL
+,GenderName Varchar(25) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+)
+
+GO
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'EducationLookUp') AND TYPEin(N'U'))
+DROP TABLE EducationLookUp
+GO
+Create Table EducationLookUp
+(
+EduId Int Identity(1,1) NOT NULL
+,EducationCode Varchar(10) NOT NULL
+,EducationName Varchar(25) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+)
+
+GO
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'IFPartyLookUp') AND TYPEin(N'U'))
+DROP TABLE IFPartyLookUp
+GO
+Create Table IFPartyLookUp
+(
+IFId Int Identity(1,1) NOT NULL
+,IFCode Varchar(10) NOT NULL
+,IFName Varchar(25) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+)
+
+GO
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'PPAT_SFLookUp') AND TYPEin(N'U'))
+DROP TABLE PPAT_SFLookUp
+GO
+Create Table PPAT_SFLookUp
+(
+ PPATSFId Int Identity(1,1) NOT NULL
+,PPAT_SFCode Varchar(10) NOT NULL
+,PPAT_SFName Varchar(25) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+)
+
+GO
+
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'PPAT_PRFLookUp') AND TYPEin(N'U'))
+DROP TABLE PPAT_PRFLookUp
+GO
+Create Table PPAT_PRFLookUp
+(
+ PPAT_PRFId Int Identity(1,1) NOT NULL
+,PPAT_PRFCode Varchar(10) NOT NULL
+,PPAT_PRFName Varchar(25) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+)
+
+GO
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'PPAT_VPFLookUp') AND TYPEin(N'U'))
+DROP TABLE PPAT_VPFLookUp
+GO
+Create Table PPAT_VPFLookUp
+(
+ PPAT_VPFId Int Identity(1,1) NOT NULL
+,PPAT_VPFCode Varchar(10) NOT NULL
+,PPAT_VPFName Varchar(25) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+)
+
+GO
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'PPAT_PIFLookUp') AND TYPEin(N'U'))
+DROP TABLE PPAT_PIFLookUp
+GO
+Create Table PPAT_PIFLookUp
+(
+ PPAT_PIFId Int Identity(1,1) NOT NULL
+,PPAT_PIFCode Varchar(10) NOT NULL
+,PPAT_PIFName Varchar(25) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+)
+
+GO
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'ApplicationLookUp') AND TYPEin(N'U'))
+DROP TABLE ApplicationLookUp
+GO
+Create Table ApplicationLookUp
+(
+ AppId Int Identity(1,1) NOT NULL
+,AppCode Varchar(10) NOT NULL
+,AppName Varchar(100) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+,PRIMARY KEY(AppCode)
+)
+
+GO
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'MeasuringApplicationLookUp') AND TYPEin(N'U'))
+DROP TABLE MeasuringApplicationLookUp
+GO
+Create Table MeasuringApplicationLookUp
+(
+ MeasureAppId Int Identity(1,1) NOT NULL
+,MeasureAppCode Varchar(50) NOT NULL
+,MeasureAppName Varchar(100) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+,PRIMARY KEY(MeasureAppCode )
+)
+
+GO
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'MeasuringApplicationMappings') AND TYPEin(N'U'))
+DROP TABLE MeasuringApplicationMappings
+GO
+Create Table MeasuringApplicationMappings
+(
+ MeasureAppMapId Int Identity(1,1) NOT NULL
+,MeasureAppCode Varchar(50) NOT NULL
+,AppCode Varchar(10) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+)
+
+GO
+
+ALTER TABLE MeasuringApplicationMappings
+ADD FOREIGN KEY (AppCode) REFERENCES ApplicationLookUp(AppCode);
+
+Go
+
+ALTER TABLE MeasuringApplicationMappings
+ADD FOREIGN KEY (MeasureAppCode) REFERENCES MeasuringApplicationLookUp(MeasureAppCode);
+
+GO
+
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'ExecutiveInfo') AND TYPEin(N'U'))
+DROP TABLE ExecutiveInfo
+GO
+Create Table ExecutiveInfo
+(
+ EmpId Int Identity(1,1) NOT NULL
+,EmpFirstName Varchar(50) NULL
+,EmpLastName Varchar(50) NULL
+,EmpPhone Varchar(50) NOT NULL
+,EmpEmail Varchar(100) NULL
+,EmpAddress Varchar(200) NULL
+,EmpUsername Varchar(50) NOT NULL
+,EmpPassword Varchar(50) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+)
+
+GO
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'RolesLookUp') AND TYPEin(N'U'))
+DROP TABLE RolesLookUp
+GO
+Create Table RolesLookUp
+(
+ AutoId Int Identity(1,1) NOT NULL
+,RoleId INT NOT NULL
+,RoleName Varchar(25) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+)
+
+GO
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'ExecutiveRoles') AND TYPEin(N'U'))
+DROP TABLE ExecutiveRoles
+GO
+Create Table ExecutiveRoles
+(
+ ExecRoleId Int Identity(1,1) NOT NULL
+,EmpId INT NOT NULL
+,RoleId INT NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+)
+
+GO
+ALTER TABLE ExecutiveRoles
+ADD FOREIGN KEY (EmpId) REFERENCES ExecutiveInfo(EmpId);
+
+Go
+
+ALTER TABLE ExecutiveRoles
+ADD FOREIGN KEY (RoleId) REFERENCES RolesLookUp(RoleId);
+
+GO
+
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'ExecutiveAppAccess') AND TYPEin(N'U'))
+DROP TABLE ExecutiveAppAccess
+GO
+Create Table ExecutiveAppAccess
+(
+ Id Int Identity(1,1) NOT NULL
+,EmpId INT NOT NULL
+,AppCode Varchar(10) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+)
+
+GO
+ALTER TABLE ExecutiveAppAccess
+ADD FOREIGN KEY (EmpId) REFERENCES ExecutiveInfo(EmpId);
+
+Go
+
+ALTER TABLE ExecutiveAppAccess
+ADD FOREIGN KEY (AppCode) REFERENCES ApplicationLookUp(AppCode);
+
+GO
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'UserInfo') AND TYPEin(N'U'))
+DROP TABLE UserInfo
+GO
+Create Table UserInfo
+(
+ UserId Int Identity(1,1) NOT NULL
+,UserDisplayName Varchar(100) NULL
+,Gender varchar(8) NOT NULL
+,UserMobile Varchar(25) NOT NULL
+,Occupation Varchar(100) NULL
+,EducationCode Varchar(50) NOT NULL
+,CommunityCode Varchar(50) NOT NULL
+,SubCasteCode Varchar(50) NOT NULL
+,IFCode Varchar(50) NOT NULL
+,SFCode Varchar(50) NOT NULL
+,PRFCode Varchar(50) NOT NULL
+,VPFCode Varchar(50) NOT NULL
+,PIFCode Varchar(50) NOT NULL
+,Remarks Varchar(250) NULL
+,StateCode Varchar(50) NOT NULL
+,PCCode Varchar(50) NOT NULL
+,ACCode Varchar(50) NOT NULL
+,MandalCode Varchar(50) NOT NULL
+,VillageCode Varchar(50) NOT NULL
+,PSCode Varchar(50) NOT NULL
+,MeasureAppCode Varchar(50) NOT NULL
+,AppCode Varchar(10) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+)
+
+GO
+
+
+
+
+
+
+
+
+INSERT INTO RolesLookUp Values('0','Not assigned', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO RolesLookUp Values('1','User', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO RolesLookUp Values('2','Supervisor', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO RolesLookUp Values('3','Admin', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO RolesLookUp Values('4','Techsupport', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+
+
+INSERT INTO MeasuringApplicationMappings Values('IF',	'PPAT','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'Weightage',	'PPAT','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'PRF',	'PPAT','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'VCP',	'PPAT','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'EP',	'PPAT','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'PPR',	'PPAT','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'ETA',	'PPAT','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'KV',	'PIG','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'OM',	'PIG','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'LBL-WM',	'PIG','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'LBL-SARPANCH',	'PIG','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'LBL-UPASARPANCH',	'PIG','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'LBL-ZPTC',	'PIG','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'LBL-MPP',	'PIG','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'LBL-MPTC',	'PIG','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'MAHILA-ANGNWADI',	'PIG','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'MAHILA-ASHA',	'PIG','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'MAHILA-SHG',	'PIG','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'MAHILA-WOM',	'PIG','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'POM',	'PIG','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'COM',	'PIG','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'TUL',	'PIG','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'SS',	'SS','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'MBC-SAPGIR',	'SS','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+
+
+
+
+INSERT INTO MeasuringApplicationLookUp Values('IF',	'IF','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'Weightage',	'Weightage','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'PRF',	'PRF','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'VCP',	'VCP','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'EP',	'EP','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'PPR',	'PPR','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'ETA',	'ETA','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'KV',	'Key-Voters','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'OM',	'Opinion Makers','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'LBL-WM',	'LBL-WardMember','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'LBL-SARPANCH',	'LBL-SARPANCH','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'LBL-UPASARPANCH',	'LBL-UPASARPANCH','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'LBL-ZPTC',	'LBL-ZPTC','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'LBL-MPP',	'LBL-MPP','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'LBL-MPTC',	'LBL-MPTC','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'MAHILA-ANGNWADI',	'Mahila-Anganwadi','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'MAHILA-ASHA',	'Mahila-Asha','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'MAHILA-SHG',	'Mahila-SHG','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'MAHILA-WOM',	'Mahila-WOM','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'POM',	'POM','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'COM',	'COM','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'TUL',	'TUL','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'SS',	'Social Segment','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+'MBC-SAPGIR',	'MOST BACK Caste -Sapta Girulu','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+
+
+INSERT INTO ApplicationLookUp Values('PPAT','PPAT', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO ApplicationLookUp Values('PIG','Political Influence Groups', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO ApplicationLookUp Values('SS','Social Segments', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+
+
+
+INSERT INTO PPAT_PIFLookUp Values('A','A', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_PIFLookUp Values('B','B', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_PIFLookUp Values('C','C', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_PIFLookUp Values('D','D', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+
+
+
+
+
+INSERT INTO PPAT_VPFLookUp Values('0','0', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_VPFLookUp Values('1','1', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_VPFLookUp Values('2','2', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_VPFLookUp Values('3','3', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+
+
+
+
+
+INSERT INTO PPAT_PRFLookUp Values('0','0', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_PRFLookUp Values('1','1', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_PRFLookUp Values('2','2', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_PRFLookUp Values('3','3', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+
+
+
+INSERT INTO PPAT_SFLookUp Values('S-0'	,'S-0','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_SFLookUp Values('S-1'	,'S-1','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_SFLookUp Values('S-2'	,'S-2','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_SFLookUp Values('S-3'	,'S-3','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_SFLookUp Values('S-4'	,'S-4','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_SFLookUp Values('S-5'	,'S-5','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_SFLookUp Values('S-6'	,'S-6','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+
+
+INSERT INTO IFPartyLookUp Values('TRS'	,	'TRS', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO IFPartyLookUp Values('INC'	,	'INC', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO IFPartyLookUp Values('BJP'	,	'BJP', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO IFPartyLookUp Values('CPM'	,	'CPM', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO IFPartyLookUp Values('DSP'	,	'DSP', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO IFPartyLookUp Values('CPI'	,	'CPI', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO IFPartyLookUp Values('TDP'	,	'TDP', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO IFPartyLookUp Values('JANASENA',	'JANASENA', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO IFPartyLookUp Values('MRPS'	,	'MRPS', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO IFPartyLookUp Values('BSP'	,	'BSP', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO IFPartyLookUp Values('MSP'	,	'MSP', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO IFPartyLookUp Values('NEUTRAL'	,'NEUTRAL', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO IFPartyLookUp Values('NOTA'	,	'NOTA', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+
+
+
+
+
+
+
+
+INSERT INTO EducationLookUp Values('0','0', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO EducationLookUp Values('1','1', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO EducationLookUp Values('2','2', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO EducationLookUp Values('3','3', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO EducationLookUp Values('4','4', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO EducationLookUp Values('5','5', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO EducationLookUp Values('6','6', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+
+
+
+INSERT INTO GenderLookUp Values('M','Male', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO GenderLookUp Values('F','Female', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO GenderLookUp Values('OTH','Others', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+
+
+
+
+
+
+INSERT INTO CommunityLookUp Values('BC','BC', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO CommunityLookUp Values('SC','SC', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO CommunityLookUp Values('ST','ST', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO CommunityLookUp Values('OC','OC', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO CommunityLookUp Values('Minority','Minority', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO CommunityLookUp Values('OTH','Others', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+
+
+INSERT INTO SubCasteLookUp Values('OTH','Others','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
