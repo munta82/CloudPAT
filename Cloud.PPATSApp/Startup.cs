@@ -39,9 +39,9 @@ namespace Cloud.PPATSApp
             services.AddDbContext<CloudPATContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             //from external file dataSettings .json - Method3
-            var settings = new DataSettingsManager().LoadSettings();
-            var dbConnection = settings.DataConnectionString.ToString();
-            services.AddDbContext<CloudPATContext>(options => options.UseSqlServer(dbConnection));
+            //var settings = new DataSettingsManager().LoadSettings(); //Check dataasettings in dbcontenxt file
+            //var dbConnection = settings.DataConnectionString.ToString();
+            //services.AddDbContext<CloudPATContext>(options => options.UseSqlServer(dbConnection));
 
         }
 
@@ -66,7 +66,7 @@ namespace Cloud.PPATSApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Login}/{id?}");
             });
         }
     }

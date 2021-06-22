@@ -407,6 +407,7 @@ Create Table EmployeeInfo
 ,EmpAddress Varchar(200) NULL
 ,EmpUsername Varchar(50) NOT NULL
 ,EmpPassword Varchar(50) NOT NULL
+,EmpSecureId UNiqueIdentifier NOT NULL
 ,IsActive Char(1) NULL
 ,CreatedDate DateTime NULL
 ,CreatedBy Varchar(100) Null

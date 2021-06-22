@@ -1,9 +1,11 @@
+use CloudPAT
+GO
 Create Procedure prcGetMeasuringApplications
 AS 
 /***************************************
 ID		Date		Change
 ----------------------------------------
-1		21-Jun-21	Initial
+1		21-Jun-21	Initial Development
 
 ***************************************/
 
@@ -11,11 +13,7 @@ BEGIN
 	SELECT [MeasureAppId]
       ,[MeasureAppCode]
       ,[MeasureAppName]
-      ,[IsActive]
-      ,[CreatedDate]
-      ,[CreatedBy]
-      ,[ModifiedDate]
-      ,[ModifiedBy]
+      ,[IsActive]     
   FROM [CloudPAT].[dbo].[MeasuringApplicationLookUp] 
   Where IsActive = 'Y' Order by MeasureAppName
 END
@@ -30,7 +28,7 @@ AS
 /***************************************
 ID		Date		Change
 ----------------------------------------
-1		21-Jun-21	Initial
+1		21-Jun-21	Initial Development
 
 prcGetMeasuringApplicationMappings 'PPAT'
 ***************************************/
@@ -38,11 +36,7 @@ BEGIN
 SELECT [MeasureAppMapId]
       ,[MeasureAppCode]
       ,[AppCode]
-      ,[IsActive]
-      ,[CreatedDate]
-      ,[CreatedBy]
-      ,[ModifiedDate]
-      ,[ModifiedBy]
+      ,[IsActive]    
   FROM [CloudPAT].[dbo].[MeasuringApplicationMappings]
   Where AppCode=@AppCode and isActive='Y'
 END
@@ -54,7 +48,7 @@ AS
 /***************************************
 ID		Date		Change
 ----------------------------------------
-1		21-Jun-21	Initial
+1		21-Jun-21	Initial Development
 
 ***************************************/
 
@@ -75,7 +69,7 @@ AS
 /***************************************
 ID		Date		Change
 ----------------------------------------
-1		21-Jun-21	Initial
+1		21-Jun-21	Initial Development
 
 ***************************************/
 BEGIN
@@ -96,7 +90,7 @@ AS
 /***************************************
 ID		Date		Change
 ----------------------------------------
-1		21-Jun-21	Initial
+1		21-Jun-21	Initial Development
 
 ***************************************/
 BEGIN
@@ -116,7 +110,7 @@ AS
 /***************************************
 ID		Date		Change
 ----------------------------------------
-1		21-Jun-21	Initial
+1		21-Jun-21	Initial Development
 
 ***************************************/
 BEGIN
@@ -124,8 +118,7 @@ SELECT [MDId]
       ,[MandalCode]
       ,[MandalName]
       ,[ACCode]
-      ,[IsActive]
-      
+      ,[IsActive]      
   FROM [CloudPAT].[dbo].[MandalLookUp]
   Where isActive='Y'
 END
@@ -137,7 +130,7 @@ AS
 /***************************************
 ID		Date		Change
 ----------------------------------------
-1		21-Jun-21	Initial
+1		21-Jun-21	Initial Development
 
 ***************************************/
 BEGIN
@@ -160,12 +153,12 @@ AS
 prcGetAssemblyPollingStationsData '56'
 ID		Date		Change
 ----------------------------------------
-1		21-Jun-21	Initial
+1		21-Jun-21	Initial Development
 
 ***************************************/
 BEGIN
 
-/****** Script for SelectTopNRows command from SSMS  ******/
+
 SELECT [PSId]
       ,[PSCode]
       ,isNULL([PSName],'') as [PSName]
@@ -190,7 +183,7 @@ AS
 /***************************************
 ID		Date		Change
 ----------------------------------------
-1		21-Jun-21	Initial
+1		21-Jun-21	Initial Development
 
 ***************************************/
 BEGIN
@@ -209,18 +202,14 @@ AS
 /***************************************
 ID		Date		Change
 ----------------------------------------
-1		21-Jun-21	Initial
+1		21-Jun-21	Initial Development
 
 ***************************************/
 BEGIN
   SELECT  [ComId]
       ,[CommunityCode]
       ,[CommunityName]
-      ,[IsActive]
-      ,[CreatedDate]
-      ,[CreatedBy]
-      ,[ModifiedDate]
-      ,[ModifiedBy]
+      ,[IsActive]     
   FROM [CloudPAT].[dbo].[CommunityLookUp]
   Where isActive='Y'
 END
@@ -235,7 +224,7 @@ AS
 /***************************************
 ID		Date		Change
 ----------------------------------------
-1		21-Jun-21	Initial
+1		21-Jun-21	Initial Development
 
 ***************************************/
 BEGIN
@@ -260,15 +249,14 @@ AS
 /***************************************
 ID		Date		Change
 ----------------------------------------
-1		21-Jun-21	Initial
+1		21-Jun-21	Initial Development
 
 ***************************************/
 BEGIN
 SELECT [IFId]
       ,[IFCode]
       ,[IFName]
-      ,[IsActive]
-      
+      ,[IsActive]      
   FROM [CloudPAT].[dbo].[IFPartyLookUp]
   Where IsActive='Y'
 END
@@ -282,15 +270,14 @@ AS
 /***************************************
 ID		Date		Change
 ----------------------------------------
-1		21-Jun-21	Initial
+1		21-Jun-21	Initial Development
 
 ***************************************/
 BEGIN
 SELECT  [PPATSFId]
       ,[PPAT_SFCode]
       ,[PPAT_SFName]
-      ,[IsActive]
-     
+      ,[IsActive]     
   FROM [CloudPAT].[dbo].[PPAT_SFLookUp]
   Where [IsActive]='Y'
 END
@@ -302,15 +289,14 @@ AS
 /***************************************
 ID		Date		Change
 ----------------------------------------
-1		21-Jun-21	Initial
+1		21-Jun-21	Initial Development
 
 ***************************************/
 BEGIN
 SELECT   [PPAT_PRFId]
       ,[PPAT_PRFCode]
       ,[PPAT_PRFName]
-      ,[IsActive]
-       
+      ,[IsActive]       
   FROM [CloudPAT].[dbo].[PPAT_PRFLookUp]
   Where [IsActive]='Y'
 END
@@ -324,15 +310,14 @@ AS
 /***************************************
 ID		Date		Change
 ----------------------------------------
-1		21-Jun-21	Initial
+1		21-Jun-21	Initial Development
 
 ***************************************/
 BEGIN
 SELECT  [PPAT_VPFId]
       ,[PPAT_VPFCode]
       ,[PPAT_VPFName]
-      ,[IsActive]
-       
+      ,[IsActive]       
   FROM [CloudPAT].[dbo].[PPAT_VPFLookUp]
   Where [IsActive]='Y'
 END
@@ -343,17 +328,205 @@ AS
 /***************************************
 ID		Date		Change
 ----------------------------------------
-1		21-Jun-21	Initial
+1		21-Jun-21	Initial Development
 
 ***************************************/
 BEGIN
 SELECT [PPAT_PIFId]
       ,[PPAT_PIFCode]
       ,[PPAT_PIFName]
-      ,[IsActive]
-      
+      ,[IsActive]      
   FROM [CloudPAT].[dbo].[PPAT_PIFLookUp]
   Where [IsActive]='Y'
-  END
+ END
 
 GO
+
+Create Procedure prcGetPPATMasterInfo
+(@AppCode varchar(25))
+AS 
+/***************************************
+ID		Date		Change
+----------------------------------------
+1		21-Jun-21	Initial Development
+prcGetPPATMasterInfo 'PPAT'
+***************************************/
+BEGIN
+	SELECT  [MeasureAppMapId]
+      ,[MeasureAppCode]
+      ,[AppCode]
+      ,[IsActive]      
+  FROM [CloudPAT].[dbo].[MeasuringApplicationMappings]
+  WHERE AppCode=@AppCode
+
+  SELECT DISTINCT [StateId]
+      ,[StateCode]
+      ,[StateName]
+      ,[IsActive]
+      
+  FROM [CloudPAT].[dbo].[StateLookUp]
+  Where isActive='Y'
+
+SELECT  [PCId]
+      ,[PCCode]
+      ,[PCName]
+      ,[StateCode]
+      ,[IsActive]
+      
+  FROM [CloudPAT].[dbo].[ParliamentLookUp]
+  Where isActive='Y'
+
+SELECT [ACId]
+      ,[ACCode]
+      ,[ACName]
+      ,[PCCode]
+      ,[IsActive]
+  FROM [CloudPAT].[dbo].[AssemblyLookUp]
+  Where isActive='Y'
+
+SELECT [MDId]
+      ,[MandalCode]
+      ,[MandalName]
+      ,[ACCode]
+      ,[IsActive]      
+  FROM [CloudPAT].[dbo].[MandalLookUp]
+  Where isActive='Y'
+
+SELECT [VGId]
+      ,[VillageCode]
+      ,[VillageName]
+      ,[MandalCode]
+      ,[IsActive]
+  FROM [CloudPAT].[dbo].[VillageLookUp]
+   Where isActive='Y'
+
+SELECT  [EduId]
+      ,[EducationCode]
+      ,[EducationName]
+      ,[IsActive]
+  FROM [CloudPAT].[dbo].[EducationLookUp]
+  Where IsActive='Y'
+
+  SELECT  [ComId]
+      ,[CommunityCode]
+      ,[CommunityName]
+      ,[IsActive]     
+  FROM [CloudPAT].[dbo].[CommunityLookUp]
+  Where isActive='Y'
+
+SELECT [IFId]
+      ,[IFCode]
+      ,[IFName]
+      ,[IsActive]      
+  FROM [CloudPAT].[dbo].[IFPartyLookUp]
+  Where IsActive='Y'
+
+SELECT  [PPATSFId]
+      ,[PPAT_SFCode]
+      ,[PPAT_SFName]
+      ,[IsActive]     
+  FROM [CloudPAT].[dbo].[PPAT_SFLookUp]
+  Where [IsActive]='Y'
+
+SELECT   [PPAT_PRFId]
+      ,[PPAT_PRFCode]
+      ,[PPAT_PRFName]
+      ,[IsActive]       
+  FROM [CloudPAT].[dbo].[PPAT_PRFLookUp]
+  Where [IsActive]='Y'
+
+SELECT  [PPAT_VPFId]
+      ,[PPAT_VPFCode]
+      ,[PPAT_VPFName]
+      ,[IsActive]       
+  FROM [CloudPAT].[dbo].[PPAT_VPFLookUp]
+  Where [IsActive]='Y'
+
+SELECT [PPAT_PIFId]
+      ,[PPAT_PIFCode]
+      ,[PPAT_PIFName]
+      ,[IsActive]      
+  FROM [CloudPAT].[dbo].[PPAT_PIFLookUp]
+  Where [IsActive]='Y'
+
+
+
+
+
+END
+
+GO
+
+
+ALTER Procedure prcCheckUserAuthentication
+(
+@UserName varchar(25),
+@Password varchar(25)
+)
+AS 
+/***************************************
+ID		Date		Change
+----------------------------------------
+1		21-Jun-21	Initial Development
+prcCheckUserAuthentication 'sa','sa'
+***************************************/
+BEGIN
+	If Exists(Select 1 from EmployeeInfo Where EmpUsername=@UserName and EmpPassword=@Password)
+	BEGIN
+		Declare @EmpId as Int
+		Select @EmpId =EmpId from EmployeeInfo Where EmpUsername=@UserName and EmpPassword=@Password
+		--Select * from EmployeeInfo Where EmpId = @EmpId 
+		--SELECT [Id]
+		--,[EmpId]
+		--,[AppCode]
+		--,[IsActive]       
+		--FROM [CloudPAT].[dbo].[EmployeeAppAccess]
+		--Where EmpId = @EmpId
+		EXEC prcGetEmployeeMasterInfo @EmpId
+		 
+   END
+	ELSE
+		Select -1 as EmpId 
+END
+
+GO
+
+Create Procedure prcGetEmployeeMasterInfo
+(
+@EmpId INT
+)
+AS 
+/***************************************
+ID		Date		Change
+----------------------------------------
+1		21-Jun-21	Initial Development
+prcGetEmployeeMasterInfo 1
+***************************************/
+BEGIN
+	SELECT  e.[EmpId]
+      ,[EmpFirstName]
+      ,[EmpLastName]
+      ,[EmpPhone]
+      ,[EmpEmail]
+      ,[EmpAddress]
+      ,[EmpUsername]
+      ,[EmpPassword]
+      ,er.RoleId      
+	  ,r.RoleName
+  FROM [CloudPAT].[dbo].[EmployeeInfo] e
+  JOIN EmployeeRoles  er on e.EmpId = er.EmpId
+  JOIN RolesLookUp R on R.RoleId= er.RoleId 
+  Where e.EmpId = @EmpId
+  and e.isActive='Y' and er.IsActive='Y'
+
+  SELECT [Id]
+      ,[EmpId]
+      ,[AppCode]
+      ,[IsActive]       
+  FROM [CloudPAT].[dbo].[EmployeeAppAccess]
+   Where EmpId = @EmpId
+    
+END
+
+GO
+

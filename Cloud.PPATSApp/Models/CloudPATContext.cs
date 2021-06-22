@@ -1,8 +1,6 @@
 ﻿using System;
-using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Newtonsoft.Json;
 
 #nullable disable
 
@@ -44,30 +42,6 @@ namespace Cloud.PPATSApp.Models
         public virtual DbSet<SubCasteLookUp> SubCasteLookUps { get; set; }
         public virtual DbSet<UserInfo> UserInfos { get; set; }
         public virtual DbSet<VillageLookUp> VillageLookUps { get; set; }
-
-         
-        //3rd method to create connection string from external json file
-        public class DataSettings
-        {
-            public string DataConnectionString { get; set; }
-        }
-
-        public class DataSettingsManager
-        {
-            private const string _dataSettingsFilePath = "App_Data/dataSettings.json";
-            public virtual DataSettings LoadSettings()
-            {
-                var text = File.ReadAllText(_dataSettingsFilePath);
-                if (string.IsNullOrEmpty(text))
-                    return new DataSettings();
-
-                //get data settings from the JSON file  
-                DataSettings settings = JsonConvert.DeserializeObject<DataSettings>(text);
-                return settings;
-            }
-
-        }
-        //3rd method to create connection string
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

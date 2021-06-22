@@ -5,7 +5,7 @@
                 <table>
                     <tr>
                         <td>Measuring Application</td>
-                        <td>@Html.DropDownList("ddlMeasuringApp")</td>
+                        <td>@Html.DropDownList("ddlMeasuringApp", (IEnumerable<SelectListItem>)ViewBag.ddlMeasuringApp, "--Select One--")</td>
                     </tr>
                 </table>
             </td>
@@ -19,27 +19,27 @@
                     <tr>
                         <td>
                             State<br />
-                            @Html.DropDownList("ddlStates")
+                            @Html.DropDownList("ddlStates", (IEnumerable<SelectListItem>)ViewBag.ddlStates, "--Select One--")
                         </td>
                         <td>
                             Parliament<br />
-                            @Html.DropDownList("ddlParliament")
+                            @Html.DropDownList("ddlParliament", ViewBag.ddlParliament as SelectList)
                         </td>
                     </tr>
                     <tr>
                         <td>
                             Assembly<br />
-                            @Html.DropDownList("ddlAssembly")
+                            @Html.DropDownList("ddlAssembly", ViewBag.ddlAssembly as SelectList)
                         </td>
                         <td>
                             Mandal<br />
-                            @Html.DropDownList("ddlMandal")
+                            @Html.DropDownList("ddlMandal", ViewBag.ddlMandal as SelectList)
                         </td>
                     </tr>
                     <tr>
                         <td>
                             Village<br />
-                            @Html.DropDownList("ddlVillage")
+                            @Html.DropDownList("ddlVillage",ViewBag.ddlVillage as SelectList)
                         </td>
                         <td>
                             PS Name<br />

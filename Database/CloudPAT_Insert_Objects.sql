@@ -612,8 +612,9 @@ INSERT INTO MeasuringApplicationMappings Values('MBC-SAPGIR',	'SS','Y', Getdate(
 
 GO	
 
-INSERT INTO EmployeeInfo Values('Satish','Kumar','9000000000','satish@yahoo.com','Hyd', 'satish','satish','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
-INSERT INTO EmployeeInfo Values('Shankar','Baba','9000000000','Shankar@yahoo.com','Hyd', 'shankar','shankar','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+Select NewID()
+INSERT INTO EmployeeInfo Values('Satish','Kumar','9000000000','satish@yahoo.com','Hyd', 'satish','satish','9F7FDD9F-8089-4495-9562-89BBF1AA241D','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO EmployeeInfo Values('Shankar','Baba','9000000000','Shankar@yahoo.com','Hyd', 'shankar','shankar','014BCAA4-3240-48C6-B60B-72D5CD985252','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
 
 GO
  
