@@ -1,76 +1,314 @@
-﻿<table>
-    <tbody>
+﻿<style>
+    input, select, textarea {
+        max-width: 250px;
+    }
+
+    .PPATDropdownlist {
+        width: 130px;
+    }
+
+    .PPATtextbox {
+        width: 130px;
+    }
+
+    .tblRoundCorner {
+        border-radius: 95px;
+        border: 2px solid #DEDEDE;
+        padding: 20px;
+        width: 200px;
+    }
+
+    .form-control {
+        font-size: small !important;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnPSGo").click(function () {
+
+            var psCodeval = $("#txtPSCode").val();
+            if (psCodeval == "") {
+                alert("Please enter PS Code");
+                return false;
+            }
+            $.ajax({
+                type: "POST",
+                url: "/PPAT/GetPPATPollingStationData",
+                dataType: "json",
+                cache: false,
+                async: false,
+                data: {
+                    PSCode: psCodeval
+                },
+                success: function (data) {
+                    //debugger;
+                    $("#ddlStates").val(data.stateCode);
+                    $("#ddlParliament").val(data.pccode);
+                    $("#ddlAssembly").val(data.accode);
+                    $("#ddlMandal").val(data.mandalCode);
+                    $("#ddlVillage").val(data.villageCode);
+                    $("#txtPSName").val(data.psName);
+
+                    $("#ddlStates").prop("disabled", true);
+                    $("#ddlParliament").prop("disabled", true);
+                    $("#ddlAssembly").prop("disabled", true);
+                    $("#ddlMandal").prop("disabled", true);
+                    $("#ddlVillage").prop("disabled", true);
+                    if (data.psName == null || data.psName == "") {
+                        $("#txtPSName").prop("disabled", false);
+                    }
+                    else {
+                        $("#txtPSName").prop("disabled", true);
+                    }
+                    console.log(data);
+                },
+                error: function (jqXhr, textStatus, errorMessage) {
+                    //debugger;
+
+                    //console.log("AJAX ERROR:", data);
+                }
+            });
+        });
+
+
+        $("#txtSubCaste").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    type: "POST",
+                    url: "/PPAT/GetPPATSubCasteData",
+                    dataType: "json",
+                    cache: false,
+                    async: false,
+                    maxShowItems: 5,
+                    minLength: 2,
+                    data: {
+                        searchString: $("#txtSubCaste").val(),
+                        communityCode: $("#ddlCommunity").val()
+                    },
+                    success: function (data) {
+                        //debugger;
+                        response($.map(data, function (item) {
+                            //debugger;
+                            return {
+                                label: item.subCasteName,
+                                value: item.subCasteCode
+
+                            }
+                        }));
+
+                        console.log(data);
+                    },
+                    error: function (jqXhr, textStatus, errorMessage) {
+                        //debugger;
+                        if (jqXhr.responseText.indexOf('maxJsonLength') > -1) {
+                            alert("Search results exceeds max records. Plese refine your search with more characters");
+                        }
+                    }
+                });
+            },
+            minLength: 2,
+            select: function (evet, ui) {
+                //debugger;
+                var subcastecode = ui.item.value;
+                $("#txtSubCaste").val(ui.item.label);
+            }
+        });
+
+        $("#btnSave").click(function () {
+            $("form").attr("action", "/PPAT/SaveForm");
+        });
+
+        $("#btnClear").click(function () {
+            $("form").attr("action", "/PPAT/ClearForm");
+        });
+
+    });
+</script>
+@*@using (Html.BeginForm("SaveUserInfo", "PPAT"))*@
+@using (Html.BeginForm())
+{
+    <table border="1">
+        <tbody>
+            <tr>
+                <td>
+                    @*@Html.ValidationSummary(true, "Please fix the following error and then submit the form")*@
+                   
+                    <table class="tblRoundCorner" style="width:100%">
+                        <tr>
+                            <td>Measuring Application</td>
+                            <td>
+                                @Html.DropDownList("ddlMeasuringApp", (IEnumerable<SelectListItem>)ViewBag.ddlMeasuringApp, "Select",
+                                new
+                                    {
+                                        @class = "form-control valid PPATDropdownlist",
+                               @data_val = "true",
+                                        @data_val_required = "Measuring App is required"
+                                    })
+                        </tr>
+                    </table>
+                </td>
+        </tr>
         <tr>
-            <td>
-                <table>
-                    <tr>
-                        <td>Measuring Application</td>
-                        <td>@Html.DropDownList("ddlMeasuringApp", (IEnumerable<SelectListItem>)ViewBag.ddlMeasuringApp, "--Select One--")</td>
-                    </tr>
-                </table>
+            <td style="height:5px;">
+                @Html.ValidationSummary()
             </td>
         </tr>
         <tr>
-            <td></td>
-        </tr>
-        <tr>
             <td>
-                <table>
+                <table border="1" style="width:100%" class="tblRoundCorner">
                     <tr>
                         <td>
                             State<br />
-                            @Html.DropDownList("ddlStates", (IEnumerable<SelectListItem>)ViewBag.ddlStates, "--Select One--")
+                            @Html.DropDownList("ddlStates", (IEnumerable<SelectListItem>)ViewBag.ddlStates, "Select",
+                           new { @class = "form-control valid PPATDropdownlist", @data_val = "true", @data_val_required = "States is required" })
                         </td>
                         <td>
                             Parliament<br />
-                            @Html.DropDownList("ddlParliament", ViewBag.ddlParliament as SelectList)
+                            @Html.DropDownList("ddlParliament", ViewBag.ddlParliament as SelectList, "Select",
+                           new { @class = "form-control PPATDropdownlist" })
+                            <span class="field-validation-valid" data-valmsg-for="ddlParliament" data-valmsg-replace="true">The email must be unique</span>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             Assembly<br />
-                            @Html.DropDownList("ddlAssembly", ViewBag.ddlAssembly as SelectList)
+                            @Html.DropDownList("ddlAssembly", ViewBag.ddlAssembly as SelectList, "Select", new { @class = "form-control PPATDropdownlist" })
                         </td>
                         <td>
                             Mandal<br />
-                            @Html.DropDownList("ddlMandal", ViewBag.ddlMandal as SelectList)
+                            @Html.DropDownList("ddlMandal", ViewBag.ddlMandal as SelectList, "Select", new { @class = "form-control PPATDropdownlist" })
                         </td>
                     </tr>
                     <tr>
                         <td>
                             Village<br />
-                            @Html.DropDownList("ddlVillage",ViewBag.ddlVillage as SelectList)
+                            @Html.DropDownList("ddlVillage", ViewBag.ddlVillage as SelectList, "Select", new { @class = "form-control PPATDropdownlist" })
                         </td>
                         <td>
                             PS Name<br />
-                            @Html.TextBox("txtPSName")
+                            @Html.TextBox("txtPSName", null, new { @class = "form-control PPATtextbox" })
                         </td>
                     </tr>
                     <tr>
                         <td>
                             PS Code<br />
-                            @Html.TextBox("txtPSCode")
+                            @Html.TextBox("txtPSCode", null, new { @class = "form-control PPATtextbox" })
                         </td>
-                        <td>
-                            <button id="btnPSGo" name="btnPSGo">GO</button>
+                        <td align="center" valign="middle">
+                            @*<button name="btnPSGo">GO</button>*@ @*id="@use.userID" Url.Action("Edit","Controller")*@
+                            <a href="#" id="btnPSGo">
+                                <img alt="go" src="~/Images/btn_go_blue.jpg" height="25px" width="25px" />
+                            </a>
                         </td>
                     </tr>
                 </table>
             </td>
         </tr>
         <tr>
-            <td></td>
+            <td style="height:5px;"></td>
         </tr>
         <tr>
             <td>
-                <table>
+                <table border="1" style="width:100%" class="tblRoundCorner">
                     <tr>
-                        <td></td>
-                        
-                        <td></td>
+                        <td>
+                            Name<br />
+                            @Html.TextBox("txtUserDisplayName", null, new { @class = "form-control PPATtextbox" })
+                        </td>
+                        <td>
+                            Age<br />
+                            @Html.TextBox("txtUserAge", null, new { @class = "form-control PPATtextbox" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Gender<br />
+                            @Html.DropDownList("ddlGender", ViewBag.ddlGender as SelectList, "Select", new { @class = "form-control PPATDropdownlist" })
+                        </td>
+                        <td>
+                            Mobile<br />
+                            @Html.TextBox("txtMobile", null, new { @class = "form-control PPATtextbox" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Education<br />
+                            @Html.DropDownList("ddlEducation", ViewBag.ddlEducation as SelectList, "Select", new { @class = "form-control PPATDropdownlist" })
+                        </td>
+                        <td>
+                            Occupation<br />
+                            @Html.TextBox("txtOccupation", null, new { @class = "form-control PPATtextbox" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Community<br />
+                            @Html.DropDownList("ddlCommunity", ViewBag.ddlCommunity as SelectList, "Select", new { @class = "form-control PPATDropdownlist" })
+                        </td>
+                        <td>
+                            Sub Caste<br />
+                            @Html.TextBox("txtSubCaste", null, new { @class = "form-control PPATtextbox" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            IF<br />
+                            @Html.DropDownList("ddlIFParty", ViewBag.ddlIFParty as SelectList, "Select", new { @class = "form-control PPATDropdownlist" })
+                        </td>
+                        <td>
+                            SF<br />
+                            @Html.DropDownList("ddlPPAT_SF", ViewBag.ddlPPAT_SF as SelectList, "Select", new { @class = "form-control PPATDropdownlist" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            PRF<br />
+                            @Html.DropDownList("ddlPPAT_PRF", ViewBag.ddlPPAT_PRF as SelectList, "Select", new { @class = "form-control PPATDropdownlist" })
+                        </td>
+                        <td>
+                            VPF<br />
+                            @Html.DropDownList("ddlPPAT_VPF", ViewBag.ddlPPAddlPPAT_VPFT_SF as SelectList, "Select", new { @class = "form-control PPATDropdownlist" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            PIF<br />
+                            @Html.DropDownList("ddlPPAT_PIF", ViewBag.ddlPPAT_PIF as SelectList, "Select", new { @class = "form-control PPATDropdownlist" })
+                        </td>
+                        <td>
+                            Remarks<br />
+                            @Html.TextArea("txtRemarks", string.Empty, 2, 15, null)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <table id="tblButtons">
+                                <tr>
+                                    <td>
+                                        @*<button id="btnPreview" name="btnPreview" class="btn-sm">Preview</button>*@
+                                        @*<input type="submit" name="btnPreview" value="Preview" formaction="PreviewForm" formmethod="post" class="btn-sm" />*@
+                                        <input type="submit" id="btnPreview" value="Preview" class="btn-sm" formnovalidate="formnovalidate" />
+                                    </td>
+                                    <td style="width:5px;"></td>
+                                    <td>
+                                        @*<button id="btnSave" name="btnSave" class="btn-sm">Save</button>*@
+                                        @*<input type="submit" name="btnSave" value="Save" formaction="SaveForm" formmethod="post" class="btn-sm" />*@
+                                        <input type="submit" id="btnSave" value="Save" class="btn-sm" />
+                                    </td>
+                                    <td style="width:5px;"></td>
+                                    <td>
+                                        @*<button id="btnClear" name="btnClear" class="btn-sm">Clear</button>*@
+                                        @*<input type="submit" name="btnClear" value="Clear" formaction="ClearForm" formmethod="post" class="btn-sm" />*@
+                                        <input type="submit" id="btnClear" value="Clear" class="btn btn-outline-success border-0 cancel"  />
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
                     </tr>
                 </table>
             </td>
         </tr>
     </tbody>
 </table>
+}

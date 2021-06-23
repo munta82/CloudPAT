@@ -8,6 +8,7 @@
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.0.1" />
     <PackageReference Include="jQuery" Version="3.6.0" />
+    <PackageReference Include="jQuery.UI" Version="1.12.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.7" />
@@ -21,7 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\DAL\" />
+    <None Include="wwwroot\Images\btn_go.png" />
+    <None Include="wwwroot\Images\btn_go_blue.jpg" />
   </ItemGroup>
 
 </Project>

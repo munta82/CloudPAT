@@ -1,6 +1,26 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+body {
+    font-family:  Verdana;
+    font-weight: 200;
+    overflow-x: hidden;
+    overflow-y: auto;
+    font-style: normal;
+    font-variant: normal;
+    line-height: 20px;
+    font-size: 11px !important;
+    background-color: #ededed;
+}
+
+a:hover,
+a:active,
+a:focus {
+    outline: none;
+    text-decoration: none;
+    color: #0076A8;
+}
+
 a.navbar-brand {
   white-space: normal;
   text-align: center;

@@ -431,3 +431,4 @@ C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\bin\Debug\netcoreap
 C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.SqlServer.Design.dll
 C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\bin\Debug\netcoreapp3.1\EntityFramework.dll
 C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\bin\Debug\netcoreapp3.1\System.Data.Entity.Repository.dll
+C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\bin\Debug\netcoreapp3.1\libman.json

@@ -13,6 +13,7 @@ using System.Data.Entity.Repository;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity;
 using Cloud.PPATSApp.Models.BAL;
+using Cloud.PPATSApp.Models.ViewModels;
 
 namespace Cloud.PPATSApp.Controllers
 {
@@ -45,7 +46,7 @@ namespace Cloud.PPATSApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(EmployeeInfo employeeInfo)
+        public ActionResult Login(EmployeeInfoViewModel employeeInfo)
         {
             if (ModelState.IsValid)
             {

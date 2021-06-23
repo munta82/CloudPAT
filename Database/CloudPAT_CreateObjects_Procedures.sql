@@ -342,7 +342,7 @@ SELECT [PPAT_PIFId]
 
 GO
 
-Create Procedure prcGetPPATMasterInfo
+Alter Procedure prcGetPPATMasterInfo
 (@AppCode varchar(25))
 AS 
 /***************************************
@@ -359,11 +359,10 @@ BEGIN
   FROM [CloudPAT].[dbo].[MeasuringApplicationMappings]
   WHERE AppCode=@AppCode
 
-  SELECT DISTINCT [StateId]
-      ,[StateCode]
+  SELECT DISTINCT --[StateId],
+      [StateCode]
       ,[StateName]
-      ,[IsActive]
-      
+      --,[IsActive]      
   FROM [CloudPAT].[dbo].[StateLookUp]
   Where isActive='Y'
 
@@ -530,3 +529,18 @@ END
 
 GO
 
+
+Create Procedure prcGetConstituencyInfo_PSCode
+(
+@PSCode varchar(25)
+)
+AS 
+/***************************************
+ID		Date		Change
+----------------------------------------
+1		23-Jun-21	Initial Development
+prcGetConstituencyInfo_PSCode 1
+***************************************/
+BEGIN
+
+END

@@ -1,6 +1,6 @@
 ﻿@{
     Layout = null;
-    @model Cloud.PPATSApp.Models.EmployeeInfo;
+    @model Cloud.PPATSApp.Models.ViewModels.EmployeeInfoViewModel;
 }
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -62,6 +62,12 @@
     //    });
     //});
 </script>
+<style>
+    .field-validation-error {
+        color: red;
+        font-weight: bold;
+    }
+</style>
 @using (Html.BeginForm("Login", "Home", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
@@ -72,7 +78,7 @@
             <td>:</td>
             @*<td><input id="txtUserName" name="txtUserName" value="" /></td>*@
             <td>@Html.TextBoxFor(a => a.EmpUsername)</td>
-            <td>@Html.ValidationMessageFor(a => a.EmpUsername)</td>
+            <td>@Html.ValidationMessageFor(a => a.EmpUsername,null, new { @class = "field-validation-errorr" })</td>
         </tr>
         <tr>
             <td>Password</td>
@@ -82,7 +88,7 @@
                 @Html.PasswordFor(a => a.EmpPassword)
             </td>
             <td>
-                @Html.ValidationMessageFor(a => a.EmpPassword)
+                @Html.ValidationMessageFor(a => a.EmpPassword,null, new { @class = "field-validation-errorr" })
             </td>
         </tr>
         <tr>

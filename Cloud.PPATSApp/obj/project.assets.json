@@ -248,6 +248,12 @@
       "jQuery/3.6.0": {
         "type": "package"
       },
+      "jQuery.UI/1.12.1.1": {
+        "type": "package",
+        "dependencies": {
+          "jQuery": "1.12.4"
+        }
+      },
       "Microsoft.AspNetCore.Html.Abstractions/2.2.0": {
         "type": "package",
         "dependencies": {
@@ -3109,6 +3115,27 @@
         "Tools/uninstall.ps1",
         "jquery.3.6.0.nupkg.sha512",
         "jquery.nuspec"
+      ]
+    },
+    "jQuery.UI/1.12.1.1": {
+      "sha512": "E+n7ILz0Pl7gGiPUXcMvdMtr8eIa8FPByfaoParBTLYFNtaNj9QA6gpD3IdWe9tARMNkpHCVmZ0Xo//kXh38Vg==",
+      "type": "package",
+      "path": "jquery.ui/1.12.1.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Content/Content/images/ui-icons_444444_256x240.png",
+        "Content/Content/images/ui-icons_555555_256x240.png",
+        "Content/Content/images/ui-icons_777620_256x240.png",
+        "Content/Content/images/ui-icons_777777_256x240.png",
+        "Content/Content/images/ui-icons_cc0000_256x240.png",
+        "Content/Content/images/ui-icons_ffffff_256x240.png",
+        "Content/Content/jquery-ui.css",
+        "Content/Content/jquery-ui.structure.css",
+        "Content/Content/jquery-ui.theme.css",
+        "Content/Scripts/jquery-ui.js",
+        "jquery.ui.1.12.1.1.nupkg.sha512",
+        "jquery.ui.nuspec"
       ]
     },
     "Microsoft.AspNetCore.Html.Abstractions/2.2.0": {
@@ -9201,7 +9228,8 @@
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.5",
       "System.Data.Entity.Repository >= 2.0.0.1",
       "bootstrap >= 5.0.1",
-      "jQuery >= 3.6.0"
+      "jQuery >= 3.6.0",
+      "jQuery.UI >= 1.12.1.1"
     ]
   },
   "packageFolders": {
@@ -9288,6 +9316,10 @@
           "jQuery": {
             "target": "Package",
             "version": "[3.6.0, )"
+          },
+          "jQuery.UI": {
+            "target": "Package",
+            "version": "[1.12.1.1, )"
           }
         },
         "imports": [
