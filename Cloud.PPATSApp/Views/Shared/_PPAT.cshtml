@@ -1,29 +1,12 @@
 ﻿<style>
-    input, select, textarea {
-        max-width: 250px;
-    }
 
-    .PPATDropdownlist {
-        width: 130px;
-    }
-
-    .PPATtextbox {
-        width: 130px;
-    }
-
-    .tblRoundCorner {
-        border-radius: 95px;
-        border: 2px solid #DEDEDE;
-        padding: 20px;
-        width: 200px;
-    }
-
-    .form-control {
-        font-size: small !important;
-    }
 </style>
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#ddlMeasuringApp").on("change", function () {
+            $("#hdnMeasuringApp").val($(this).find("option:selected").text());
+        });
+
         $("#btnPSGo").click(function () {
 
             var psCodeval = $("#txtPSCode").val();
@@ -47,14 +30,14 @@
                     $("#ddlAssembly").val(data.accode);
                     $("#ddlMandal").val(data.mandalCode);
                     $("#ddlVillage").val(data.villageCode);
-                    $("#txtPSName").val(data.psName);
+                    $("#txtPSName").val(data.psname);
 
                     $("#ddlStates").prop("disabled", true);
                     $("#ddlParliament").prop("disabled", true);
                     $("#ddlAssembly").prop("disabled", true);
                     $("#ddlMandal").prop("disabled", true);
                     $("#ddlVillage").prop("disabled", true);
-                    if (data.psName == null || data.psName == "") {
+                    if (data.psname == null || data.psname == "") {
                         $("#txtPSName").prop("disabled", false);
                     }
                     else {
@@ -115,6 +98,19 @@
         });
 
         $("#btnSave").click(function () {
+            //e.preventDefault();
+            //var selectedOption = $("#CountryId option:selected").text();
+            //// Add the selected drop down text to a hidden field
+            //$("<input/>", { type: 'hidden', name: 'countryName' }).val(selectedOption).appendTo("#someForm");
+
+
+            $("#ddlStates").prop("disabled", false);
+            $("#ddlParliament").prop("disabled", false);
+            $("#ddlAssembly").prop("disabled", false);
+            $("#ddlMandal").prop("disabled", false);
+            $("#ddlVillage").prop("disabled", false);
+            $("#txtPSName").prop("disabled", false);            
+
             $("form").attr("action", "/PPAT/SaveForm");
         });
 
@@ -132,17 +128,18 @@
             <tr>
                 <td>
                     @*@Html.ValidationSummary(true, "Please fix the following error and then submit the form")*@
-                   
+                   <input type="hidden" id="hdnMeasuringApp" name="hdnMeasuringApp" value="" />
                     <table class="tblRoundCorner" style="width:100%">
                         <tr>
-                            <td>Measuring Application</td>
+                            <td>Measuring Applications<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlMeasuringApp"
+      data-valmsg-replace="true">*</span></td>
                             <td>
                                 @Html.DropDownList("ddlMeasuringApp", (IEnumerable<SelectListItem>)ViewBag.ddlMeasuringApp, "Select",
                                 new
                                     {
                                         @class = "form-control valid PPATDropdownlist",
                                @data_val = "true",
-                                        @data_val_required = "Measuring App is required"
+                                        @data_val_required = " required"
                                     })
                         </tr>
                     </table>
@@ -150,7 +147,7 @@
         </tr>
         <tr>
             <td style="height:5px;">
-                @Html.ValidationSummary()
+                @*@Html.ValidationSummary(false)*@
             </td>
         </tr>
         <tr>
@@ -158,31 +155,38 @@
                 <table border="1" style="width:100%" class="tblRoundCorner">
                     <tr>
                         <td>
-                            State<br />
+                            State<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlStates"
+                                       data-valmsg-replace="true">*</span><br />
                             @Html.DropDownList("ddlStates", (IEnumerable<SelectListItem>)ViewBag.ddlStates, "Select",
-                           new { @class = "form-control valid PPATDropdownlist", @data_val = "true", @data_val_required = "States is required" })
+                           new { @class = "form-control valid PPATDropdownlist", @data_val = "true", @data_val_required = " required" }) @*Parliament is*@
                         </td>
                         <td>
-                            Parliament<br />
+                            Parliament<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlParliament"
+      data-valmsg-replace="true">*</span><br />
                             @Html.DropDownList("ddlParliament", ViewBag.ddlParliament as SelectList, "Select",
-                           new { @class = "form-control PPATDropdownlist" })
-                            <span class="field-validation-valid" data-valmsg-for="ddlParliament" data-valmsg-replace="true">The email must be unique</span>
+                           new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })                            
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Assembly<br />
-                            @Html.DropDownList("ddlAssembly", ViewBag.ddlAssembly as SelectList, "Select", new { @class = "form-control PPATDropdownlist" })
+                            Assembly<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlAssembly"
+      data-valmsg-replace="true">*</span><br />
+                            @Html.DropDownList("ddlAssembly", ViewBag.ddlAssembly as SelectList, "Select", 
+                           new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
                         </td>
                         <td>
-                            Mandal<br />
-                            @Html.DropDownList("ddlMandal", ViewBag.ddlMandal as SelectList, "Select", new { @class = "form-control PPATDropdownlist" })
+                            Mandal<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlMandal"
+      data-valmsg-replace="true">*</span><br />
+                            @Html.DropDownList("ddlMandal", ViewBag.ddlMandal as SelectList, "Select", 
+                           new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Village<br />
-                            @Html.DropDownList("ddlVillage", ViewBag.ddlVillage as SelectList, "Select", new { @class = "form-control PPATDropdownlist" })
+                            Village<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlVillage"
+      data-valmsg-replace="true">*</span><br />
+                            @Html.DropDownList("ddlVillage", ViewBag.ddlVillage as SelectList, "Select", 
+                           new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
                         </td>
                         <td>
                             PS Name<br />
@@ -191,8 +195,10 @@
                     </tr>
                     <tr>
                         <td>
-                            PS Code<br />
-                            @Html.TextBox("txtPSCode", null, new { @class = "form-control PPATtextbox" })
+                            PS Code<span class="field-validation-valid field-validation-error" data-valmsg-for="txtPSCode"
+      data-valmsg-replace="true">*</span><br />
+                            @Html.TextBox("txtPSCode", null, 
+                           new { @class = "form-control PPATtextbox valid", @data_val = "true", @data_val_required = " required" })
                         </td>
                         <td align="center" valign="middle">
                             @*<button name="btnPSGo">GO</button>*@ @*id="@use.userID" Url.Action("Edit","Controller")*@
@@ -212,28 +218,38 @@
                 <table border="1" style="width:100%" class="tblRoundCorner">
                     <tr>
                         <td>
-                            Name<br />
-                            @Html.TextBox("txtUserDisplayName", null, new { @class = "form-control PPATtextbox" })
+                            Name<span class="field-validation-valid field-validation-error" data-valmsg-for="txtUserDisplayName"
+      data-valmsg-replace="true">*</span><br />
+                            @Html.TextBox("txtUserDisplayName", null, 
+                           new { @class = "form-control PPATtextbox valid", @data_val = "true", @data_val_required = " required" })
                         </td>
                         <td>
-                            Age<br />
-                            @Html.TextBox("txtUserAge", null, new { @class = "form-control PPATtextbox" })
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Gender<br />
-                            @Html.DropDownList("ddlGender", ViewBag.ddlGender as SelectList, "Select", new { @class = "form-control PPATDropdownlist" })
-                        </td>
-                        <td>
-                            Mobile<br />
-                            @Html.TextBox("txtMobile", null, new { @class = "form-control PPATtextbox" })
+                            Age<span class="field-validation-valid field-validation-error" data-valmsg-for="txtUserAge"
+      data-valmsg-replace="true">*</span><br />
+                            @Html.TextBox("txtUserAge", null, 
+                           new { @class = "form-control PPATtextbox valid", @data_val = "true", @data_val_required = " required" })
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Education<br />
-                            @Html.DropDownList("ddlEducation", ViewBag.ddlEducation as SelectList, "Select", new { @class = "form-control PPATDropdownlist" })
+                            Gender<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlGender"
+      data-valmsg-replace="true">*</span><br />
+                            @Html.DropDownList("ddlGender", ViewBag.ddlGender as SelectList, "Select", 
+                           new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
+                        </td>
+                        <td>
+                            Mobile<span class="field-validation-valid field-validation-error" data-valmsg-for="txtMobile"
+      data-valmsg-replace="true">*</span><br />
+                            @Html.TextBox("txtMobile", null, 
+                           new { @class = "form-control PPATtextbox valid", @data_val = "true", @data_val_required = " required" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Education<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlEducation"
+      data-valmsg-replace="true">*</span><br />
+                            @Html.DropDownList("ddlEducation", ViewBag.ddlEducation as SelectList, "Select", 
+                           new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " is required" })
                         </td>
                         <td>
                             Occupation<br />
@@ -242,8 +258,10 @@
                     </tr>
                     <tr>
                         <td>
-                            Community<br />
-                            @Html.DropDownList("ddlCommunity", ViewBag.ddlCommunity as SelectList, "Select", new { @class = "form-control PPATDropdownlist" })
+                            Community<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlCommunity"
+      data-valmsg-replace="true">*</span><br />
+                            @Html.DropDownList("ddlCommunity", ViewBag.ddlCommunity as SelectList, "Select", 
+                           new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
                         </td>
                         <td>
                             Sub Caste<br />
@@ -252,28 +270,38 @@
                     </tr>
                     <tr>
                         <td>
-                            IF<br />
-                            @Html.DropDownList("ddlIFParty", ViewBag.ddlIFParty as SelectList, "Select", new { @class = "form-control PPATDropdownlist" })
+                            IF<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlIFParty"
+      data-valmsg-replace="true">*</span><br />
+                            @Html.DropDownList("ddlIFParty", ViewBag.ddlIFParty as SelectList, "Select", 
+                           new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
                         </td>
                         <td>
-                            SF<br />
-                            @Html.DropDownList("ddlPPAT_SF", ViewBag.ddlPPAT_SF as SelectList, "Select", new { @class = "form-control PPATDropdownlist" })
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            PRF<br />
-                            @Html.DropDownList("ddlPPAT_PRF", ViewBag.ddlPPAT_PRF as SelectList, "Select", new { @class = "form-control PPATDropdownlist" })
-                        </td>
-                        <td>
-                            VPF<br />
-                            @Html.DropDownList("ddlPPAT_VPF", ViewBag.ddlPPAddlPPAT_VPFT_SF as SelectList, "Select", new { @class = "form-control PPATDropdownlist" })
+                            SF<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlPPAT_SF"
+      data-valmsg-replace="true">*</span><br />
+                            @Html.DropDownList("ddlPPAT_SF", ViewBag.ddlPPAT_SF as SelectList, "Select", 
+                           new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            PIF<br />
-                            @Html.DropDownList("ddlPPAT_PIF", ViewBag.ddlPPAT_PIF as SelectList, "Select", new { @class = "form-control PPATDropdownlist" })
+                            PRF<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlPPAT_PRF"
+      data-valmsg-replace="true">*</span><br />
+                            @Html.DropDownList("ddlPPAT_PRF", ViewBag.ddlPPAT_PRF as SelectList, "Select", 
+                           new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
+                        </td>
+                        <td>
+                            VPF<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlPPAT_VPF"
+      data-valmsg-replace="true">*</span><br />
+                            @Html.DropDownList("ddlPPAT_VPF", ViewBag.ddlPPAddlPPAT_VPFT_SF as SelectList, "Select", 
+                           new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            PIF<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlPPAT_PIF"
+      data-valmsg-replace="true">*</span><br />
+                            @Html.DropDownList("ddlPPAT_PIF", ViewBag.ddlPPAT_PIF as SelectList, "Select", 
+                           new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
                         </td>
                         <td>
                             Remarks<br />

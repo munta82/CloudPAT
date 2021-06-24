@@ -1,0 +1,194 @@
+﻿
+@{
+    ViewData["Title"] = "ConstituencySettings";
+}
+
+<h1>ConstituencySettings</h1>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnPSGo").click(function () {
+            var psCodeval = $("#txtPSCode").val();
+            if (psCodeval == "") {
+                alert("Please enter PS Code");
+                return false;
+            }
+            $.ajax({
+                type: "POST",
+                url: "/PPAT/GetPPATPollingStationData",
+                dataType: "json",
+                cache: false,
+                async: false,
+                data: {
+                    PSCode: psCodeval
+                },
+                success: function (data) {
+                    //debugger;
+                    $("#ddlStates").val(data.stateCode);
+                    $("#ddlParliament").val(data.pccode);
+                    $("#ddlAssembly").val(data.accode);
+                    $("#ddlMandal").val(data.mandalCode);
+                    $("#ddlVillage").val(data.villageCode);
+                    $("#txtPSName").val(data.psname);
+
+                    $("#ddlStates").prop("disabled", true);
+                    $("#ddlParliament").prop("disabled", true);
+                    $("#ddlAssembly").prop("disabled", true);
+                    $("#ddlMandal").prop("disabled", true);
+                    $("#ddlVillage").prop("disabled", true);
+                    $("#txtPSName").prop("disabled", false);
+                    
+                    console.log(data);
+                },
+                error: function (jqXhr, textStatus, errorMessage) {
+                    //debugger;
+
+                    //console.log("AJAX ERROR:", data);
+                }
+            });
+        });
+
+        $("#btnSave").click(function () {
+            //e.preventDefault();
+            //var selectedOption = $("#CountryId option:selected").text();
+            //// Add the selected drop down text to a hidden field
+            //$("<input/>", { type: 'hidden', name: 'countryName' }).val(selectedOption).appendTo("#someForm");
+
+
+            $("#ddlStates").prop("disabled", false);
+            $("#ddlParliament").prop("disabled", false);
+            $("#ddlAssembly").prop("disabled", false);
+            $("#ddlMandal").prop("disabled", false);
+            $("#ddlVillage").prop("disabled", false);
+            $("#txtPSName").prop("disabled", false);
+
+            $("form").attr("action", "/PPAT/SaveUserConstituencySettings");
+        });
+        $("#ddlMeasuringApp").on("change", function () {
+            $("#hdnMeasuringApp").val($(this).find("option:selected").text());
+        });
+    });
+</script>
+@using (Html.BeginForm())
+{
+    <table border="1">
+        <tbody>
+            <tr>
+                <td>
+                    @*@Html.ValidationSummary(true, "Please fix the following error and then submit the form")*@
+                    <input type="hidden" id="hdnMeasuringApp" name="hdnMeasuringApp" value="" />
+                    <table class="tblRoundCorner" style="width:100%">
+                        <tr>
+                            <td>
+                                Measuring Applications<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlMeasuringApp"
+                                                            data-valmsg-replace="true">*</span>
+                            </td>
+                            <td>
+                                @Html.DropDownList("ddlMeasuringApp", (IEnumerable<SelectListItem>)ViewBag.ddlMeasuringApp, "Select",
+                                new
+                                    {
+                                        @class = "form-control valid PPATDropdownlist",
+                               @data_val = "true",
+                                        @data_val_required = " required"
+                                    })
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="height:5px;">
+                    @*@Html.ValidationSummary(false)*@
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="1" style="width:100%" class="tblRoundCorner">
+                        <tr>
+                            <td>
+                                State<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlStates"
+                                           data-valmsg-replace="true">*</span><br />
+                                @Html.DropDownList("ddlStates", (IEnumerable<SelectListItem>)ViewBag.ddlStates, "Select",
+                               new { @class = "form-control valid PPATDropdownlist", @data_val = "true", @data_val_required = " required" }) @*Parliament is*@
+                        </td>
+                        <td>
+                            Parliament<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlParliament"
+                                            data-valmsg-replace="true">*</span><br />
+                            @Html.DropDownList("ddlParliament", ViewBag.ddlParliament as SelectList, "Select",
+                           new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Assembly<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlAssembly"
+                                          data-valmsg-replace="true">*</span><br />
+                            @Html.DropDownList("ddlAssembly", ViewBag.ddlAssembly as SelectList, "Select",
+                           new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
+                        </td>
+                        <td>
+                            Mandal<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlMandal"
+                                        data-valmsg-replace="true">*</span><br />
+                            @Html.DropDownList("ddlMandal", ViewBag.ddlMandal as SelectList, "Select",
+                           new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Village<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlVillage"
+                                         data-valmsg-replace="true">*</span><br />
+                            @Html.DropDownList("ddlVillage", ViewBag.ddlVillage as SelectList, "Select",
+                           new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
+                        </td>
+                        <td>
+                            PS Name<br />
+                            @Html.TextBox("txtPSName", null, new { @class = "form-control PPATtextbox" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            PS Code<span class="field-validation-valid field-validation-error" data-valmsg-for="txtPSCode"
+                                         data-valmsg-replace="true">*</span><br />
+                            @Html.TextBox("txtPSCode", null,
+                           new { @class = "form-control PPATtextbox valid", @data_val = "true", @data_val_required = " required" })
+                        </td>
+                        <td align="center" valign="middle">
+                            @*<button name="btnPSGo">GO</button>*@ @*id="@use.userID" Url.Action("Edit","Controller")*@
+                            <a href="#" id="btnPSGo">
+                                <img alt="go" src="~/Images/btn_go_blue.jpg" height="25px" width="25px" />
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="height:5px;"></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="1" style="width:100%" class="tblRoundCorner">
+                    <tr>
+                        <td colspan="2" align="center">
+                            <table id="tblButtons">
+                                <tr>
+                                    <td style="width:5px;"></td>
+                                    <td>
+                                        @*<button id="btnSave" name="btnSave" class="btn-sm">Save</button>*@
+                                        @*<input type="submit" name="btnSave" value="Save" formaction="SaveForm" formmethod="post" class="btn-sm" />*@
+                                        <input type="submit" id="btnSave" value="Save" class="btn-sm" />
+                                    </td>
+                                    <td style="width:5px;"></td>
+                                    <td>
+                                        @*<button id="btnClear" name="btnClear" class="btn-sm">Clear</button>*@
+                                        @*<input type="submit" name="btnClear" value="Clear" formaction="ClearForm" formmethod="post" class="btn-sm" />*@
+                                        <input type="submit" id="btnClear" value="Clear" class="btn btn-outline-success border-0 cancel" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+}

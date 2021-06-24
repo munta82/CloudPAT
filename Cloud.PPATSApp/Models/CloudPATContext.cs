@@ -22,6 +22,7 @@ namespace Cloud.PPATSApp.Models
         public virtual DbSet<AssemblyPollingStationLookUp> AssemblyPollingStationLookUps { get; set; }
         public virtual DbSet<CommunityLookUp> CommunityLookUps { get; set; }
         public virtual DbSet<EducationLookUp> EducationLookUps { get; set; }
+        public virtual DbSet<EmployeeAcSetting> EmployeeAcSettings { get; set; }
         public virtual DbSet<EmployeeAppAccess> EmployeeAppAccesses { get; set; }
         public virtual DbSet<EmployeeInfo> EmployeeInfos { get; set; }
         public virtual DbSet<EmployeeRole> EmployeeRoles { get; set; }
@@ -139,9 +140,12 @@ namespace Cloud.PPATSApp.Models
 
             modelBuilder.Entity<AssemblyPollingStationLookUp>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Psid)
+                    .HasName("PK__Assembly__BC00095605298BAC");
 
                 entity.ToTable("AssemblyPollingStationLookUp");
+
+                entity.Property(e => e.Psid).HasColumnName("PSId");
 
                 entity.Property(e => e.Accode)
                     .IsRequired()
@@ -182,10 +186,6 @@ namespace Cloud.PPATSApp.Models
                     .HasMaxLength(10)
                     .IsUnicode(false)
                     .HasColumnName("PSCode");
-
-                entity.Property(e => e.Psid)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("PSId");
 
                 entity.Property(e => e.Psname)
                     .HasMaxLength(100)
@@ -273,6 +273,83 @@ namespace Cloud.PPATSApp.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<EmployeeAcSetting>(entity =>
+            {
+                entity.HasKey(e => e.AcSettingsId)
+                    .HasName("PK__Employee__979FC1B52F9EE2E1");
+
+                entity.ToTable("Employee_AC_Settings");
+
+                entity.Property(e => e.AcSettingsId).HasColumnName("AC_SettingsId");
+
+                entity.Property(e => e.Accode)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("ACCode");
+
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.EmpId).HasColumnName("EmpID");
+
+                entity.Property(e => e.IsActive)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.MainAppCode)
+                    .IsRequired()
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MandalCode)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MeasuringAppCode)
+                    .IsRequired()
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedBy)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Pccode)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("PCCode");
+
+                entity.Property(e => e.Pscode)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("PSCode");
+
+                entity.Property(e => e.Psname)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("PSName");
+
+                entity.Property(e => e.StateCode)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.VillageCode)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<EmployeeAppAccess>(entity =>
@@ -1031,7 +1108,8 @@ namespace Cloud.PPATSApp.Models
 
             modelBuilder.Entity<UserInfo>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.UserId)
+                    .HasName("PK__UserInfo__1788CC4CA90BAC0C");
 
                 entity.ToTable("UserInfo");
 
@@ -1145,8 +1223,6 @@ namespace Cloud.PPATSApp.Models
                 entity.Property(e => e.UserDisplayName)
                     .HasMaxLength(100)
                     .IsUnicode(false);
-
-                entity.Property(e => e.UserId).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.UserMobile)
                     .IsRequired()

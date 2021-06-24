@@ -14,6 +14,7 @@ using System.Data.Entity.Infrastructure;
 using System.Data.Entity;
 using Cloud.PPATSApp.Models.BAL;
 using Cloud.PPATSApp.Models.ViewModels;
+using Microsoft.AspNetCore.Http;
 
 namespace Cloud.PPATSApp.Controllers
 {
@@ -62,7 +63,11 @@ namespace Cloud.PPATSApp.Controllers
                             return ViewLogin(dsEmployeeInfo);
                         }
                         else
-                        {
+                        {                           
+                            HttpContext.Session.SetString("LoginUserName", employeeInfo.EmpUsername);
+                            HttpContext.Session.SetString("LoginUserDisplayName", dsEmployeeInfo.Tables[0].Rows[0].ItemArray[1].ToString() + " "+ dsEmployeeInfo.Tables[0].Rows[0].ItemArray[2].ToString());
+                            HttpContext.Session.SetString("LoginEmpId", dsEmployeeInfo.Tables[0].Rows[0].ItemArray[0].ToString());
+
                             string LaunchingApp = dsEmployeeInfo.Tables[1].Rows[0].ItemArray[2].ToString();
                             if (LaunchingApp == "PPAT")
                             {
@@ -131,6 +136,8 @@ namespace Cloud.PPATSApp.Controllers
         {
             return View("_SS", ds);
         }
+
+     
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

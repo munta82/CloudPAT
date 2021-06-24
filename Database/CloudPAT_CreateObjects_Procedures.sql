@@ -456,6 +456,29 @@ END
 
 GO
 
+Alter Procedure prcGetEmployeeInfo
+(
+@UserName varchar(25) = null,
+@EmpId INT = null
+)
+AS 
+/***************************************
+ID		Date		Change
+----------------------------------------
+1		21-Jun-21	Initial Development
+prcGetEmployeeInfo 'sa','-1'
+***************************************/
+BEGIN
+	if(@UserName IS NOT null)
+	BEGIN
+		Select @EmpId =EmpId from EmployeeInfo Where EmpUsername=@UserName  
+		EXEC prcGetEmployeeMasterInfo @EmpId
+	END
+	else IF(@EmpId != -1)
+		EXEC prcGetEmployeeMasterInfo @EmpId
+END
+
+GO
 
 ALTER Procedure prcCheckUserAuthentication
 (
@@ -470,6 +493,7 @@ ID		Date		Change
 prcCheckUserAuthentication 'sa','sa'
 ***************************************/
 BEGIN
+if(@Password = '')
 	If Exists(Select 1 from EmployeeInfo Where EmpUsername=@UserName and EmpPassword=@Password)
 	BEGIN
 		Declare @EmpId as Int
@@ -530,7 +554,7 @@ END
 GO
 
 
-Create Procedure prcGetConstituencyInfo_PSCode
+Create Procedure SaveUpdateUserInfo
 (
 @PSCode varchar(25)
 )

@@ -89,3 +89,31 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+.field-validation-error {
+    color: red;
+    font-weight: bold;
+}
+
+input, select, textarea {
+    max-width: 250px;
+}
+
+.PPATDropdownlist {
+    width: 130px;
+}
+
+.PPATtextbox {
+    width: 130px;
+}
+
+.tblRoundCorner {
+    border-radius: 95px;
+    border: 2px solid #DEDEDE;
+    padding: 20px;
+    width: 200px;
+}
+
+.form-control {
+    font-size: small !important;
+}

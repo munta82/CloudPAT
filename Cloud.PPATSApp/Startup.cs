@@ -43,6 +43,13 @@ namespace Cloud.PPATSApp
             //var dbConnection = settings.DataConnectionString.ToString();
             //services.AddDbContext<CloudPATContext>(options => options.UseSqlServer(dbConnection));
 
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);//We set Time here 
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +68,9 @@ namespace Cloud.PPATSApp
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
+            //app.UseMvc();
 
             app.UseEndpoints(endpoints =>
             {

@@ -10,6 +10,7 @@ namespace Cloud.PPATSApp.Models
         public int UserId { get; set; }
         public string UserDisplayName { get; set; }
         public string Gender { get; set; }
+        public int UserAge { get; set; }
         public string UserMobile { get; set; }
         public string Occupation { get; set; }
         public string EducationCode { get; set; }

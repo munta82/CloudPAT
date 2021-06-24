@@ -15,7 +15,7 @@ GO
 Create Table StateLookUp
 (
  StateId Int Identity(1,1) NOT NULL
-,StateCode Varchar(10) NOT NULL
+,StateCode Varchar(10) NOT NULL PRIMARY KEY
 ,StateName Varchar(100) NOT NULL
 ,IsActive Char(1) NULL
 ,CreatedDate DateTime NULL
@@ -32,7 +32,7 @@ GO
 Create Table ParliamentLookUp
 (
  PCId Int Identity(1,1) NOT NULL
-,PCCode Varchar(10) NOT NULL
+,PCCode Varchar(10) NOT NULL PRIMARY KEY
 ,PCName Varchar(100) NOT NULL
 ,StateCode Varchar(10) NULL
 ,IsActive Char(1) NULL
@@ -54,7 +54,7 @@ GO
 Create Table AssemblyLookUp
 (
  ACId Int Identity(1,1) NOT NULL
-,ACCode Varchar(10) NOT NULL
+,ACCode Varchar(10) NOT NULL PRIMARY KEY
 ,ACName Varchar(100) NOT NULL
 ,PCCode Varchar(10) NULL
 ,IsActive Char(1) NULL
@@ -73,7 +73,7 @@ DROP TABLE MandalLookUp
 GO
 Create Table MandalLookUp
 (
- MDId Int Identity(1,1) NOT NULL
+ MDId Int Identity(1,1) NOT NULL PRIMARY KEY
 ,MandalCode Varchar(100) NOT NULL
 ,MandalName Varchar(100) NOT NULL
 ,ACCode Varchar(10)  NULL
@@ -91,7 +91,7 @@ DROP TABLE VillageLookUp
 GO
 Create Table VillageLookUp
 (
- VGId Int Identity(1,1) NOT NULL
+ VGId Int Identity(1,1) NOT NULL PRIMARY KEY
 ,VillageCode Varchar(100) NOT NULL
 ,VillageName Varchar(100) NOT NULL
 ,MandalCode Varchar(100) NULL
@@ -110,8 +110,8 @@ DROP TABLE AssemblyPollingStationLookUp
 GO
 Create Table AssemblyPollingStationLookUp
 (
- PSId Int Identity(1,1) NOT NULL
-,PSCode Varchar(10) NOT NULL
+ PSId Int Identity(1,1) NOT NULL PRIMARY KEY
+,PSCode Varchar(10) NOT NULL 
 ,PSName Varchar(100) NULL
 ,VillageCode Varchar(100) NOT NULL
 ,MandalCode Varchar(100) NOT NULL
@@ -127,6 +127,10 @@ Create Table AssemblyPollingStationLookUp
 
 GO
 
+--ALTER TABLE AssemblyPollingStationLookUp
+--ADD PRIMARY KEY (PSId);
+
+GO
 
 
 IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'MuncipalityLookUp') AND TYPE in(N'U'))
@@ -134,7 +138,7 @@ DROP TABLE MuncipalityLookUp
 GO
 Create Table MuncipalityLookUp
 (
- MuncipalId Int Identity(1,1) NOT NULL
+ MuncipalId Int Identity(1,1) NOT NULL PRIMARY KEY
 ,MuncipalCode Varchar(100) NOT NULL
 ,MuncipalName Varchar(100) NOT NULL
 ,ACCode Varchar(10) NULL
@@ -153,8 +157,8 @@ DROP TABLE MuncipalPollingStationLookUp
 GO
 Create Table MuncipalPollingStationLookUp
 (
- MunPSId Int Identity(1,1) NOT NULL
-,MunPSCode Varchar(10) NOT NULL
+ MunPSId Int Identity(1,1) NOT NULL  
+,MunPSCode Varchar(10) NOT NULL PRIMARY KEY
 ,MunPSName Varchar(100) NOT NULL
 ,MandalCode Varchar(100) NOT NULL
 ,ACCode Varchar(10) NOT NULL
@@ -177,7 +181,7 @@ GO
 Create Table CommunityLookUp
 (
  ComId Int Identity(1,1) NOT NULL
-,CommunityCode Varchar(25) NOT NULL
+,CommunityCode Varchar(25) NOT NULL  PRIMARY KEY
 ,CommunityName Varchar(100) NOT NULL
 ,IsActive Char(1) NULL
 ,CreatedDate DateTime NULL
@@ -193,7 +197,7 @@ DROP TABLE SubCasteLookUp
 GO
 Create Table SubCasteLookUp
 (
- SubCasteId Int Identity(1,1) NOT NULL
+ SubCasteId Int Identity(1,1) NOT NULL  PRIMARY KEY
 ,SubCasteCode Varchar(25) NOT NULL
 ,SubCasteName Varchar(100) NOT NULL
 ,CommunityCode Varchar(25) NOT NULL
@@ -212,7 +216,7 @@ GO
 Create Table GenderLookUp
 (
  GenderId Int Identity(1,1) NOT NULL
-,GenderCode Varchar(10) NOT NULL
+,GenderCode Varchar(10) NOT NULL  PRIMARY KEY
 ,GenderName Varchar(25) NOT NULL
 ,IsActive Char(1) NULL
 ,CreatedDate DateTime NULL
@@ -229,7 +233,7 @@ GO
 Create Table EducationLookUp
 (
  EduId Int Identity(1,1) NOT NULL
-,EducationCode Varchar(10) NOT NULL
+,EducationCode Varchar(10) NOT NULL  PRIMARY KEY
 ,EducationName Varchar(25) NOT NULL
 ,IsActive Char(1) NULL
 ,CreatedDate DateTime NULL
@@ -246,7 +250,7 @@ GO
 Create Table IFPartyLookUp
 (
  IFId Int Identity(1,1) NOT NULL
-,IFCode Varchar(25) NOT NULL
+,IFCode Varchar(25) NOT NULL  PRIMARY KEY
 ,IFName Varchar(25) NOT NULL
 ,IsActive Char(1) NULL
 ,CreatedDate DateTime NULL
@@ -262,14 +266,15 @@ DROP TABLE PPAT_SFLookUp
 GO
 Create Table PPAT_SFLookUp
 (
- PPATSFId Int Identity(1,1) NOT NULL
-,PPAT_SFCode Varchar(10) NOT NULL
+ PPATSFId Int Identity(1,1) NOT NULL 
+,PPAT_SFCode Varchar(10) NOT NULL 
 ,PPAT_SFName Varchar(25) NOT NULL
 ,IsActive Char(1) NULL
 ,CreatedDate DateTime NULL
 ,CreatedBy Varchar(100) Null
 ,ModifiedDate DateTime NULL
 ,ModifiedBy Varchar(100)
+,PRIMARY KEY(PPAT_SFCode )
 )
 
 GO
@@ -288,6 +293,7 @@ Create Table PPAT_PRFLookUp
 ,CreatedBy Varchar(100) Null
 ,ModifiedDate DateTime NULL
 ,ModifiedBy Varchar(100)
+,PRIMARY KEY(PPAT_PRFCode )
 )
 
 GO
@@ -305,6 +311,7 @@ Create Table PPAT_VPFLookUp
 ,CreatedBy Varchar(100) Null
 ,ModifiedDate DateTime NULL
 ,ModifiedBy Varchar(100)
+,PRIMARY KEY(PPAT_VPFCode )
 )
 
 GO
@@ -322,6 +329,7 @@ Create Table PPAT_PIFLookUp
 ,CreatedBy Varchar(100) Null
 ,ModifiedDate DateTime NULL
 ,ModifiedBy Varchar(100)
+,PRIMARY KEY(PPAT_PIFCode )
 )
 
 GO
@@ -377,6 +385,7 @@ Create Table MeasuringApplicationMappings
 ,CreatedBy Varchar(100) Null
 ,ModifiedDate DateTime NULL
 ,ModifiedBy Varchar(100)
+,PRIMARY KEY(MeasureAppMapId)
 )
 
 GO
@@ -451,6 +460,7 @@ Create Table EmployeeRoles
 ,CreatedBy Varchar(100) Null
 ,ModifiedDate DateTime NULL
 ,ModifiedBy Varchar(100)
+,PRIMARY KEY(AutoRoleId)
 )
 
 GO
@@ -481,6 +491,7 @@ Create Table EmployeeAppAccess
 ,CreatedBy Varchar(100) Null
 ,ModifiedDate DateTime NULL
 ,ModifiedBy Varchar(100)
+,PRIMARY KEY(Id)
 )
 
 GO
@@ -507,6 +518,7 @@ Create Table UserInfo
  UserId Int Identity(1,1) NOT NULL
 ,UserDisplayName Varchar(100) NULL
 ,Gender varchar(8) NOT NULL
+,UserAge INT NOT NULL
 ,UserMobile Varchar(25) NOT NULL
 ,Occupation Varchar(100) NULL
 ,EducationCode Varchar(50) NOT NULL
@@ -531,6 +543,7 @@ Create Table UserInfo
 ,CreatedBy Varchar(100) Null
 ,ModifiedDate DateTime NULL
 ,ModifiedBy Varchar(100)
+,PRIMARY KEY(UserId)
 )
 
 GO
@@ -538,3 +551,27 @@ GO
 
 
 
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'User_AC_Settings') AND TYPE in(N'U'))
+DROP TABLE Employee_AC_Settings
+GO
+Create Table Employee_AC_Settings
+(
+ AC_SettingsId Int Identity(1,1) NOT NULL PRIMARY KEY
+,EmpID INT NOT NULL
+,PSCode Varchar(10) NOT NULL 
+,PSName Varchar(100) NULL
+,VillageCode Varchar(100) NOT NULL
+,MandalCode Varchar(100) NOT NULL
+,ACCode Varchar(10) NOT NULL
+,PCCode Varchar(10) NOT NULL
+,StateCode Varchar(10) NOT NULL
+,MeasuringAppCode Varchar(25) NOT NULL
+,MainAppCode varchar(25) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+)
+
+GO

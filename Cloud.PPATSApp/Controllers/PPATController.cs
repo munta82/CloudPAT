@@ -1,6 +1,7 @@
 ﻿using Cloud.PPATSApp.Models;
 using Cloud.PPATSApp.Models.BAL;
 using Cloud.PPATSApp.Models.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -65,10 +66,50 @@ namespace Cloud.PPATSApp.Controllers
 
         
         [HttpPost]
-        public ActionResult SaveForm(PPATViewModel obj)
+        public ActionResult SaveForm(PPATViewModel obj, IFormCollection form)//, IFormCollection form
         {
+            UserInfo userInfoModel = new UserInfo();
+            userInfoModel.UserDisplayName = HttpContext.Request.Form["txtUserDisplayName"].ToString();
+            userInfoModel.UserAge = Convert.ToInt16(HttpContext.Request.Form["txtUserAge"]);
+            userInfoModel.Gender = HttpContext.Request.Form["ddlGender"].ToString();
+            userInfoModel.UserMobile = HttpContext.Request.Form["txtMobile"].ToString();
+            userInfoModel.Occupation = HttpContext.Request.Form["txtOccupation"].ToString();
+            userInfoModel.EducationCode = HttpContext.Request.Form["ddlEducation"].ToString();
+            userInfoModel.CommunityCode = HttpContext.Request.Form["ddlCommunity"].ToString();
+            userInfoModel.SubCasteCode = HttpContext.Request.Form["txtSubCaste"].ToString();
+            userInfoModel.Ifcode = HttpContext.Request.Form["ddlIFParty"].ToString();
+            userInfoModel.Sfcode = HttpContext.Request.Form["ddlPPAT_SF"].ToString();
+            userInfoModel.Prfcode = HttpContext.Request.Form["ddlPPAT_PRF"].ToString();
+            userInfoModel.Vpfcode = HttpContext.Request.Form["ddlPPAT_VPF"].ToString();
+            userInfoModel.Pifcode = HttpContext.Request.Form["ddlPPAT_PIF"].ToString();
+            userInfoModel.Remarks = HttpContext.Request.Form["txtRemarks"].ToString();
+            userInfoModel.StateCode = HttpContext.Request.Form["ddlStates"].ToString();
+            userInfoModel.Pccode = HttpContext.Request.Form["ddlParliament"].ToString();
+            userInfoModel.Accode = HttpContext.Request.Form["ddlAssembly"].ToString();
+            userInfoModel.MandalCode = HttpContext.Request.Form["ddlMandal"].ToString();
+            userInfoModel.VillageCode = HttpContext.Request.Form["ddlVillage"].ToString();
+            userInfoModel.Pscode = HttpContext.Request.Form["txtPSCode"].ToString();
+            userInfoModel.MeasureAppCode = HttpContext.Request.Form["hdnMeasuringApp"].ToString();
+                //HttpContext.Request.Form["ddlMeasuringApp"].ToString();
+            userInfoModel.AppCode = "PPAT";
+            userInfoModel.CreatedBy = HttpContext.Session.GetString("LoginUserName").ToString();
+            userInfoModel.CreatedDate = System.DateTime.Now;
+
+            databaseAPI.SaveUpdateUserInfo(userInfoModel);
+
+            AssemblyPollingStationLookUp  objPSData = new AssemblyPollingStationLookUp();
+            TryUpdateModelAsync(objPSData);
+            objPSData.Pscode = HttpContext.Request.Form["txtPSCode"].ToString();
+            objPSData.Psname = HttpContext.Request.Form["txtPSName"].ToString();
+            databaseAPI.UpdateAssemblyPollingStationName(objPSData);
+          
             ViewBag.Message = "Customer saved successfully!";
-            return View("PPAT", obj);
+
+            DataSet dsEmployeeInfo = new DataSet();
+            dsEmployeeInfo = databaseAPI.GetEmployeeInfo(HttpContext.Session.GetString("LoginUserName").ToString(), -1);
+            
+            //return View("Index", dsEmployeeInfo);
+            return RedirectToAction("Index", "PPAT", dsEmployeeInfo);
         }
 
         [HttpPost]
@@ -85,7 +126,46 @@ namespace Cloud.PPATSApp.Controllers
             return View("PPAT", obj);
         }
 
-        public SelectList ToSelectList(DataTable table, string valueField, string textField)
+        public IActionResult ConstituencySettings(IFormCollection form)
+        {
+            DataSet dsPPAT = new DataSet();
+            dsPPAT = databaseAPI.GetPPATMasterInfo("PPAT");
+
+            ViewBag.ddlMeasuringApp = ToSelectList(dsPPAT.Tables[0], "MeasureAppMapId", "MeasureAppCode");
+            ViewBag.ddlStates = ToSelectList(dsPPAT.Tables[1], "StateCode", "StateName");
+            ViewBag.ddlParliament = ToSelectList(dsPPAT.Tables[2], "PCCode", "PCName");
+            ViewBag.ddlAssembly = ToSelectList(dsPPAT.Tables[3], "ACCode", "ACName");
+            ViewBag.ddlMandal = ToSelectList(dsPPAT.Tables[4], "MandalCode", "MandalName");
+            ViewBag.ddlVillage = ToSelectList(dsPPAT.Tables[5], "VillageCode", "VillageName");
+           
+            return View("_ConstituencySettings");
+        }
+
+        [HttpPost]
+        public IActionResult SaveUserConstituencySettings()
+        {
+
+            EmployeeAcSetting empAcSettingModel = new EmployeeAcSetting();
+            empAcSettingModel.StateCode = HttpContext.Request.Form["ddlStates"].ToString();
+            empAcSettingModel.Pccode = HttpContext.Request.Form["ddlParliament"].ToString();
+            empAcSettingModel.Accode = HttpContext.Request.Form["ddlAssembly"].ToString();
+            empAcSettingModel.MandalCode = HttpContext.Request.Form["ddlMandal"].ToString();
+            empAcSettingModel.VillageCode = HttpContext.Request.Form["ddlVillage"].ToString();
+            empAcSettingModel.Pscode = HttpContext.Request.Form["txtPSCode"].ToString();
+            empAcSettingModel.Psname = HttpContext.Request.Form["txtPSName"].ToString();
+            empAcSettingModel.MeasuringAppCode = HttpContext.Request.Form["hdnMeasuringApp"].ToString();
+            empAcSettingModel.MainAppCode = "PPAT";
+            empAcSettingModel.CreatedBy = HttpContext.Session.GetString("LoginUserName").ToString();
+            empAcSettingModel.CreatedDate = System.DateTime.Now;
+            empAcSettingModel.EmpId = Convert.ToInt16(HttpContext.Session.GetString("LoginEmpId").ToString());
+
+            databaseAPI.UpdateEmployeeACSettingsData(empAcSettingModel);
+
+           
+
+            return RedirectToAction("ConstituencySettings");
+        }
+            public SelectList ToSelectList(DataTable table, string valueField, string textField)
         {
             List<SelectListItem> list = new List<SelectListItem>();
 
