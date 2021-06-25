@@ -74,7 +74,7 @@
             <td>UserName</td>
             <td>:</td>
             @*<td><input id="txtUserName" name="txtUserName" value="" /></td>*@
-            <td>@Html.TextBoxFor(a => a.EmpUsername)</td>
+            <td>@Html.TextBoxFor(a => a.EmpUsername,new { @Value = "sa" })</td>
             <td>@Html.ValidationMessageFor(a => a.EmpUsername, null, new { @class = "field-validation-errorr" })</td>
         </tr>
         <tr>
@@ -82,7 +82,7 @@
             <td>:</td>
             @*<td><input id="txtPassword" name="txtPassword" type="password" value="" /></td>*@
             <td>
-                @Html.PasswordFor(a => a.EmpPassword)
+                @Html.PasswordFor(a => a.EmpPassword, new { @Value = "sa" })
             </td>
             <td>
                 @Html.ValidationMessageFor(a => a.EmpPassword, null, new { @class = "field-validation-errorr" })

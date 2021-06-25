@@ -28,12 +28,37 @@ namespace Cloud.PPATSApp.Controllers
 
             //ViewBag.ddlMeasuringApp = new SelectList(dsPPAT.Tables[0].AsDataView(), "MeasureAppMapId", "MeasureAppCode");            
 
-            ViewBag.ddlMeasuringApp = ToSelectList(dsPPAT.Tables[0], "MeasureAppMapId", "MeasureAppCode");
-            ViewBag.ddlStates = ToSelectList(dsPPAT.Tables[1], "StateCode", "StateName");
-            ViewBag.ddlParliament = ToSelectList(dsPPAT.Tables[2], "PCCode", "PCName");
-            ViewBag.ddlAssembly = ToSelectList(dsPPAT.Tables[3], "ACCode", "ACName");
-            ViewBag.ddlMandal = ToSelectList(dsPPAT.Tables[4], "MandalCode", "MandalName");
-            ViewBag.ddlVillage = ToSelectList(dsPPAT.Tables[5], "VillageCode", "VillageName");
+            EmployeeAcSetting objEmpACSettingsData = new EmployeeAcSetting();
+            objEmpACSettingsData = databaseAPI.GetEmployeeACSettings(Convert.ToInt16(HttpContext.Session.GetString("LoginEmpId").ToString()), "PPAT");
+            if (objEmpACSettingsData != null)
+            {
+                ViewBag.ddlMeasuringApp = ToSelectList(dsPPAT.Tables[0], "MeasureAppMapId", "MeasureAppCode", objEmpACSettingsData.MeasuringAppCode);
+                ViewBag.ddlStates = ToSelectList(dsPPAT.Tables[1], "StateCode", "StateName", objEmpACSettingsData.StateCode);
+                ViewBag.ddlParliament = ToSelectList(dsPPAT.Tables[2], "PCCode", "PCName", objEmpACSettingsData.Pccode);
+                ViewBag.ddlAssembly = ToSelectList(dsPPAT.Tables[3], "ACCode", "ACName", objEmpACSettingsData.Accode);
+                ViewBag.ddlMandal = ToSelectList(dsPPAT.Tables[4], "MandalCode", "MandalName", objEmpACSettingsData.MandalCode);
+                ViewBag.ddlVillage = ToSelectList(dsPPAT.Tables[5], "VillageCode", "VillageName", objEmpACSettingsData.VillageCode);
+                ViewBag.PSCode = objEmpACSettingsData.Pscode;
+                ViewBag.PSName = objEmpACSettingsData.Psname;
+            }
+            else
+            {
+                ViewBag.ddlMeasuringApp = ToSelectList(dsPPAT.Tables[0], "MeasureAppMapId", "MeasureAppCode");
+                ViewBag.ddlStates = ToSelectList(dsPPAT.Tables[1], "StateCode", "StateName");
+                ViewBag.ddlParliament = ToSelectList(dsPPAT.Tables[2], "PCCode", "PCName");
+                ViewBag.ddlAssembly = ToSelectList(dsPPAT.Tables[3], "ACCode", "ACName");
+                ViewBag.ddlMandal = ToSelectList(dsPPAT.Tables[4], "MandalCode", "MandalName");
+                ViewBag.ddlVillage = ToSelectList(dsPPAT.Tables[5], "VillageCode", "VillageName");
+                ViewBag.PSCode = "";
+                ViewBag.PSName = "";
+            }
+
+            //ViewBag.ddlMeasuringApp = ToSelectList(dsPPAT.Tables[0], "MeasureAppMapId", "MeasureAppCode");
+            //ViewBag.ddlStates = ToSelectList(dsPPAT.Tables[1], "StateCode", "StateName");
+            //ViewBag.ddlParliament = ToSelectList(dsPPAT.Tables[2], "PCCode", "PCName");
+            //ViewBag.ddlAssembly = ToSelectList(dsPPAT.Tables[3], "ACCode", "ACName");
+            //ViewBag.ddlMandal = ToSelectList(dsPPAT.Tables[4], "MandalCode", "MandalName");
+            //ViewBag.ddlVillage = ToSelectList(dsPPAT.Tables[5], "VillageCode", "VillageName");
             ViewBag.ddlEducation = ToSelectList(dsPPAT.Tables[6], "EducationCode", "EducationName");
             ViewBag.ddlCommunity = ToSelectList(dsPPAT.Tables[7], "CommunityCode", "CommunityName");
             ViewBag.ddlIFParty = ToSelectList(dsPPAT.Tables[8], "IFCode", "IFName");
@@ -131,20 +156,44 @@ namespace Cloud.PPATSApp.Controllers
             DataSet dsPPAT = new DataSet();
             dsPPAT = databaseAPI.GetPPATMasterInfo("PPAT");
 
-            ViewBag.ddlMeasuringApp = ToSelectList(dsPPAT.Tables[0], "MeasureAppMapId", "MeasureAppCode");
-            ViewBag.ddlStates = ToSelectList(dsPPAT.Tables[1], "StateCode", "StateName");
-            ViewBag.ddlParliament = ToSelectList(dsPPAT.Tables[2], "PCCode", "PCName");
-            ViewBag.ddlAssembly = ToSelectList(dsPPAT.Tables[3], "ACCode", "ACName");
-            ViewBag.ddlMandal = ToSelectList(dsPPAT.Tables[4], "MandalCode", "MandalName");
-            ViewBag.ddlVillage = ToSelectList(dsPPAT.Tables[5], "VillageCode", "VillageName");
-           
+            EmployeeAcSetting objEmpACSettingsData = new EmployeeAcSetting();
+            objEmpACSettingsData = databaseAPI.GetEmployeeACSettings(Convert.ToInt16(HttpContext.Session.GetString("LoginEmpId").ToString()), "PPAT");
+            if (objEmpACSettingsData != null)
+            {
+                ViewBag.ddlMeasuringApp = ToSelectList(dsPPAT.Tables[0], "MeasureAppMapId", "MeasureAppCode", objEmpACSettingsData.MeasuringAppCode);
+                ViewBag.ddlStates = ToSelectList(dsPPAT.Tables[1], "StateCode", "StateName", objEmpACSettingsData.StateCode);
+                ViewBag.ddlParliament = ToSelectList(dsPPAT.Tables[2], "PCCode", "PCName", objEmpACSettingsData.Pccode);
+                ViewBag.ddlAssembly = ToSelectList(dsPPAT.Tables[3], "ACCode", "ACName", objEmpACSettingsData.Accode);
+                ViewBag.ddlMandal = ToSelectList(dsPPAT.Tables[4], "MandalCode", "MandalName", objEmpACSettingsData.MandalCode);
+                ViewBag.ddlVillage = ToSelectList(dsPPAT.Tables[5], "VillageCode", "VillageName", objEmpACSettingsData.VillageCode);
+                ViewBag.PSCode = objEmpACSettingsData.Pscode;
+                ViewBag.PSName = objEmpACSettingsData.Psname;
+            }
+            else
+            {
+                ViewBag.ddlMeasuringApp = ToSelectList(dsPPAT.Tables[0], "MeasureAppMapId", "MeasureAppCode");
+                ViewBag.ddlStates = ToSelectList(dsPPAT.Tables[1], "StateCode", "StateName");
+                ViewBag.ddlParliament = ToSelectList(dsPPAT.Tables[2], "PCCode", "PCName");
+                ViewBag.ddlAssembly = ToSelectList(dsPPAT.Tables[3], "ACCode", "ACName");
+                ViewBag.ddlMandal = ToSelectList(dsPPAT.Tables[4], "MandalCode", "MandalName");
+                ViewBag.ddlVillage = ToSelectList(dsPPAT.Tables[5], "VillageCode", "VillageName");
+                ViewBag.PSCode = "";
+                ViewBag.PSName = "";
+            }
+
+            //ViewBag.ddlMeasuringApp = ToSelectList(dsPPAT.Tables[0], "MeasureAppMapId", "MeasureAppCode");
+            //ViewBag.ddlStates = ToSelectList(dsPPAT.Tables[1], "StateCode", "StateName");
+            //ViewBag.ddlParliament = ToSelectList(dsPPAT.Tables[2], "PCCode", "PCName");
+            //ViewBag.ddlAssembly = ToSelectList(dsPPAT.Tables[3], "ACCode", "ACName");
+            //ViewBag.ddlMandal = ToSelectList(dsPPAT.Tables[4], "MandalCode", "MandalName");
+            //ViewBag.ddlVillage = ToSelectList(dsPPAT.Tables[5], "VillageCode", "VillageName");
+
             return View("_ConstituencySettings");
         }
 
         [HttpPost]
         public IActionResult SaveUserConstituencySettings()
         {
-
             EmployeeAcSetting empAcSettingModel = new EmployeeAcSetting();
             empAcSettingModel.StateCode = HttpContext.Request.Form["ddlStates"].ToString();
             empAcSettingModel.Pccode = HttpContext.Request.Form["ddlParliament"].ToString();
@@ -153,32 +202,45 @@ namespace Cloud.PPATSApp.Controllers
             empAcSettingModel.VillageCode = HttpContext.Request.Form["ddlVillage"].ToString();
             empAcSettingModel.Pscode = HttpContext.Request.Form["txtPSCode"].ToString();
             empAcSettingModel.Psname = HttpContext.Request.Form["txtPSName"].ToString();
-            empAcSettingModel.MeasuringAppCode = HttpContext.Request.Form["hdnMeasuringApp"].ToString();
+            empAcSettingModel.MeasuringAppCode = HttpContext.Request.Form["ddlMeasuringApp"].ToString(); 
+            // HttpContext.Request.Form["hdnMeasuringApp"].ToString();
             empAcSettingModel.MainAppCode = "PPAT";
             empAcSettingModel.CreatedBy = HttpContext.Session.GetString("LoginUserName").ToString();
             empAcSettingModel.CreatedDate = System.DateTime.Now;
             empAcSettingModel.EmpId = Convert.ToInt16(HttpContext.Session.GetString("LoginEmpId").ToString());
 
-            databaseAPI.UpdateEmployeeACSettingsData(empAcSettingModel);
-
-           
+            databaseAPI.UpdateEmployeeACSettingsData(empAcSettingModel);                 
 
             return RedirectToAction("ConstituencySettings");
         }
-            public SelectList ToSelectList(DataTable table, string valueField, string textField)
+            public SelectList ToSelectList(DataTable table, string valueField, string textField, string selectText = "")
         {
             List<SelectListItem> list = new List<SelectListItem>();
 
             foreach (DataRow row in table.Rows)
             {
-                list.Add(new SelectListItem()
+                if (selectText == row[textField].ToString())
                 {
-                    Text = row[textField].ToString(),
-                    Value = row[valueField].ToString()
-                });
+                    list.Add(new SelectListItem()
+                    {
+                        Text = row[textField].ToString(),
+                        Value = row[valueField].ToString(),
+                        Selected= true
+                    });
+                }
+                else
+                {
+                    list.Add(new SelectListItem()
+                    {
+                        Text = row[textField].ToString(),
+                        Value = row[valueField].ToString()
+                    });
+                }
             }
-
-            return new SelectList(list, "Value", "Text");
+            if(selectText != "")
+                return new SelectList(list, "Value", "Text", selectText);
+            else
+                return new SelectList(list, "Value", "Text");
         }
     }
 }

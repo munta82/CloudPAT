@@ -520,7 +520,7 @@ Create Procedure prcGetEmployeeMasterInfo
 )
 AS 
 /***************************************
-ID		Date		Change
+ID		Date		Changer
 ----------------------------------------
 1		21-Jun-21	Initial Development
 prcGetEmployeeMasterInfo 1
@@ -554,17 +554,21 @@ END
 GO
 
 
-Create Procedure SaveUpdateUserInfo
+Create Procedure prcGetEmployeeACSettings
 (
-@PSCode varchar(25)
+	@EmpId INT,
+	@MainAppCode Varchar(25)
 )
 AS 
 /***************************************
 ID		Date		Change
 ----------------------------------------
-1		23-Jun-21	Initial Development
-prcGetConstituencyInfo_PSCode 1
+1		25-Jun-21	Initial Development
+prcGetEmployeeACSettings 1,'PPAT'
 ***************************************/
 BEGIN
-
+	Select * from Employee_AC_Settings
+	WHERE EmpId=@EmpId  and MainAppCode=@MainAppCode
 END
+
+GO

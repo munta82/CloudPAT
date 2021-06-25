@@ -1,0 +1,163 @@
+﻿@using (Html.BeginForm())
+{
+    <table border="1">
+        <tbody>
+            <tr>
+                <td>
+                    <table class="tblRoundCorner" style="width:100%">
+                        <tr>
+                            <td>
+                                Search User
+                            </td>
+                            <td>
+                                @Html.TextBox("txtSearchUser", null, new { @class = "form-control PPATtextbox" })
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="height:5px;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="1" style="width:100%" class="tblRoundCorner">
+                        <tr>
+                            <td>
+                                First Name<span class="field-validation-valid field-validation-error" data-valmsg-for="txtempFirstName"
+                                                data-valmsg-replace="true">*</span><br />
+                            </td>
+                            <td>
+                                @Html.TextBox("txtempFirstName", null, new { @class = "form-control PPATtextbox" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Last Name<span class="field-validation-valid field-validation-error" data-valmsg-for="txtempLastName"
+                                               data-valmsg-replace="true">*</span><br />
+                            </td>
+                            <td>
+                                @Html.TextBox("txtempLastName", null, new { @class = "form-control PPATtextbox" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Mobile<span class="field-validation-valid field-validation-error" data-valmsg-for="txtempMobile"
+                                            data-valmsg-replace="true">*</span><br />
+                            </td>
+                            <td>
+                                @Html.TextBox("txtempMobile", null, new { @class = "form-control PPATtextbox" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Email
+                            </td>
+                            <td>
+                                @Html.TextBox("txtempEmail", null, new { @class = "form-control PPATtextbox" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Address
+                            </td>
+                            <td>
+                                @Html.TextBox("txtempAddress", null, new { @class = "form-control PPATtextbox" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                UserName<span class="field-validation-valid field-validation-error" data-valmsg-for="txtempUserName"
+                                              data-valmsg-replace="true">*</span>
+                            </td>
+                            <td>
+                                @Html.TextBox("txtempUserName", null, new { @class = "form-control PPATtextbox" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Password<span class="field-validation-valid field-validation-error" data-valmsg-for="txtempPassword"
+                                              data-valmsg-replace="true">*</span>
+                            </td>
+                            <td>
+                                @Html.TextBox("txtempPassword", null, new { @class = "form-control PPATtextbox" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Roles<span class="field-validation-valid field-validation-error" data-valmsg-for="txtempPassword"
+                                           data-valmsg-replace="true">*</span>
+                            </td>
+                            <td>
+                                @*@Html.DropDownList("ddlRoles", (IEnumerable<SelectListItem>)TempData["Roles"], "Select",
+                               new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })*@
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Appilcations<span class="field-validation-valid field-validation-error" data-valmsg-for="txtPSCode"
+                                                  data-valmsg-replace="true">*</span><br />
+
+                            </td>
+                            <td align="center" valign="middle">
+                                <table>
+                                    @*@foreach (var app in (IEnumerable<SelectListItem>)objEmployeeInfo.EmpAssignedApps)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <input id="@app.Value" type="checkbox" name="@app.Value" value="@app.Value" checked="@app.Selected" />
+                                            </td>
+                                            <td>
+                                                <label for="@app.Value">@app.Text</label>
+                                            </td>
+                                        </tr>
+                                    }*@
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Active
+                            </td>
+                            <td>
+                                <input id="chkActive" type="checkbox" name="chkActive" value="1" checked="checked" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="height:5px;"></td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="1" style="width:100%" class="tblRoundCorner">
+                        <tr>
+                            <td colspan="2" align="center">
+                                <table id="tblButtons">
+                                    <tr>
+                                        <td style="width:5px;"></td>
+                                        <td>
+                                            @*<button id="btnSave" name="btnSave" class="btn-sm">Save</button>*@
+                                            @*<input type="submit" name="btnSave" value="Save" formaction="SaveForm" formmethod="post" class="btn-sm" />*@
+                                            <input type="submit" id="btnSave" value="Save" class="btn-sm" />
+                                        </td>
+                                        <td style="width:5px;"></td>
+                                        <td>
+                                            @*<button id="btnClear" name="btnClear" class="btn-sm">Clear</button>*@
+                                            @*<input type="submit" name="btnClear" value="Clear" formaction="ClearForm" formmethod="post" class="btn-sm" />*@
+                                            <input type="submit" id="btnClear" value="Clear" class="btn btn-outline-success border-0 cancel" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}

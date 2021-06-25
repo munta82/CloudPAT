@@ -226,6 +226,26 @@ namespace Cloud.PPATSApp.Models.BAL
 
         }
 
+        public EmployeeAcSetting GetEmployeeACSettings(int empId, string MainAppCode)
+        {
+            EmployeeAcSetting objEmpACSettingsData = new EmployeeAcSetting();
+            try
+            {
+                using (CloudPATContext db = new CloudPATContext())
+                {
+
+                    objEmpACSettingsData = db.EmployeeAcSettings
+                        .Where(a => a.EmpId == empId && a.MainAppCode == MainAppCode)
+                        .OrderByDescending(a => a.ModifiedDate)
+                        .FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message + " " + ex.InnerException;
+            }
+            return objEmpACSettingsData;
+        }
         public void UpdateEmployeeACSettingsData(EmployeeAcSetting objEmpACSettingsData)
         {
             try
@@ -295,7 +315,27 @@ namespace Cloud.PPATSApp.Models.BAL
 
         }
 
+        public DataSet GetEmployeeMasterInfo(int empId)
+        {
+            SqlParameter empIdParam = new SqlParameter("@empId", empId);
 
+            var dbConnection = dbContext.Database.GetDbConnection().ConnectionString;
+            DataSet ds = new DataSet();
+            using (var con = new SqlConnection(dbConnection))
+            {
+                using (SqlCommand cmd = new SqlCommand("prcGetEmployeeMasterInfo", con))
+                {
+                    using (var da = new SqlDataAdapter(cmd))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.Add(empIdParam);
+                        da.Fill(ds);
+                    }
+                }
+            }
+
+            return ds;
+        }
         //private  List<T> MapToList<T>(this DbDataReader dr)
         //{
         //    var objList = new List<T>();

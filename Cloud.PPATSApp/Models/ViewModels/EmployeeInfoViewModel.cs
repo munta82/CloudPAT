@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Cloud.PPATSApp.Models.ViewModels
 {
@@ -23,5 +24,13 @@ namespace Cloud.PPATSApp.Models.ViewModels
         public string CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
+
+        public List<RolesLookUp> RolesLookUp { get; set; }
+        public List<ApplicationLookUp> EmpApplications { get; set; }
+        public IEnumerable<SelectListItem> EmpAssignedApps { get; set; }
+        public IEnumerable<SelectListItem> Roles { get; set; }
+        public int EmpRoleId { get; set; }
+        public string EmpRoleName { get; set; }
+
     }
 }

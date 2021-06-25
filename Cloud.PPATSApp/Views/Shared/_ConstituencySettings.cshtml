@@ -6,6 +6,17 @@
 <h1>ConstituencySettings</h1>
 <script type="text/javascript">
     $(document).ready(function () {
+        //Loading of page
+        $("#ddlStates").prop("disabled", true);
+        $("#ddlParliament").prop("disabled", true);
+        $("#ddlAssembly").prop("disabled", true);
+        $("#ddlMandal").prop("disabled", true);
+        $("#ddlVillage").prop("disabled", true);
+        $("#txtPSName").prop("disabled", false);
+
+
+        //Loading of page
+
         $("#btnPSGo").click(function () {
             var psCodeval = $("#txtPSCode").val();
             if (psCodeval == "") {
@@ -23,6 +34,8 @@
                 },
                 success: function (data) {
                     //debugger;
+
+                    //$("#ddlMeasuringApp").val(data.stateCode);
                     $("#ddlStates").val(data.stateCode);
                     $("#ddlParliament").val(data.pccode);
                     $("#ddlAssembly").val(data.accode);
@@ -36,7 +49,7 @@
                     $("#ddlMandal").prop("disabled", true);
                     $("#ddlVillage").prop("disabled", true);
                     $("#txtPSName").prop("disabled", false);
-                    
+
                     console.log(data);
                 },
                 error: function (jqXhr, textStatus, errorMessage) {
@@ -90,6 +103,7 @@
                                @data_val = "true",
                                         @data_val_required = " required"
                                     })
+                            </td>
                         </tr>
                     </table>
                 </td>
@@ -139,14 +153,14 @@
                         </td>
                         <td>
                             PS Name<br />
-                            @Html.TextBox("txtPSName", null, new { @class = "form-control PPATtextbox" })
+                            @Html.TextBox("txtPSName", (object)ViewBag.PSName, new { @class = "form-control PPATtextbox" })
                         </td>
                     </tr>
                     <tr>
                         <td>
                             PS Code<span class="field-validation-valid field-validation-error" data-valmsg-for="txtPSCode"
                                          data-valmsg-replace="true">*</span><br />
-                            @Html.TextBox("txtPSCode", null,
+                            @Html.TextBox("txtPSCode", (object)ViewBag.PSCode,
                            new { @class = "form-control PPATtextbox valid", @data_val = "true", @data_val_required = " required" })
                         </td>
                         <td align="center" valign="middle">
