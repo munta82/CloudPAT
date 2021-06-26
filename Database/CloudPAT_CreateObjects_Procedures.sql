@@ -514,7 +514,7 @@ END
 
 GO
 
-Create Procedure prcGetEmployeeMasterInfo
+Alter Procedure prcGetEmployeeMasterInfo
 (
 @EmpId INT
 )
@@ -536,6 +536,7 @@ BEGIN
       ,[EmpPassword]
       ,er.RoleId      
 	  ,r.RoleName
+	  ,e.isActive
   FROM [CloudPAT].[dbo].[EmployeeInfo] e
   JOIN EmployeeRoles  er on e.EmpId = er.EmpId
   JOIN RolesLookUp R on R.RoleId= er.RoleId 
@@ -552,7 +553,11 @@ BEGIN
 END
 
 GO
-
+ --Select * from EmployeeInfo  Where Empid= 6
+ --Select * from EmployeeRoles  Where Empid= 6
+ --Select * from EmployeeAppAccess Where Empid= 6
+ --prcCheckUserAuthentication 'sa','sa'
+ GO
 
 Create Procedure prcGetEmployeeACSettings
 (
@@ -572,3 +577,25 @@ BEGIN
 END
 
 GO
+
+
+Create Procedure prcGetEmpSearchData
+(
+	@searchString Varchar(5)
+)
+AS 
+/***************************************
+ID		Date		Change
+----------------------------------------
+1		25-Jun-21	Initial Development
+prcGetEmpSearchData 'ba'
+***************************************/
+BEGIN
+	Select * from EmployeeInfo Where 
+	(EmpFirstName like '%'+@searchString+'%' OR 
+	EmpLastName like '%'+@searchString+'%' OR
+	EmpEmail like '%'+@searchString+'%' OR
+	EmpUserName like '%'+@searchString+'%')
+	Order by EmpFirstName, EmpLastName asc
+
+END

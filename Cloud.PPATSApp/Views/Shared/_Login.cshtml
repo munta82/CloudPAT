@@ -62,6 +62,10 @@
     //        }
     //    });
     //});
+    $(document).ready(function () {
+        $("#EmpUsername").val("sa");
+        $("#EmpPassword").val("sa");
+    });
 </script>
 <style>
 </style>
@@ -69,38 +73,47 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
-    <table border="0" style="border:1px solid #DEDEDE;margin-top:50px;" align="center" cellpadding="2" cellspacing="2">
+    <table border="1" style="border:1px solid #DEDEDE;margin-top:50px;" align="center" cellpadding="2" cellspacing="2">
         <tr>
-            <td>UserName</td>
-            <td>:</td>
-            @*<td><input id="txtUserName" name="txtUserName" value="" /></td>*@
-            <td>@Html.TextBoxFor(a => a.EmpUsername,new { @Value = "sa" })</td>
-            <td>@Html.ValidationMessageFor(a => a.EmpUsername, null, new { @class = "field-validation-errorr" })</td>
-        </tr>
-        <tr>
-            <td>Password</td>
-            <td>:</td>
-            @*<td><input id="txtPassword" name="txtPassword" type="password" value="" /></td>*@
             <td>
-                @Html.PasswordFor(a => a.EmpPassword, new { @Value = "sa" })
-            </td>
-            <td>
-                @Html.ValidationMessageFor(a => a.EmpPassword, null, new { @class = "field-validation-errorr" })
+                <table>
+                    <tr>
+                        <td>UserName</td>
+                        <td>:</td>
+                        @*<td><input id="txtUserName" name="txtUserName" value="" /></td>*@
+                        <td>@Html.TextBoxFor(a => a.EmpUsername, new { @Value = "sa" })</td>
+                        <td>@Html.ValidationMessageFor(a => a.EmpUsername, null, new { @class = "field-validation-errorr" })</td>
+                    </tr>
+                    <tr>
+                        <td>Password</td>
+                        <td>:</td>
+                        @*<td><input id="txtPassword" name="txtPassword" type="password" value="" /></td>*@
+                        <td>
+                            @Html.PasswordFor(a => a.EmpPassword, new { @Value = "sa" })
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(a => a.EmpPassword, null, new { @class = "field-validation-errorr" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" align="center">
+                            <form method="post">
+                                @*<button id="btnLogin" name="btnLogin" type="button" onclick="Login()">Login</button>*@
+                                <input type="submit" value="Login" class="btn btn-primary" />
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" align="center">
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
         <tr>
-            <td colspan="4" align="center">
-                <form method="post">
-                    @*<button id="btnLogin" name="btnLogin" type="button" onclick="Login()">Login</button>*@
-                    <input type="submit" value="Login" class="btn btn-primary" />
-                </form>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4" align="center">
-                <label id="lblMsg" name="lblMsg"></label>
-                <div></div>
-            </td>
+            <td> <label id="lblMsg" name="lblMsg">@ViewBag.LoginMessage</label></td>
         </tr>
     </table>
+
 }

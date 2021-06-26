@@ -4,7 +4,131 @@
 //var objEmployeeInfo = TempDataExtensions.Get<EmployeeInfoViewModel>(TempData, "empInfo") as EmployeeInfoViewModel;
 }
 @model Cloud.PPATSApp.Models.ViewModels.EmployeeInfoViewModel
+<script type="text/javascript">
+    $(document).ready(function () {
 
+        $("#txtSearchUser").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/GetEmpSearchData",
+                    dataType: "json",
+                    cache: false,
+                    async: false,
+                    maxShowItems: 5,
+                    minLength: 3,
+                    data: {
+                        searchString: $("#txtSearchUser").val()                        
+                    },
+                    success: function (data) {
+                        //debugger;
+                        response($.map(data, function (item) {
+                            //debugger;
+                            return {
+                                label: item.empFirstName + ' ' + item.empLastName,
+                                value: item.empFirstName + ' ' + item.empLastName,
+                                empId : item.empId
+                            }
+                        }));
+
+                        //console.log(data);
+                    },
+                    error: function (jqXhr, textStatus, errorMessage) {
+                        //debugger;
+                        if (jqXhr.responseText.indexOf('maxJsonLength') > -1) {
+                            alert("Search results exceeds max records. Plese refine your search with more characters");
+                        }
+                    }
+                });
+            },
+            minLength: 3,
+            select: function (evet, ui) {
+                //debugger;
+                var resEmpId = ui.item.empId;
+                $("#hdnEmpId").val(resEmpId);
+                $("#txtEmpId").val(resEmpId);
+                $("#txtSearchUser").val(ui.item.label);
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/GetEmployeeMasterInfo",
+                    dataType: "json",
+                    cache: false,
+                    async: false,
+                    maxShowItems: 5,
+                    minLength: 3,
+                    data: {
+                        empId: resEmpId
+                    },
+                    close: function (event, ui) {
+                        $("#txtSearchUser").val(ui.item.label);
+                    },
+                    success: function (empData) {
+                        //debugger;
+                        $("#txtempFirstName").val(empData.empFirstName);
+                        $("#txtempLastName").val(empData.empLastName);
+                        $("#txtempAddress").val(empData.empAddress);
+                        $("#txtempMobile").val(empData.empPhone);
+                        $("#txtempEmail").val(empData.empEmail);
+                        $("#txtempUserName").val(empData.empUsername);
+                        $("#txtempPassword").val(empData.empPassword);
+                        
+                        
+                        if (empData.isActive == 'Y') {
+                            $("#chkActive").prop('checked', true);
+                        }
+                        else {
+                            $("#chkActive").prop('checked', false);
+                        }
+                        var _empRoleId = empData.empRoleId;
+                        $("#ddlRoles").val(_empRoleId).attr('selected', 'selected');
+
+                        //var arrApps = empData.empAssignedApps;
+                        //var pp = empData.empApplications[0];
+                        for (var i = 0; i < empData.empAssignedApps.length; i++) {
+                            $("#chk_" + empData.empAssignedApps[i].value).prop('checked', true);
+                            //$("#chk_" + empData.empAssignedApps[i].value).prop('checked', 'checked');
+                            //$("#chk_" + empData.empAssignedApps[i].value).attr('checked', 'checked');
+                        }                       
+                        //console.log(empData);
+                    },
+                    error: function (jqXhr, textStatus, errorMessage) {
+                        //debugger;
+                        //if (jqXhr.responseText.indexOf('maxJsonLength') > -1) {
+                        //    alert("Search results exceeds max records. Plese refine your search with more characters");
+                        //}
+                    }
+                });//second ajax
+            }
+        });
+
+        $("#btnSave").click(function () {
+            
+            //if ($("#chk_PPAT").prop("checked") == false && $("#chk_PIG").prop("checked") == false && $("#chk_SS").prop("checked") == false) 
+            //    {
+            //        $("#spnApplications").html(" required");
+            //        return false;
+            //    }
+            $("form").attr("action", "/Admin/SaveUpdateEmployeeForm");
+        });
+
+        $("#btnClear").click(function () {
+            $("#txtempFirstName").val('');
+            $("#txtempLastName").val('');
+            $("#txtempAddress").val('');
+            $("#txtempMobile").val('');
+            $("#txtempEmail").val('');
+            $("#txtempUserName").val('');
+            $("#txtempPassword").val('');
+            $("#ddlRoles").val(0);
+            $("#chk_PPAT").prop('checked', false);
+            $("#chk_PIG").prop('checked', false);
+            $("#chk_SS").prop('checked', false);
+            $("#txtSearchUser").val('');
+            $("#hdnEmpId").val(0);
+            $("#txtEmpId").val(0);
+        });
+    });//Document.ready
+</script>
 @using (Html.BeginForm())
 {
     <table border="1">
@@ -33,11 +157,21 @@
                     <table border="1" style="width:100%" class="tblRoundCorner">
                         <tr>
                             <td>
+                                Employee ID<br />
+                            </td>
+                            <td>
+                                <input type="hidden" id="hdnEmpId" name="hdnEmpId" value="0" />
+                                @Html.TextBox("txtEmpId", '0', new { @class = "form-control PPATtextbox", disabled = "disabled" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
                                 First Name<span class="field-validation-valid field-validation-error" data-valmsg-for="txtempFirstName"
                                                 data-valmsg-replace="true">*</span><br />
                             </td>
                             <td>
-                                @Html.TextBox("txtempFirstName", null, new { @class = "form-control PPATtextbox" })
+                                @Html.TextBox("txtempFirstName", null, 
+                               new { @class = "form-control PPATtextbox", @data_val = "true", @data_val_required = " required" })
                             </td>
                         </tr>
                         <tr>
@@ -46,7 +180,8 @@
                                                data-valmsg-replace="true">*</span><br />
                             </td>
                             <td>
-                                @Html.TextBox("txtempLastName", null, new { @class = "form-control PPATtextbox" })
+                                @Html.TextBox("txtempLastName", null, 
+                               new { @class = "form-control PPATtextbox", @data_val = "true", @data_val_required = " required" })
                             </td>
                         </tr>
                         <tr>
@@ -55,7 +190,8 @@
                                             data-valmsg-replace="true">*</span><br />
                             </td>
                             <td>
-                                @Html.TextBox("txtempMobile", null, new { @class = "form-control PPATtextbox" })
+                                @Html.TextBox("txtempMobile", null, 
+                               new { @class = "form-control PPATtextbox", @data_val = "true", @data_val_required = " required" })
                             </td>
                         </tr>
                         <tr>
@@ -80,7 +216,8 @@
                                               data-valmsg-replace="true">*</span>
                             </td>
                             <td>
-                                @Html.TextBox("txtempUserName", null, new { @class = "form-control PPATtextbox" })
+                                @Html.TextBox("txtempUserName", null, 
+                               new { @class = "form-control PPATtextbox", @data_val = "true", @data_val_required = " required" })
                             </td>
                         </tr>
                         <tr>
@@ -89,23 +226,24 @@
                                               data-valmsg-replace="true">*</span>
                             </td>
                             <td>
-                                @Html.TextBox("txtempPassword", null, new { @class = "form-control PPATtextbox" })
+                                @Html.TextBox("txtempPassword", null, 
+                               new { @class = "form-control PPATtextbox", @data_val = "true", @data_val_required = " required" })
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                Roles<span class="field-validation-valid field-validation-error" data-valmsg-for="txtempPassword"
+                                Roles<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlRoles"
                                            data-valmsg-replace="true">*</span>
                             </td>
                             <td>
-                                @Html.DropDownList("ddlRoles", (IEnumerable<SelectListItem>)Model.Roles, "Select", 
+                                @Html.DropDownList("ddlRoles", (IEnumerable<SelectListItem>)Model.Roles, "Select",
                                new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
                             </td>
                         </tr>
 
                         <tr>
                             <td>
-                                Appilcations<span class="field-validation-valid field-validation-error" data-valmsg-for="txtPSCode"
+                                Appilcations<span id="spnApplications" class="field-validation-valid field-validation-error" data-valmsg-for="txtPSCode"
                                                   data-valmsg-replace="true">*</span><br />
 
                             </td>
@@ -113,9 +251,11 @@
                                 <table>
                                     @foreach (var app in (IEnumerable<SelectListItem>)Model.EmpAssignedApps)
                                     {
+                                        var chkId = "chk_" + app.Value;
                                         <tr>
                                             <td>
-                                                <input id="@app.Value" type="checkbox" name="@app.Value" value="@app.Value" checked="@app.Selected" />
+                                               
+                                                <input id="@chkId" type="checkbox" name="@chkId" value="@app.Value" checked="@app.Selected" />
                                             </td>
                                             <td>
                                                 <label for="@app.Value">@app.Text</label>
@@ -150,13 +290,13 @@
                                         <td>
                                             @*<button id="btnSave" name="btnSave" class="btn-sm">Save</button>*@
                                             @*<input type="submit" name="btnSave" value="Save" formaction="SaveForm" formmethod="post" class="btn-sm" />*@
-                                            <input type="submit" id="btnSave" value="Save" class="btn-sm" />
+                                            <input type="submit" id="btnSave" value="Save" class="btn btn-outline-success border-0" />
                                         </td>
                                         <td style="width:5px;"></td>
                                         <td>
                                             @*<button id="btnClear" name="btnClear" class="btn-sm">Clear</button>*@
                                             @*<input type="submit" name="btnClear" value="Clear" formaction="ClearForm" formmethod="post" class="btn-sm" />*@
-                                            <input type="submit" id="btnClear" value="Clear" class="btn btn-outline-success border-0 cancel" />
+                                            <input type="button" id="btnClear" value="Clear" class="btn btn-outline-success border-0 cancel" />
                                         </td>
                                     </tr>
                                 </table>

@@ -354,8 +354,6 @@ namespace Cloud.PPATSApp.Models
 
             modelBuilder.Entity<EmployeeAppAccess>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("EmployeeAppAccess");
 
                 entity.Property(e => e.AppCode)
@@ -369,8 +367,6 @@ namespace Cloud.PPATSApp.Models
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
                 entity.Property(e => e.IsActive)
                     .HasMaxLength(1)
                     .IsUnicode(false)
@@ -383,16 +379,16 @@ namespace Cloud.PPATSApp.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.HasOne(d => d.AppCodeNavigation)
-                    .WithMany()
+                    .WithMany(p => p.EmployeeAppAccesses)
                     .HasForeignKey(d => d.AppCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__EmployeeA__AppCo__07C12930");
+                    .HasConstraintName("FK__EmployeeA__AppCo__540C7B00");
 
                 entity.HasOne(d => d.Emp)
-                    .WithMany()
+                    .WithMany(p => p.EmployeeAppAccesses)
                     .HasForeignKey(d => d.EmpId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__EmployeeA__EmpId__06CD04F7");
+                    .HasConstraintName("FK__EmployeeA__EmpId__531856C7");
             });
 
             modelBuilder.Entity<EmployeeInfo>(entity =>
@@ -453,9 +449,8 @@ namespace Cloud.PPATSApp.Models
 
             modelBuilder.Entity<EmployeeRole>(entity =>
             {
-                entity.HasNoKey();
-
-                entity.Property(e => e.AutoRoleId).ValueGeneratedOnAdd();
+                entity.HasKey(e => e.AutoRoleId)
+                    .HasName("PK__Employee__08B81E1C4E8BB7D5");
 
                 entity.Property(e => e.CreatedBy)
                     .HasMaxLength(100)
@@ -475,13 +470,13 @@ namespace Cloud.PPATSApp.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Emp)
-                    .WithMany()
+                    .WithMany(p => p.EmployeeRoles)
                     .HasForeignKey(d => d.EmpId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__EmployeeR__EmpId__03F0984C");
 
                 entity.HasOne(d => d.Role)
-                    .WithMany()
+                    .WithMany(p => p.EmployeeRoles)
                     .HasForeignKey(d => d.RoleId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__EmployeeR__RoleI__04E4BC85");

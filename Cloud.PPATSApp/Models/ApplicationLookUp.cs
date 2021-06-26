@@ -7,6 +7,11 @@ namespace Cloud.PPATSApp.Models
 {
     public partial class ApplicationLookUp
     {
+        public ApplicationLookUp()
+        {
+            EmployeeAppAccesses = new HashSet<EmployeeAppAccess>();
+        }
+
         public int AppId { get; set; }
         public string AppCode { get; set; }
         public string AppName { get; set; }
@@ -15,5 +20,7 @@ namespace Cloud.PPATSApp.Models
         public string CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
+
+        public virtual ICollection<EmployeeAppAccess> EmployeeAppAccesses { get; set; }
     }
 }

@@ -63,23 +63,31 @@ namespace Cloud.PPATSApp.Controllers
                             return ViewLogin(dsEmployeeInfo);
                         }
                         else
-                        {                           
+                        {
                             HttpContext.Session.SetString("LoginUserName", employeeInfo.EmpUsername);
-                            HttpContext.Session.SetString("LoginUserDisplayName", dsEmployeeInfo.Tables[0].Rows[0].ItemArray[1].ToString() + " "+ dsEmployeeInfo.Tables[0].Rows[0].ItemArray[2].ToString());
+                            HttpContext.Session.SetString("LoginUserDisplayName", dsEmployeeInfo.Tables[0].Rows[0].ItemArray[1].ToString() + " " + dsEmployeeInfo.Tables[0].Rows[0].ItemArray[2].ToString());
                             HttpContext.Session.SetString("LoginEmpId", dsEmployeeInfo.Tables[0].Rows[0].ItemArray[0].ToString());
 
-                            string LaunchingApp = dsEmployeeInfo.Tables[1].Rows[0].ItemArray[2].ToString();
-                            if (LaunchingApp == "PPAT")
+                            if (dsEmployeeInfo.Tables[1].Rows.Count == 0)
                             {
-                                return ViewPPAT(dsEmployeeInfo);// View("_PPAT", dsEmployeeInfo);
+                                ViewBag.LoginMessage = "You are not assinged with any applications. Please contact your admin";
+                                return ViewLogin(dsEmployeeInfo);
                             }
-                            else if (LaunchingApp == "PIG")
+                            else
                             {
-                                return ViewPPAT(dsEmployeeInfo);  //return View("_PIG", dsEmployeeInfo);
-                            }
-                            else if (LaunchingApp == "SS")
-                            {
-                                return ViewPPAT(dsEmployeeInfo);  //return View("_SS", dsEmployeeInfo);
+                                string LaunchingApp = dsEmployeeInfo.Tables[1].Rows[0].ItemArray[2].ToString();
+                                if (LaunchingApp == "PPAT")
+                                {
+                                    return ViewPPAT(dsEmployeeInfo);// View("_PPAT", dsEmployeeInfo);
+                                }
+                                else if (LaunchingApp == "PIG")
+                                {
+                                    return ViewPPAT(dsEmployeeInfo);  //return View("_PIG", dsEmployeeInfo);
+                                }
+                                else if (LaunchingApp == "SS")
+                                {
+                                    return ViewPPAT(dsEmployeeInfo);  //return View("_SS", dsEmployeeInfo);
+                                }
                             }
                         }
                         return ViewLogin(dsEmployeeInfo);
@@ -91,13 +99,13 @@ namespace Cloud.PPATSApp.Controllers
         }
 
 
-        [HttpPost]         
+        [HttpPost]
         public IActionResult AuthenticateUser(string username, string password)
         {
             List<EmployeeInfo> list;
             DataSet dsEmployeeInfo = new DataSet();
             dsEmployeeInfo = databaseAPI.CheckUserAuthetication(username, password);
-            if(dsEmployeeInfo.Tables[0].Rows[0].ItemArray[0].ToString() == "-1")
+            if (dsEmployeeInfo.Tables[0].Rows[0].ItemArray[0].ToString() == "-1")
             {
                 return ViewLogin(dsEmployeeInfo);
             }
@@ -108,7 +116,7 @@ namespace Cloud.PPATSApp.Controllers
                 {
                     return ViewPPAT(dsEmployeeInfo);// View("_PPAT", dsEmployeeInfo);
                 }
-                else if(LaunchingApp == "PIG")
+                else if (LaunchingApp == "PIG")
                 {
                     return ViewPPAT(dsEmployeeInfo);  //return View("_PIG", dsEmployeeInfo);
                 }
@@ -126,7 +134,7 @@ namespace Cloud.PPATSApp.Controllers
         }
         private ActionResult ViewPPAT(DataSet ds)
         {
-            return RedirectToAction("Index", "PPAT",ds);
+            return RedirectToAction("Index", "PPAT", ds);
         }
         private ActionResult ViewPIG(DataSet ds)
         {
@@ -137,7 +145,7 @@ namespace Cloud.PPATSApp.Controllers
             return View("_SS", ds);
         }
 
-     
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

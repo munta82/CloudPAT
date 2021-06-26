@@ -26,7 +26,7 @@ namespace Cloud.PPATSApp.Models.ViewModels
         public string ModifiedBy { get; set; }
 
         public List<RolesLookUp> RolesLookUp { get; set; }
-        public List<ApplicationLookUp> EmpApplications { get; set; }
+        public List<String> EmpApplications { get; set; }
         public IEnumerable<SelectListItem> EmpAssignedApps { get; set; }
         public IEnumerable<SelectListItem> Roles { get; set; }
         public int EmpRoleId { get; set; }

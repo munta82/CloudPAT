@@ -7,6 +7,12 @@ namespace Cloud.PPATSApp.Models
 {
     public partial class EmployeeInfo
     {
+        public EmployeeInfo()
+        {
+            EmployeeAppAccesses = new HashSet<EmployeeAppAccess>();
+            EmployeeRoles = new HashSet<EmployeeRole>();
+        }
+
         public int EmpId { get; set; }
         public string EmpFirstName { get; set; }
         public string EmpLastName { get; set; }
@@ -20,5 +26,8 @@ namespace Cloud.PPATSApp.Models
         public string CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
+
+        public virtual ICollection<EmployeeAppAccess> EmployeeAppAccesses { get; set; }
+        public virtual ICollection<EmployeeRole> EmployeeRoles { get; set; }
     }
 }

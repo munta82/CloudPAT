@@ -473,11 +473,26 @@ ALTER TABLE EmployeeRoles
 ADD FOREIGN KEY (RoleId) REFERENCES RolesLookUp(RoleId);
 
 GO
+--ALTER TABLE EmployeeRoles 
+--ADD PRIMARY KEY(AutoRoleId)  
+
+GO
+
+--SELECT name
+--FROM   sys.key_constraints
+--WHERE  [type] = 'PK'
+--       AND [parent_object_id] = Object_id('dbo.EmployeeRoles');
+
+--	   ALTER TABLE dbo.EmployeeRoles 
+--DROP CONSTRAINT PK__Employee__1782177845F47384;
+	   
+GO
 ---------------------EmployeeRoles-------------------------------
 GO
 
 ------------------EmployeeAppAccess---------------------------------
 GO
+
 IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'EmployeeAppAccess') AND TYPE in(N'U'))
 DROP TABLE EmployeeAppAccess
 GO
@@ -502,6 +517,10 @@ Go
 
 ALTER TABLE EmployeeAppAccess
 ADD FOREIGN KEY (AppCode) REFERENCES ApplicationLookUp(AppCode);
+
+GO
+--ALTER TABLE EmployeeAppAccess 
+--ADD PRIMARY KEY(Id)  
 
 GO
 

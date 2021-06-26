@@ -7,6 +7,11 @@ namespace Cloud.PPATSApp.Models
 {
     public partial class RolesLookUp
     {
+        public RolesLookUp()
+        {
+            EmployeeRoles = new HashSet<EmployeeRole>();
+        }
+
         public int AutoId { get; set; }
         public int RoleId { get; set; }
         public string RoleName { get; set; }
@@ -15,5 +20,7 @@ namespace Cloud.PPATSApp.Models
         public string CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
+
+        public virtual ICollection<EmployeeRole> EmployeeRoles { get; set; }
     }
 }
