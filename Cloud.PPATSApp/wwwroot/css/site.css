@@ -2,14 +2,14 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 body {
-    font-family:  Verdana;
-    font-weight: 200;
+    font-family:  Arial, Helvetica, sans-serif;
+    font-weight: 400;
     overflow-x: hidden;
     overflow-y: auto;
     font-style: normal;
     font-variant: normal;
-    line-height: 20px;
-    font-size: 11px !important;
+    line-height: 12px;
+    font-size: 12px !important;
     background-color: #ededed;
 }
 
@@ -115,5 +115,7 @@ input, select, textarea {
 }
 
 .form-control {
-    font-size: small !important;
+    font-size: 11px !important;
+    height:27px !important;
+    padding:4 !important;
 }

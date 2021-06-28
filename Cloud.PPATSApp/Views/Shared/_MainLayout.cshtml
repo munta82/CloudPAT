@@ -1,147 +1,241 @@
-﻿<!DOCTYPE html>
-<html>
+﻿<!doctype html>
+<html lang="en">
 <head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Title</title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="dist/font-awesome/css/font-awesome.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="~/css/Application_Admin.css">
-    <link rel="stylesheet" href="~/css/Application_white.css">
+    <!-- Bootstrap CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/stylesheet.css" rel="stylesheet" />
 
-    <!-- ./wrapper -->
-    <!-- REQUIRED JS SCRIPTS -->
-    <!-- jQuery v3.3.1 -->
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <!-- Bootstrap v4.4.1 -->
-    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-    <!-- App Main JS -->
-    <script src="~/js/Application_main.js"></script>
 
+    <!-- Optional JavaScript; choose one of the two! -->
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+
+    <title>Application Form</title>
 </head>
+<body>
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-2 logo">Logo</div>
+                <div class="col-8 banner">Banner</div>
+                <div class="col-2 greybg"><a href="#">Welcome</a><br><a href="#">Logout</a></div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col-2 mt-4">
 
-<body class="hold-transition theme-white sidebar-collapse sidebar-mini">
-    <div class="wrapper">
-
-        <!-- Main Header -->
-        <header class="main-header">
-
-            <!-- Logo -->
-            <a href="#" class="logo">
-                <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini"><img src="dist/img/logo-small.png" alt="" height="23"></span>
-                <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg"><img src="dist/img/logo-big.png" alt="" height="23"></span>
-            </a>
-
-            <!-- Header Navbar -->
-            <nav class="navbar navbar-static-top" role="navigation">
-                <!-- Sidebar toggle button-->
-                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-                    <span class="sr-only">Toggle navigation</span>
-                </a>
-                <!-- Navbar Right Menu -->
-                <div class="navbar-custom-menu">
-                    <ul class="nav navbar-nav">
-                        <!-- Messages: style can be found in dropdown.less-->
-                        <!-- User Account Menu -->
-                        <li class="user-info">
-                            <img src="dist/img/user.png" class="user-image" alt="">
+                    <ul class="nav flex-column sidenav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">> Home</a>
                         </li>
-                        <li class="user-info">
-                            <a href="#">
-                            <span class="welcome">Welcome</span> <br><span class="">John Wick</span> 
-                            </a>
-
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">> PPAT</a>
                         </li>
-                        <li class="dropdown user user-menu">
-                            <!-- Menu Toggle Button -->
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <!-- The user image in the navbar-->
-                                <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                <i class="fa fa-angle-down"></i>
-                            </a>
-                            <ul class="user-menu dropdown-menu ">
-                                <li>
-                                    <a href="#"><i class="fa fa-user-o"></i> My Profile</a>
-                                </li>
-                                <li>
-                                    <a href="login.html"><i class="fa fa-gear"></i> Settings</a>
-                                </li>
-                                <li>
-                                    <a href="login.html"><i class="fa fa-sign-out"></i> Sign out</a>
-                                </li>
-                            </ul>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">> PIG</a>
                         </li>
-                        <!-- Control Sidebar Toggle Button -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">> SS</a>
+                        </li>
                     </ul>
+
                 </div>
-            </nav>
-        </header>
-        <!-- Left side column. contains the logo and sidebar -->
-        <aside class="main-sidebar" style="display:block;">
+                <div class="col-10 mt-4">
 
-            <!-- sidebar: style can be found in sidebar.less -->
-            <section class="sidebar">
+                    <div class="row mb-3 ">
 
-                <!-- Sidebar user panel (optional) -->
-                <!-- Sidebar Menu -->
-                <ul class="sidebar-menu" data-widget="tree" style="display:block;">
-                    <!-- Optionally, you can add icons to the links -->
-                    <li class="active"><a href="index.html"><i class="fa fa-home"></i> <span>Home</span></a></li>
-                </ul>
-                <!-- /.sidebar-menu -->
-            </section>
-            <!-- /.sidebar -->
-        </aside>
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <section class="content-header">
-                <h1>Dashboard</h1>
-            </section>
+                        <div class="col-sm-5"><label for="formControlInput1" class=" col-form-label"><h2>Measure Application </h2></label></div>
+                        <div class="col-sm-1"><h2>:</h2></div>
+                        <div class="col-sm-6 mt-2">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Selects</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="border p-3">
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <label for="exampleFormControlInput1" class="form-label">State</label>
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Select</option>
+                                    <option value="AP">AP</option>
+                                    <option value="TN">TN</option>
+                                    <option value="TN">TN</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleFormControlInput1" class="form-label">Parliament</label>
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Select</option>
+                                    <option value="AA">AA</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleFormControlInput1" class="form-label">Assembly</label>
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Select</option>
+                                    <option value="AA">AA</option>
+                                </select>
+                            </div>
 
-            <section class="content container-fluid">
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <label for="exampleFormControlInput1" class="form-label">Mandal</label>
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Select</option>
+                                    <option value="AP">AP</option>
+                                    <option value="TN">TN</option>
+                                    <option value="TN">TN</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleFormControlInput1" class="form-label">Village</label>
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Select</option>
+                                    <option value="AA">AA</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleFormControlInput1" class="form-label">PS Code</label>
+                                <input type="text" class="form-control" id="pscode" placeholder="Auto Populate">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleFormControlInput1" class="form-label">PS Name</label>
+                                <input type="text" class="form-control" id="pscode" placeholder="">
+                            </div>
 
-                <div class="row">
-                    <div class="col-md-9">
-                        <div class="box user-content">
-                            <div class="table-responsive text-nowrap">
-                                <!--Table-->
-                                
+                        </div>
+                    </div>
+                    <div class="border p-3 mt-4">
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <label for="exampleFormControlInput1" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="pscode" placeholder="">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleFormControlInput1" class="form-label">Age</label>
+                                <input type="text" class="form-control" id="pscode" placeholder="">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleFormControlInput1" class="form-label">Gender</label>
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Select</option>
+                                    <option value="M">M</option>
+                                    <option value="F">F</option>
+                                </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="box user-content">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.<br><br>
+
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <label for="exampleFormControlInput1" class="form-label">Mobile</label>
+                                <input type="text" class="form-control" id="pscode" placeholder="">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleFormControlInput1" class="form-label">Occupation</label>
+                                <input type="text" class="form-control" id="pscode" placeholder="">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleFormControlInput1" class="form-label">Education</label>
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Select</option>
+                                    <option value="Graduation">Graduation</option>
+                                    <option value="PG">PG</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <label for="exampleFormControlInput1" class="form-label">Community</label>
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Select</option>
+                                    <option value="OC">OC</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleFormControlInput1" class="form-label">Sub-Caste</label>
+                                <input type="text" class="form-control" id="pscode" placeholder="Auto Populate">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleFormControlInput1" class="form-label">IF</label>
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Select</option>
+                                    <option value="AA">AA</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <label for="exampleFormControlInput1" class="form-label">SF</label>
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Select</option>
+                                    <option value="OC">SF</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleFormControlInput1" class="form-label">PRF</label>
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Select</option>
+                                    <option value="AA">VPF</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleFormControlInput1" class="form-label">VPF</label>
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Select</option>
+                                    <option value="AA">VPF</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <label for="exampleFormControlInput1" class="form-label">PIF</label>
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Select</option>
+                                    <option value="PIF">PIF</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleFormControlInput1" class="form-label">Remarks</label>
+                                <input type="text" class="form-control" id="pscode" placeholder="">
+                            </div>
+
+                        </div>
+
+                        <div class="row ">
+                            <div class="col-sm-3">
+                                <button type="submit" class="btn btn-primary mb-3">Preview</button>
+                            </div>
+                            <div class="col-sm-3">
+                                <button type="submit" class="btn btn-primary mb-3">Save</button>
+                            </div>
+                            <div class="col-sm-3">
+                                <button type="submit" class="btn btn-primary mb-3">Clear</button>
+                            </div>
 
                         </div>
 
                     </div>
                 </div>
-
-
-
-            </section>
+            </div>
         </div>
-        <!-- /.content -->
-        <!-- /.content-wrapper -->
-        <!-- Main Footer -->
-        <footer class="main-footer">
-            <span class="">©
-            <script type="text/javascript">var today = new Date; document.write(today.getFullYear());</script> Abc. All rights reserved.</span>
+    </main>
 
-        </footer>
-    </div>
 
-    <!-- /. Main Footer -->
-    @*</div>*@
 
 </body>
 </html>

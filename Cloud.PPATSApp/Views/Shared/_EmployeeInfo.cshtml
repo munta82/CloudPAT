@@ -1,7 +1,7 @@
 ﻿@using Cloud.PPATSApp.Core;
 @using Cloud.PPATSApp.Models.ViewModels;
 @{
-//var objEmployeeInfo = TempDataExtensions.Get<EmployeeInfoViewModel>(TempData, "empInfo") as EmployeeInfoViewModel;
+    //var objEmployeeInfo = TempDataExtensions.Get<EmployeeInfoViewModel>(TempData, "empInfo") as EmployeeInfoViewModel;
 }
 @model Cloud.PPATSApp.Models.ViewModels.EmployeeInfoViewModel
 <script type="text/javascript">
@@ -18,7 +18,7 @@
                     maxShowItems: 5,
                     minLength: 3,
                     data: {
-                        searchString: $("#txtSearchUser").val()                        
+                        searchString: $("#txtSearchUser").val()
                     },
                     success: function (data) {
                         //debugger;
@@ -27,7 +27,7 @@
                             return {
                                 label: item.empFirstName + ' ' + item.empLastName,
                                 value: item.empFirstName + ' ' + item.empLastName,
-                                empId : item.empId
+                                empId: item.empId
                             }
                         }));
 
@@ -71,8 +71,8 @@
                         $("#txtempEmail").val(empData.empEmail);
                         $("#txtempUserName").val(empData.empUsername);
                         $("#txtempPassword").val(empData.empPassword);
-                        
-                        
+
+
                         if (empData.isActive == 'Y') {
                             $("#chkActive").prop('checked', true);
                         }
@@ -88,7 +88,7 @@
                             $("#chk_" + empData.empAssignedApps[i].value).prop('checked', true);
                             //$("#chk_" + empData.empAssignedApps[i].value).prop('checked', 'checked');
                             //$("#chk_" + empData.empAssignedApps[i].value).attr('checked', 'checked');
-                        }                       
+                        }
                         //console.log(empData);
                     },
                     error: function (jqXhr, textStatus, errorMessage) {
@@ -102,8 +102,8 @@
         });
 
         $("#btnSave").click(function () {
-            
-            //if ($("#chk_PPAT").prop("checked") == false && $("#chk_PIG").prop("checked") == false && $("#chk_SS").prop("checked") == false) 
+
+            //if ($("#chk_PPAT").prop("checked") == false && $("#chk_PIG").prop("checked") == false && $("#chk_SS").prop("checked") == false)
             //    {
             //        $("#spnApplications").html(" required");
             //        return false;
@@ -131,181 +131,193 @@
 </script>
 @using (Html.BeginForm())
 {
-    <table border="1">
-        <tbody>
-            <tr>
-                <td>
-                    <table class="tblRoundCorner" style="width:100%">
+    <table>
+        <tr>            
+            <td>
+                <table border="1">
+                    <tbody>
                         <tr>
                             <td>
-                                Search User
-                            </td>
-                            <td>
-                               
-                                @Html.TextBox("txtSearchUser", null, new { @class = "form-control PPATtextbox" })
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td style="height:5px;">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <table border="1" style="width:100%" class="tblRoundCorner">
-                        <tr>
-                            <td>
-                                Employee ID<br />
-                            </td>
-                            <td>
-                                <input type="hidden" id="hdnEmpId" name="hdnEmpId" value="0" />
-                                @Html.TextBox("txtEmpId", '0', new { @class = "form-control PPATtextbox", disabled = "disabled" })
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                First Name<span class="field-validation-valid field-validation-error" data-valmsg-for="txtempFirstName"
-                                                data-valmsg-replace="true">*</span><br />
-                            </td>
-                            <td>
-                                @Html.TextBox("txtempFirstName", null, 
-                               new { @class = "form-control PPATtextbox", @data_val = "true", @data_val_required = " required" })
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Last Name<span class="field-validation-valid field-validation-error" data-valmsg-for="txtempLastName"
-                                               data-valmsg-replace="true">*</span><br />
-                            </td>
-                            <td>
-                                @Html.TextBox("txtempLastName", null, 
-                               new { @class = "form-control PPATtextbox", @data_val = "true", @data_val_required = " required" })
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Mobile<span class="field-validation-valid field-validation-error" data-valmsg-for="txtempMobile"
-                                            data-valmsg-replace="true">*</span><br />
-                            </td>
-                            <td>
-                                @Html.TextBox("txtempMobile", null, 
-                               new { @class = "form-control PPATtextbox", @data_val = "true", @data_val_required = " required" })
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Email
-                            </td>
-                            <td>
-                                @Html.TextBox("txtempEmail", null, new { @class = "form-control PPATtextbox" })
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Address
-                            </td>
-                            <td>
-                                @Html.TextBox("txtempAddress", null, new { @class = "form-control PPATtextbox" })
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                UserName<span class="field-validation-valid field-validation-error" data-valmsg-for="txtempUserName"
-                                              data-valmsg-replace="true">*</span>
-                            </td>
-                            <td>
-                                @Html.TextBox("txtempUserName", null, 
-                               new { @class = "form-control PPATtextbox", @data_val = "true", @data_val_required = " required" })
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Password<span class="field-validation-valid field-validation-error" data-valmsg-for="txtempPassword"
-                                              data-valmsg-replace="true">*</span>
-                            </td>
-                            <td>
-                                @Html.TextBox("txtempPassword", null, 
-                               new { @class = "form-control PPATtextbox", @data_val = "true", @data_val_required = " required" })
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Roles<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlRoles"
-                                           data-valmsg-replace="true">*</span>
-                            </td>
-                            <td>
-                                @Html.DropDownList("ddlRoles", (IEnumerable<SelectListItem>)Model.Roles, "Select",
-                               new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                Appilcations<span id="spnApplications" class="field-validation-valid field-validation-error" data-valmsg-for="txtPSCode"
-                                                  data-valmsg-replace="true">*</span><br />
-
-                            </td>
-                            <td align="center" valign="middle">
-                                <table>
-                                    @foreach (var app in (IEnumerable<SelectListItem>)Model.EmpAssignedApps)
-                                    {
-                                        var chkId = "chk_" + app.Value;
-                                        <tr>
-                                            <td>
-                                               
-                                                <input id="@chkId" type="checkbox" name="@chkId" value="@app.Value" checked="@app.Selected" />
-                                            </td>
-                                            <td>
-                                                <label for="@app.Value">@app.Text</label>
-                                            </td>
-                                        </tr>
-                                    }
-                                </table>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Active
-                            </td>
-                            <td>
-                                <input id="chkActive" type="checkbox" name="chkActive" value="1" checked="checked" />
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td style="height:5px;"></td>
-            </tr>
-            <tr>
-                <td>
-                    <table border="1" style="width:100%" class="tblRoundCorner">
-                        <tr>
-                            <td colspan="2" align="center">
-                                <table id="tblButtons">
+                                <table class="tblRoundCorner" style="width:100%">
                                     <tr>
-                                        <td style="width:5px;"></td>
                                         <td>
-                                            @*<button id="btnSave" name="btnSave" class="btn-sm">Save</button>*@
-                                            @*<input type="submit" name="btnSave" value="Save" formaction="SaveForm" formmethod="post" class="btn-sm" />*@
-                                            <input type="submit" id="btnSave" value="Save" class="btn btn-outline-success border-0" />
+                                            Search User
                                         </td>
-                                        <td style="width:5px;"></td>
                                         <td>
-                                            @*<button id="btnClear" name="btnClear" class="btn-sm">Clear</button>*@
-                                            @*<input type="submit" name="btnClear" value="Clear" formaction="ClearForm" formmethod="post" class="btn-sm" />*@
-                                            <input type="button" id="btnClear" value="Clear" class="btn btn-outline-success border-0 cancel" />
+
+                                            @Html.TextBox("txtSearchUser", null, new { @class = "form-control PPATtextbox" })
                                         </td>
                                     </tr>
                                 </table>
                             </td>
-
                         </tr>
-                    </table>
-                </td>
-            </tr>
-        </tbody>
+                        <tr>
+                            <td style="height:5px;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table border="1" style="width:100%" class="tblRoundCorner">
+                                    <tr>
+                                        <td>
+                                            Employee ID<br />
+                                        </td>
+                                        <td>
+                                            <input type="hidden" id="hdnEmpId" name="hdnEmpId" value="0" />
+                                            @Html.TextBox("txtEmpId", '0', new { @class = "form-control PPATtextbox", disabled = "disabled" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            First Name<span class="field-validation-valid field-validation-error" data-valmsg-for="txtempFirstName"
+                                                            data-valmsg-replace="true">*</span><br />
+                                        </td>
+                                        <td>
+                                            @Html.TextBox("txtempFirstName", null,
+                                           new { @class = "form-control PPATtextbox", @data_val = "true", @data_val_required = " required" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Last Name<span class="field-validation-valid field-validation-error" data-valmsg-for="txtempLastName"
+                                                           data-valmsg-replace="true">*</span><br />
+                                        </td>
+                                        <td>
+                                            @Html.TextBox("txtempLastName", null,
+                                           new { @class = "form-control PPATtextbox", @data_val = "true", @data_val_required = " required" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Mobile<span class="field-validation-valid field-validation-error" data-valmsg-for="txtempMobile"
+                                                        data-valmsg-replace="true">*</span><br />
+                                        </td>
+                                        <td>
+                                            @Html.TextBox("txtempMobile", null,
+                                           new { @class = "form-control PPATtextbox", @data_val = "true", @data_val_required = " required" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Email
+                                        </td>
+                                        <td>
+                                            @Html.TextBox("txtempEmail", null, new { @class = "form-control PPATtextbox" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Address
+                                        </td>
+                                        <td>
+                                            @Html.TextBox("txtempAddress", null, new { @class = "form-control PPATtextbox" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            UserName<span class="field-validation-valid field-validation-error" data-valmsg-for="txtempUserName"
+                                                          data-valmsg-replace="true">*</span>
+                                        </td>
+                                        <td>
+                                            @Html.TextBox("txtempUserName", null,
+                                           new { @class = "form-control PPATtextbox", @data_val = "true", @data_val_required = " required" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Password<span class="field-validation-valid field-validation-error" data-valmsg-for="txtempPassword"
+                                                          data-valmsg-replace="true">*</span>
+                                        </td>
+                                        <td>
+                                            @Html.TextBox("txtempPassword", null,
+                                           new { @class = "form-control PPATtextbox", @data_val = "true", @data_val_required = " required" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Roles<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlRoles"
+                                                       data-valmsg-replace="true">*</span>
+                                        </td>
+                                        <td>
+                                            @Html.DropDownList("ddlRoles", (IEnumerable<SelectListItem>)Model.Roles, "Select",
+                                           new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            Appilcations<span id="spnApplications" class="field-validation-valid field-validation-error" data-valmsg-for="txtPSCode"
+                                                              data-valmsg-replace="true">*</span><br />
+
+                                        </td>
+                                        <td align="center" valign="middle">
+                                            <table>
+                                                @foreach (var app in (IEnumerable<SelectListItem>)Model.EmpAssignedApps)
+                                                {
+                                                    var chkId = "chk_" + app.Value;
+                                                    <tr>
+                                                        <td>
+
+                                                            <input id="@chkId" type="checkbox" name="@chkId" value="@app.Value" checked="@app.Selected" />
+                                                        </td>
+                                                        <td>
+                                                            <label for="@app.Value">@app.Text</label>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Active
+                                        </td>
+                                        <td>
+                                            <input id="chkActive" type="checkbox" name="chkActive" value="1" checked="checked" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="height:5px;"></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table border="1" style="width:100%" class="tblRoundCorner">
+                                    <tr>
+                                        <td colspan="2" align="center">
+                                            <table id="tblButtons">
+                                                <tr>
+                                                    <td style="width:5px;"></td>
+                                                    <td>
+                                                        @*<button id="btnSave" name="btnSave" class="btn-sm">Save</button>*@
+                                                        @*<input type="submit" name="btnSave" value="Save" formaction="SaveForm" formmethod="post" class="btn-sm" />*@
+                                                        <input type="submit" id="btnSave" value="Save" class="btn btn-outline-success border-0" />
+                                                    </td>
+                                                    <td style="width:5px;"></td>
+                                                    <td>
+                                                        @*<button id="btnClear" name="btnClear" class="btn-sm">Clear</button>*@
+                                                        @*<input type="submit" name="btnClear" value="Clear" formaction="ClearForm" formmethod="post" class="btn-sm" />*@
+                                                        <input type="button" id="btnClear" value="Clear" class="btn btn-outline-success border-0 cancel" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td valign="top" style="margin-left:10px;">
+                <a href="@Url.Action("DownloadExcelDocument", "Admin", new { id = "1" })">
+                    <img src="~/Images/excel.jpg" style="width:20px;height:20px;"/>
+                </a>
+            </td>
+        </tr>
     </table>
+
 }

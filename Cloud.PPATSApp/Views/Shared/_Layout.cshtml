@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model Cloud.PPATSApp.Models.ViewModels.EmployeeInfoViewModel;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -52,21 +54,30 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="PPAT" asp-action="ConstituencySettings">Settings</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="PPAT" asp-action="ConstituencySettings">AC Settings</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="PPAT" asp-action="Index">PPAT</a>
-                        </li>
+                        @*@if (Cloud.PPATSApp.Core.Authorization.CurrentUser.EmpApplications.Contains("PPAT"))
+                        {*@
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="PPAT" asp-action="Index">PPAT</a>
+                            </li>
+                        @*}*@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">PIG</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" q asp-controller="Home" asp-action="Privacy">SS</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">SS</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AdminConfig">Admin</a>
-                        </li>
+                        @*@if (Cloud.PPATSApp.Core.Authorization.CurrentUser.EmpRoleName == "Admin"
+                           || Cloud.PPATSApp.Core.Authorization.CurrentUser.EmpRoleName == "TechSupport")
+                        {*@
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AdminConfig">Admin</a>
+                            </li>
+                        @*}*@
+
                     </ul>
                 </div>
             </div>

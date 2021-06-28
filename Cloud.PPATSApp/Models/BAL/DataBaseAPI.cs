@@ -1,4 +1,5 @@
-﻿using Cloud.PPATSApp.Core;
+﻿using ClosedXML.Excel;
+using Cloud.PPATSApp.Core;
 using Cloud.PPATSApp.Models.ViewModels;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -6,9 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Cloud.PPATSApp.Models.BAL
 {
@@ -346,9 +349,7 @@ namespace Cloud.PPATSApp.Models.BAL
             try
             {
                 SqlParameter searchStringParam = new SqlParameter("@searchString", searchString);
-
                 var dbConnection = dbContext.Database.GetDbConnection().ConnectionString;
-
                 using (var con = new SqlConnection(dbConnection))
                 {
                     using (SqlCommand cmd = new SqlCommand("prcGetEmpSearchData", con))
@@ -518,11 +519,140 @@ namespace Cloud.PPATSApp.Models.BAL
             {
                 string msg = ex.Message;
             }
+        }
 
+        //protected DataTable Export()
+        //{
+        //    int i = 0;
+        //    int j = 0;
+        //    string sql = null;
+        //    string data = null;
+        //    Excel.Application xlApp;
+        //    Excel.Workbook xlWorkBook;
+        //    Excel.Worksheet xlWorkSheet;
+        //    object misValue = System.Reflection.Missing.Value;
+        //    xlApp = new Excel.Application();
+        //    xlApp.Visible = false;
+        //    xlWorkBook = (Excel.Workbook)(xlApp.Workbooks.Add(Missing.Value));
+        //    xlWorkSheet = (Excel.Worksheet)xlWorkBook.ActiveSheet;
+        //    string conn = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
+        //    SqlConnection con = newSqlConnection(conn);
+        //    con.Open();
+        //    var cmd = newSqlCommand("SELECT TOP 0 * FROM Person", con);
+        //    var reader = cmd.ExecuteReader();
+        //    int k = 0;
+        //    for (i = 0; i < reader.FieldCount; i++)
+        //    {
+        //        data = (reader.GetName(i));
+        //        xlWorkSheet.Cells[1, k + 1] = data;
+        //        k++;
+        //    }
+        //    char lastColumn = (char)(65 + reader.FieldCount - 1);
+        //    xlWorkSheet.get_Range("A1", lastColumn + "1").Font.Bold = true;
+        //    xlWorkSheet.get_Range("A1", lastColumn + "1").VerticalAlignment = Excel.XlVAlign.xlVAlignCenter;
+        //    reader.Close();
+        //    sql = "SELECT * FROM Person";
+        //    SqlDataAdapter dscmd = newSqlDataAdapter(sql, con);
+        //    DataSet ds = newDataSet();
+        //    dscmd.Fill(ds);
+        //    for (i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+        //    {
+        //        var newj = 0;
+        //        for (j = 0; j <= ds.Tables[0].Columns.Count - 1; j++)
+        //        {
+        //            data = ds.Tables[0].Rows[i].ItemArray[j].ToString();
+        //            xlWorkSheet.Cells[i + 2, newj + 1] = data;
+        //            newj++;
+        //        }
+        //    }
+        //    xlWorkBook.Close(true, misValue, misValue);
+        //    xlApp.Quit();
+        //    release Object(xlWorkSheet);
+        //    release Object(xlWorkBook);
+        //    release Object(xlApp);
+        //}
+        //public DataTable ExportDataFromSQLServer()
+        //{
+        //    DataTable dataTable = new DataTable();
+        //    List<EmployeeInfo> lstEmployees = new List<EmployeeInfo>();
+        //    DataSet dsEmp = new DataSet();
+        //    try
+        //    {
+        //        // Define the query to be performed to export desired data
+        //        //SqlCommand command = new SqlCommand("select * from Partners", connection);
 
+        //        //SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
 
+        //        //SqlParameter searchStringParam = new SqlParameter("@searchString", searchString);
+        //        var dbConnection = dbContext.Database.GetDbConnection().ConnectionString;
+        //        using (var con = new SqlConnection(dbConnection))
+        //        {
+        //            using (SqlCommand cmd = new SqlCommand("prcExportUserDataToExcel", con))
+        //            {
+        //                using (var da = new SqlDataAdapter(cmd))
+        //                {
+        //                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+        //                    //cmd.Parameters.Add(searchStringParam);
+        //                    da.Fill(dataTable);
+        //                }
+        //            }
+        //        }
 
+        //        lstEmployees = CommonExtensions.CreateListFromTable(dataTable);
+        //        //dataAdapter.Fill(dataTable);
 
+        //        var excelApplication = new Excel.Application();
+        //        var excelWorkBook = excelApplication.Application.Workbooks.Add(Type.Missing);
+        //        DataColumnCollection dataColumnCollection = dataTable.Columns;
+        //        for (int i = 1; i <= dataTable.Rows.Count + 1; i++)
+        //        {
+        //            for (int j = 1; j <= dataTable.Columns.Count; j++)
+        //            {
+        //                if (i == 1)
+        //                    excelApplication.Cells[i, j] = dataColumnCollection[j - 1].ToString();
+        //                else
+        //                    excelApplication.Cells[i, j] = dataTable.Rows[i - 2][j - 1].ToString();
+        //            }
+        //        }
+
+        //        // Save the excel file at specified location
+        //        excelApplication.ActiveWorkbook.SaveCopyAs(@"C:\Users\Satish Kumar\Desktop\BKP\test.xlsx");
+        //        excelApplication.ActiveWorkbook.Saved = true;
+        //        // Close the Excel Application
+        //        excelApplication.Quit();
+
+        //        //Release or clear the COM object
+        //        releaseObject(excelWorkBook);
+        //        releaseObject(excelApplication);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        string msg = ex.Message;
+        //    }
+            
+        //    return dataTable;
+        //}
+        private void releaseObject(object obj)
+        {
+            try
+            {
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
+                obj = null;
+            }
+            catch
+            {
+                obj = null;
+                //MessageBox.Show("Exception Occured while releasing object " + ex.ToString());  
+            }
+            finally
+            {
+                GC.Collect();
+            }
+        }
+
+        public void DownloadExcelDocument(string id)
+        {
+            
         }
         //private  List<T> MapToList<T>(this DbDataReader dr)
         //{

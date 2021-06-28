@@ -599,3 +599,56 @@ BEGIN
 	Order by EmpFirstName, EmpLastName asc
 
 END
+
+GO
+ 
+ 
+Alter Procedure prcExportUserDataToExcel
+ 
+AS 
+/***************************************
+ID		Date		Change
+----------------------------------------
+1		25-Jun-21	Initial Development
+prcGetEmpSearchData 'ba'
+***************************************/
+BEGIN
+	Select 
+	U.UserId
+	,U.UserDisplayName
+,U.Gender
+,U.UserAge
+,U.UserMobile
+,U.Occupation
+,U.EducationCode
+,U.CommunityCode
+,U.SubCasteCode
+,U.IFCode
+,U.SFCode
+,U.PRFCode
+,U.VPFCode
+,U.PIFCode
+,U.Remarks 
+,U.MeasureAppCode
+,U.StateCode
+,U.MandalCode
+,U.VillageCode
+,pa.PCCode
+,pa.PCName
+,ac.ACCode
+,ac.ACName
+,aps.PSCode
+,aps.PSName
+,u.CreatedBy
+,u.CreatedDate
+,u.ModifiedBy
+,u.ModifiedDate
+from UserInfo U
+	JOIN ParliamentLookUp pa on pa.PCCode = u.PCCode
+	JOIN AssemblyLookUp AC on AC.ACCode = u.ACCode
+	JOIN AssemblyPollingStationLookUp aps on aps.PSCode = u.PSCode
+END
+
+
+
+GO

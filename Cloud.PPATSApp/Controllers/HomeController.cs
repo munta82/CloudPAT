@@ -53,13 +53,14 @@ namespace Cloud.PPATSApp.Controllers
             {
                 using (CloudPATContext db = new CloudPATContext())
                 {
+                    DataSet dsEmployeeInfo = new DataSet();
                     var obj = _db.EmployeeInfos.Where(a => a.EmpUsername.Equals(employeeInfo.EmpUsername) && a.EmpPassword.Equals(employeeInfo.EmpPassword)).FirstOrDefault();
                     if (obj != null)
                     {
-                        DataSet dsEmployeeInfo = new DataSet();
                         dsEmployeeInfo = databaseAPI.CheckUserAuthetication(employeeInfo.EmpUsername, employeeInfo.EmpPassword);
                         if (dsEmployeeInfo.Tables[0].Rows[0].ItemArray[0].ToString() == "-1")
                         {
+                            ViewBag.LoginMessage = "You are not authorized user. Please contact your admin";
                             return ViewLogin(dsEmployeeInfo);
                         }
                         else
@@ -75,6 +76,9 @@ namespace Cloud.PPATSApp.Controllers
                             }
                             else
                             {
+                                //Access code should be here
+                                //Authorization.setCurrentUserInfo(dsEmployeeInfo);
+
                                 string LaunchingApp = dsEmployeeInfo.Tables[1].Rows[0].ItemArray[2].ToString();
                                 if (LaunchingApp == "PPAT")
                                 {
@@ -92,41 +96,68 @@ namespace Cloud.PPATSApp.Controllers
                         }
                         return ViewLogin(dsEmployeeInfo);
                     }
+                    else
+                    {
+                        ViewBag.LoginMessage = "You are not authorized user. Please contact your admin";
+                        return ViewLogin(dsEmployeeInfo);
+                    }
                 }
             }
 
             return View("_Login");
         }
 
+        private void setCurrentUserInfo1(DataSet dsEmpInfo)
+        { 
+            Authorization.CurrentUser.EmpId = Convert.ToInt16(dsEmpInfo.Tables[0].Rows[0]["EmpId"].ToString());
+            Authorization.CurrentUser.EmpFirstName = dsEmpInfo.Tables[0].Rows[0]["EmpFirstName"].ToString();
+            Authorization.CurrentUser.EmpLastName = dsEmpInfo.Tables[0].Rows[0]["EmpLastName"].ToString();
+            Authorization.CurrentUser.EmpAddress = dsEmpInfo.Tables[0].Rows[0]["EmpAddress"].ToString();
+            Authorization.CurrentUser.EmpPhone = dsEmpInfo.Tables[0].Rows[0]["EmpPhone"].ToString();
+            Authorization.CurrentUser.EmpEmail = dsEmpInfo.Tables[0].Rows[0]["EmpEmail"].ToString();
+            Authorization.CurrentUser.EmpUsername = dsEmpInfo.Tables[0].Rows[0]["EmpUsername"].ToString();
+            Authorization.CurrentUser.EmpPassword = dsEmpInfo.Tables[0].Rows[0]["EmpPassword"].ToString();
+            Authorization.CurrentUser.IsActive = dsEmpInfo.Tables[0].Rows[0]["IsActive"].ToString();
+            Authorization.CurrentUser.EmpRoleId = Convert.ToInt16(dsEmpInfo.Tables[0].Rows[0]["RoleId"].ToString());
+            Authorization.CurrentUser.EmpRoleName = dsEmpInfo.Tables[0].Rows[0]["RoleName"].ToString();
 
-        [HttpPost]
-        public IActionResult AuthenticateUser(string username, string password)
-        {
-            List<EmployeeInfo> list;
-            DataSet dsEmployeeInfo = new DataSet();
-            dsEmployeeInfo = databaseAPI.CheckUserAuthetication(username, password);
-            if (dsEmployeeInfo.Tables[0].Rows[0].ItemArray[0].ToString() == "-1")
+            List<String> EmpAssignedApps = new List<String>();
+
+            foreach(DataRow dr in dsEmpInfo.Tables[1].Rows)
             {
-                return ViewLogin(dsEmployeeInfo);
+                EmpAssignedApps.Add(dr["AppCode"].ToString());
             }
-            else
-            {
-                string LaunchingApp = dsEmployeeInfo.Tables[1].Rows[0].ItemArray[2].ToString();
-                if (LaunchingApp == "PPAT")
-                {
-                    return ViewPPAT(dsEmployeeInfo);// View("_PPAT", dsEmployeeInfo);
-                }
-                else if (LaunchingApp == "PIG")
-                {
-                    return ViewPPAT(dsEmployeeInfo);  //return View("_PIG", dsEmployeeInfo);
-                }
-                else if (LaunchingApp == "SS")
-                {
-                    return ViewPPAT(dsEmployeeInfo);  //return View("_SS", dsEmployeeInfo);
-                }
-            }
-            return ViewLogin(dsEmployeeInfo);
+            Authorization.CurrentUser.EmpApplications = EmpAssignedApps;
+
         }
+        //[HttpPost]
+        //public IActionResult AuthenticateUser(string username, string password)
+        //{
+        //    List<EmployeeInfo> list;
+        //    DataSet dsEmployeeInfo = new DataSet();
+        //    dsEmployeeInfo = databaseAPI.CheckUserAuthetication(username, password);
+        //    if (dsEmployeeInfo.Tables[0].Rows[0].ItemArray[0].ToString() == "-1")
+        //    {
+        //        return ViewLogin(dsEmployeeInfo);
+        //    }
+        //    else
+        //    {
+        //        string LaunchingApp = dsEmployeeInfo.Tables[1].Rows[0].ItemArray[2].ToString();
+        //        if (LaunchingApp == "PPAT")
+        //        {
+        //            return ViewPPAT(dsEmployeeInfo);// View("_PPAT", dsEmployeeInfo);
+        //        }
+        //        else if (LaunchingApp == "PIG")
+        //        {
+        //            return ViewPPAT(dsEmployeeInfo);  //return View("_PIG", dsEmployeeInfo);
+        //        }
+        //        else if (LaunchingApp == "SS")
+        //        {
+        //            return ViewPPAT(dsEmployeeInfo);  //return View("_SS", dsEmployeeInfo);
+        //        }
+        //    }
+        //    return ViewLogin(dsEmployeeInfo);
+        //}
 
         private ActionResult ViewLogin(DataSet ds)
         {

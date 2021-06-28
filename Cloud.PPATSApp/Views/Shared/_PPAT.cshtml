@@ -1,6 +1,9 @@
 ﻿<style>
     .modal-dialog{
-        width:230px !important;
+        width:250px !important;
+    }
+    #tblPreview td{
+        height:5px;
     }
 </style>
 <script type="text/javascript">
@@ -144,6 +147,24 @@
             $("#lblAssembly").text($("#ddlAssembly option:selected").text());
             $("#lblMandal").text($("#ddlMandal option:selected").text());
             $("#lblVillage").text($("#ddlVillage option:selected").text());
+
+            $("#lblPSName").text($("#txtPSName").val());
+            $("#lblPSCode").text($("#txtPSCode").val());
+            $("#lblName").text($("#txtUserDisplayName").val());
+            $("#lblAge").text($("#txtUserAge").val());
+            $("#lblGender").text($("#ddlGender option:selected").text());
+            $("#lblMobile").text($("#txtMobile").val());
+            $("#lblEducation").text($("#ddlEducation option:selected").text());
+            $("#lblOccupation").text($("#txtOccupation").val());
+
+            $("#lblCommunity").text($("#ddlCommunity option:selected").text());
+            $("#lblSubCaste").text($("#txtSubCaste").val());
+            $("#lblIF").text($("#ddlIFParty option:selected").text());
+            $("#lblSF").text($("#ddlPPAT_SF option:selected").text());
+            $("#lblPRF").text($("#ddlPPAT_VPF option:selected").text());
+            $("#lblVPF").text($("#ddlPPAT_VPF option:selected").text());
+            $("#lblPIF").text($("#ddlPPAT_PIF option:selected").text());
+            $("#lblRemarks").text($("#txtRemarks").val());            
         });
 
         $("#btnPreviewClose,#btnClosePreview").click(function () {
@@ -156,6 +177,11 @@
             //$("form").attr("action", "/PPAT/ClearForm");
         });
 
+        $("#btnClear").click(function () {
+            //$("input:text").val("");
+            //$("select#elem").prop('selectedIndex', 0);
+        })
+        
     });
 </script>
 @*@using (Html.BeginForm("SaveUserInfo", "PPAT"))*@
@@ -367,7 +393,7 @@
                                     <td>
                                         @*<button id="btnClear" name="btnClear" class="btn-sm">Clear</button>*@
                                         @*<input type="submit" name="btnClear" value="Clear" formaction="ClearForm" formmethod="post" class="btn-sm" />*@
-                                        <input type="submit" id="btnClear" value="Clear" class="btn btn-outline-success border-0 cancel" />
+                                        <input type="button" id="btnClear" value="Clear" class="btn btn-outline-success border-0 cancel" />
                                     </td>
                                 </tr>
                             </table>
@@ -385,8 +411,13 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>*@
+                             <div>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnClosePreview">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
                             <div class="modal-body">
-                                <table border="1">
+                                <table border="1" id="tblPreview">
                                     <tr>
                                         <td>Measuring Application</td>
                                         <td>:</td>
