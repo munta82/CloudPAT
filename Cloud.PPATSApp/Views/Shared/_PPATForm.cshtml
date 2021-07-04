@@ -1,0 +1,397 @@
+﻿<style>
+    .modal-dialog {
+        width: 250px !important;
+    }
+
+    #tblPreview td {
+        height: 5px;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#ddlMeasuringApp").on("change", function () {
+            $("#hdnMeasuringApp").val($(this).find("option:selected").text());
+        });
+        //Loading of page
+        $("#ddlStates").prop("disabled", true);
+        $("#ddlParliament").prop("disabled", true);
+        $("#ddlAssembly").prop("disabled", true);
+        $("#ddlMandal").prop("disabled", true);
+        $("#ddlVillage").prop("disabled", true);
+        if ($("#txtPSName").val() == null || $("#txtPSName").val() == "") {
+            $("#txtPSName").prop("disabled", false);
+        }
+        else {
+            $("#txtPSName").prop("disabled", true);
+        }
+        //Loading of page
+
+        $("#btnPSGo").click(function () {
+
+            var psCodeval = $("#txtPSCode").val();
+            if (psCodeval == "") {
+                alert("Please enter PS Code");
+                return false;
+            }
+            $.ajax({
+                type: "POST",
+                url: "/PPAT/GetPPATPollingStationData",
+                dataType: "json",
+                cache: false,
+                async: false,
+                data: {
+                    PSCode: psCodeval
+                },
+                success: function (data) {
+                    //debugger;
+                    $("#ddlStates").val(data.stateCode);
+                    $("#ddlParliament").val(data.pccode);
+                    $("#ddlAssembly").val(data.accode);
+                    $("#ddlMandal").val(data.mandalCode);
+                    $("#ddlVillage").val(data.villageCode);
+                    $("#txtPSName").val(data.psname);
+
+                    $("#ddlStates").prop("disabled", true);
+                    $("#ddlParliament").prop("disabled", true);
+                    $("#ddlAssembly").prop("disabled", true);
+                    $("#ddlMandal").prop("disabled", true);
+                    $("#ddlVillage").prop("disabled", true);
+                    if (data.psname == null || data.psname == "") {
+                        $("#txtPSName").prop("disabled", false);
+                    }
+                    else {
+                        $("#txtPSName").prop("disabled", true);
+                    }
+                    console.log(data);
+                },
+                error: function (jqXhr, textStatus, errorMessage) {
+                    //debugger;
+
+                    //console.log("AJAX ERROR:", data);
+                }
+            });
+        });
+
+
+        $("#txtSubCaste").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    type: "POST",
+                    url: "/PPAT/GetPPATSubCasteData",
+                    dataType: "json",
+                    cache: false,
+                    async: false,
+                    maxShowItems: 5,
+                    minLength: 2,
+                    data: {
+                        searchString: $("#txtSubCaste").val(),
+                        communityCode: $("#ddlCommunity").val()
+                    },
+                    success: function (data) {
+                        //debugger;
+                        response($.map(data, function (item) {
+                            //debugger;
+                            return {
+                                label: item.subCasteName,
+                                value: item.subCasteCode
+
+                            }
+                        }));
+
+                        console.log(data);
+                    },
+                    error: function (jqXhr, textStatus, errorMessage) {
+                        //debugger;
+                        if (jqXhr.responseText.indexOf('maxJsonLength') > -1) {
+                            alert("Search results exceeds max records. Plese refine your search with more characters");
+                        }
+                    }
+                });
+            },
+            minLength: 2,
+            select: function (evet, ui) {
+                //debugger;
+                var subcastecode = ui.item.value;
+                $("#txtSubCaste").val(ui.item.label);
+            }
+        });
+
+        $("#btnSave").click(function () {
+            //e.preventDefault();
+            //var selectedOption = $("#CountryId option:selected").text();
+            //// Add the selected drop down text to a hidden field
+            //$("<input/>", { type: 'hidden', name: 'countryName' }).val(selectedOption).appendTo("#someForm");
+
+
+            $("#ddlStates").prop("disabled", false);
+            $("#ddlParliament").prop("disabled", false);
+            $("#ddlAssembly").prop("disabled", false);
+            $("#ddlMandal").prop("disabled", false);
+            $("#ddlVillage").prop("disabled", false);
+            $("#txtPSName").prop("disabled", false);
+
+            $("form").attr("action", "/PPAT/SaveForm");
+        });
+
+        $("#btnPreview").click(function () {
+
+            $("#ddlStates").prop("disabled", false);
+            $("#ddlParliament").prop("disabled", false);
+            $("#ddlAssembly").prop("disabled", false);
+            $("#ddlMandal").prop("disabled", false);
+            $("#ddlVillage").prop("disabled", false);
+            $("#txtPSName").prop("disabled", false);
+
+            $("#lblMeasuringApplication").text($("#ddlMeasuringApp option:selected").text());
+            $("#lblState").text($("#ddlStates option:selected").text());
+            $("#lblParliament").text($("#ddlParliament option:selected").text());
+            $("#lblAssembly").text($("#ddlAssembly option:selected").text());
+            $("#lblMandal").text($("#ddlMandal option:selected").text());
+            $("#lblVillage").text($("#ddlVillage option:selected").text());
+
+            $("#lblPSName").text($("#txtPSName").val());
+            $("#lblPSCode").text($("#txtPSCode").val());
+            $("#lblName").text($("#txtUserDisplayName").val());
+            $("#lblAge").text($("#txtUserAge").val());
+            $("#lblGender").text($("#ddlGender option:selected").text());
+            $("#lblMobile").text($("#txtMobile").val());
+            $("#lblEducation").text($("#ddlEducation option:selected").text());
+            $("#lblOccupation").text($("#txtOccupation").val());
+
+            $("#lblCommunity").text($("#ddlCommunity option:selected").text());
+            $("#lblSubCaste").text($("#txtSubCaste").val());
+            $("#lblIF").text($("#ddlIFParty option:selected").text());
+            $("#lblSF").text($("#ddlPPAT_SF option:selected").text());
+            $("#lblPRF").text($("#ddlPPAT_VPF option:selected").text());
+            $("#lblVPF").text($("#ddlPPAT_VPF option:selected").text());
+            $("#lblPIF").text($("#ddlPPAT_PIF option:selected").text());
+            $("#lblRemarks").text($("#txtRemarks").val());
+        });
+
+        $("#btnPreviewClose,#btnClosePreview").click(function () {
+            $("#ddlStates").prop("disabled", true);
+            $("#ddlParliament").prop("disabled", true);
+            $("#ddlAssembly").prop("disabled", true);
+            $("#ddlMandal").prop("disabled", true);
+            $("#ddlVillage").prop("disabled", true);
+            $("#txtPSName").prop("disabled", true);
+            //$("form").attr("action", "/PPAT/ClearForm");
+        });
+
+        $("#btnClear").click(function () {
+            //$("input:text").val("");
+            //$("select#elem").prop('selectedIndex', 0);
+        })
+
+    });
+</script>
+
+@using (Html.BeginForm())
+{
+    <div class="col-10 mt-4">
+        <input type="hidden" id="hdnMeasuringApp" name="hdnMeasuringApp" value="" />
+        <div class="border p-3">
+            <div class="row mb-3 ">
+
+                <div class="col-sm-2">
+                    <label for="formControlInput1" class=" col-form-label">Measure Application</label>
+                    <span class="field-validation-valid field-validation-error" data-valmsg-for="ddlMeasuringApp"
+                          data-valmsg-replace="true">*</span>
+                </div>
+                <div class="col-sm-1" style="margin-top:10px;">:</div>
+                <div class="col-sm-2">
+                    @Html.DropDownList("ddlMeasuringApp", (IEnumerable<SelectListItem>)ViewBag.ddlMeasuringApp, "Select",
+                                        new
+                                            {
+                                                @class = "form-control valid PPATDropdownlist",
+                                       @data_val = "true",
+                                                @data_val_required = " required"
+                                            })
+                </div>
+            </div>
+        </div>
+        <div class="border p-3">
+            <div class="row mb-3">
+                <div class="col-sm-3">
+                    <label for="exampleFormControlInput1" class="form-label">State</label>
+                    <span class="field-validation-valid field-validation-error" data-valmsg-for="ddlStates"
+                          data-valmsg-replace="true">*</span>
+                    @Html.DropDownList("ddlStates", (IEnumerable<SelectListItem>)ViewBag.ddlStates, "Select",
+                           new { @class = "form-control valid PPATDropdownlist", @data_val = "true", @data_val_required = " required" })
+                </div>
+                <div class="col-sm-3">
+                    <label for="exampleFormControlInput1" class="form-label">Parliament</label>
+                    <span class="field-validation-valid field-validation-error" data-valmsg-for="ddlParliament"
+                          data-valmsg-replace="true">*</span>
+                    @Html.DropDownList("ddlParliament", ViewBag.ddlParliament as SelectList, "Select",
+                          new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
+                </div>
+                <div class="col-sm-3">
+                    <label for="exampleFormControlInput1" class="form-label">Assembly</label>
+                    <span class="field-validation-valid field-validation-error" data-valmsg-for="ddlAssembly"
+                          data-valmsg-replace="true">*</span>
+                    @Html.DropDownList("ddlAssembly", ViewBag.ddlAssembly as SelectList, "Select",
+                           new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
+                </div>
+
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-3">
+                    <label for="exampleFormControlInput1" class="form-label">Mandal</label>
+                    <span class="field-validation-valid field-validation-error" data-valmsg-for="ddlMandal"
+                          data-valmsg-replace="true">*</span>
+                    @Html.DropDownList("ddlMandal", ViewBag.ddlMandal as SelectList, "Select",
+                           new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
+                </div>
+                <div class="col-sm-3">
+                    <label for="exampleFormControlInput1" class="form-label">Village</label>
+                    <span class="field-validation-valid field-validation-error" data-valmsg-for="ddlVillage"
+                          data-valmsg-replace="true">*</span>
+                    @Html.DropDownList("ddlVillage", ViewBag.ddlVillage as SelectList, "Select",
+                          new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
+                </div>
+                <div class="col-sm-3">
+                    <label for="exampleFormControlInput1" class="form-label">PS Code</label>
+                    <span class="field-validation-valid field-validation-error" data-valmsg-for="txtPSCode"
+                          data-valmsg-replace="true">*</span>
+                    @Html.TextBox("txtPSCode", (object)ViewBag.PSCode,
+                          new { @class = "form-control PPATtextbox valid", @data_val = "true", @data_val_required = " required" })
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-3">
+                    <label for="exampleFormControlInput1" class="form-label">PS Name</label>
+                    @Html.TextBox("txtPSName", (object)ViewBag.PSName, new { @class = "form-control PPATtextbox" })
+                </div>
+                <div class="col-sm-3">
+                    <a href="#" id="btnPSGo">
+                        <img alt="go" src="~/Images/btn_go_blue.jpg" height="25px" width="25px" />
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="border p-3 mt-4">
+            <div class="row mb-3">
+                <div class="col-sm-3">
+                    <label for="exampleFormControlInput1" class="form-label">Name</label>
+                    <span class="field-validation-valid field-validation-error" data-valmsg-for="txtUserDisplayName"
+                          data-valmsg-replace="true">*</span>
+                    @Html.TextBox("txtUserDisplayName", null,
+                           new { @class = "form-control PPATtextbox valid", @data_val = "true", @data_val_required = " required" })
+                </div>
+                <div class="col-sm-3">
+                    <label for="exampleFormControlInput1" class="form-label">Age</label>
+                    <span class="field-validation-valid field-validation-error" data-valmsg-for="txtUserAge"
+                          data-valmsg-replace="true">*</span>
+                    @Html.TextBox("txtUserAge", null,
+                          new { @class = "form-control PPATtextbox valid", @data_val = "true", @data_val_required = " required" })
+                </div>
+                <div class="col-sm-3">
+                    <label for="exampleFormControlInput1" class="form-label">Gender</label>
+                    <span class="field-validation-valid field-validation-error" data-valmsg-for="ddlGender"
+                          data-valmsg-replace="true">*</span>
+                    @Html.DropDownList("ddlGender", ViewBag.ddlGender as SelectList, "Select",
+                           new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-3">
+                    <label for="exampleFormControlInput1" class="form-label">Mobile</label>
+                    <span class="field-validation-valid field-validation-error" data-valmsg-for="txtMobile"
+                          data-valmsg-replace="true">*</span>
+                    @Html.TextBox("txtMobile", null,
+                           new { @class = "form-control PPATtextbox valid", @data_val = "true", @data_val_required = " required" })
+                </div>
+                <div class="col-sm-3">
+                    <label for="exampleFormControlInput1" class="form-label">Occupation</label>
+                    @Html.TextBox("txtOccupation", null, new { @class = "form-control PPATtextbox" })
+                </div>
+                <div class="col-sm-3">
+                    <label for="exampleFormControlInput1" class="form-label">Education</label>
+                    <span class="field-validation-valid field-validation-error" data-valmsg-for="ddlEducation"
+                          data-valmsg-replace="true">*</span>
+                    @Html.DropDownList("ddlEducation", ViewBag.ddlEducation as SelectList, "Select",
+                           new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " is required" })
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-3">
+                    <label for="exampleFormControlInput1" class="form-label">Community</label>
+                    <span class="field-validation-valid field-validation-error" data-valmsg-for="ddlCommunity"
+                          data-valmsg-replace="true">*</span>
+                    @Html.DropDownList("ddlCommunity", ViewBag.ddlCommunity as SelectList, "Select",
+                           new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
+                </div>
+                <div class="col-sm-3">
+                    <label for="exampleFormControlInput1" class="form-label">Sub-Caste</label>
+                    @Html.TextBox("txtSubCaste", null, new { @class = "form-control PPATtextbox" })
+                </div>
+                <div class="col-sm-3">
+                    <label for="exampleFormControlInput1" class="form-label">IF</label>
+                    <span class="field-validation-valid field-validation-error" data-valmsg-for="ddlIFParty"
+                          data-valmsg-replace="true">*</span>
+                    @Html.DropDownList("ddlIFParty", ViewBag.ddlIFParty as SelectList, "Select",
+                            new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-3">
+                    <label for="exampleFormControlInput1" class="form-label">SF</label>
+                    <span class="field-validation-valid field-validation-error" data-valmsg-for="ddlPPAT_SF"
+                          data-valmsg-replace="true">*</span>
+                    @Html.DropDownList("ddlPPAT_SF", ViewBag.ddlPPAT_SF as SelectList, "Select",
+                          new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
+                </div>
+                <div class="col-sm-3">
+                    <label for="exampleFormControlInput1" class="form-label">PRF</label>
+                    <span class="field-validation-valid field-validation-error" data-valmsg-for="ddlPPAT_PRF"
+                          data-valmsg-replace="true">*</span>
+                    @Html.DropDownList("ddlPPAT_PRF", ViewBag.ddlPPAT_PRF as SelectList, "Select",
+                           new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
+                </div>
+                <div class="col-sm-3">
+                    <label for="exampleFormControlInput1" class="form-label">VPF</label>
+                    <span class="field-validation-valid field-validation-error" data-valmsg-for="ddlPPAT_VPF"
+                          data-valmsg-replace="true">*</span>
+                    @Html.DropDownList("ddlPPAT_VPF", ViewBag.ddlPPAddlPPAT_VPFT_SF as SelectList, "Select",
+                           new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-3">
+                    <label for="exampleFormControlInput1" class="form-label">PIF</label>
+                    <span class="field-validation-valid field-validation-error" data-valmsg-for="ddlPPAT_PIF"
+                          data-valmsg-replace="true">*</span>
+                    @Html.DropDownList("ddlPPAT_PIF", ViewBag.ddlPPAT_PIF as SelectList, "Select",
+                          new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
+                </div>
+                <div class="col-sm-3">
+                    <label for="exampleFormControlInput1" class="form-label">Remarks</label><br />
+                    @Html.TextArea("txtRemarks", string.Empty, 2, 15, null)
+                </div>
+
+            </div>
+
+            <div class="row ">
+                <div class="col-sm-3">
+                    <input id="btnPreview" value="Preview"
+                           formnovalidate="formnovalidate"
+                           type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" />
+                </div>
+                <div class="col-sm-3">
+                    <input type="submit" id="btnSave" value="Save" class="btn-sm" />
+                </div>
+                <div class="col-sm-3">
+                    <input type="button" id="btnClear" value="Clear" class="btn btn-outline-success border-0 cancel" />
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+}
+

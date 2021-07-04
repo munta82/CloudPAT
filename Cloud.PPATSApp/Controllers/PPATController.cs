@@ -74,7 +74,8 @@ namespace Cloud.PPATSApp.Controllers
                 new SelectListItem {Text="OTH",Value="OTH"}
             };
             ViewBag.ddlGender = ddlGender;
-            return View("_PPAT");
+            //return View("_PPAT");
+            return View("_PPATForm");
         }
         public AssemblyPollingStationLookUp GetPPATPollingStationData(string PSCode)
         {
@@ -241,6 +242,64 @@ namespace Cloud.PPATSApp.Controllers
                 return new SelectList(list, "Value", "Text", selectText);
             else
                 return new SelectList(list, "Value", "Text");
+        }
+
+        public IActionResult PPATMobile(DataSet dsEmployeeInfo)
+        {
+            DataSet dsPPAT = new DataSet();
+            dsPPAT = databaseAPI.GetPPATMasterInfo("PPAT");
+            //IEnumerable<MeasuringApplicationMapping> PPATMeasuringApp =
+
+            //ViewBag.ddlMeasuringApp = new SelectList(dsPPAT.Tables[0].AsDataView(), "MeasureAppMapId", "MeasureAppCode");            
+
+            EmployeeAcSetting objEmpACSettingsData = new EmployeeAcSetting();
+            objEmpACSettingsData = databaseAPI.GetEmployeeACSettings(Convert.ToInt16(HttpContext.Session.GetString("LoginEmpId").ToString()), "PPAT");
+            if (objEmpACSettingsData != null)
+            {
+                ViewBag.ddlMeasuringApp = ToSelectList(dsPPAT.Tables[0], "MeasureAppMapId", "MeasureAppCode", objEmpACSettingsData.MeasuringAppCode);
+                ViewBag.ddlStates = ToSelectList(dsPPAT.Tables[1], "StateCode", "StateName", objEmpACSettingsData.StateCode);
+                ViewBag.ddlParliament = ToSelectList(dsPPAT.Tables[2], "PCCode", "PCName", objEmpACSettingsData.Pccode);
+                ViewBag.ddlAssembly = ToSelectList(dsPPAT.Tables[3], "ACCode", "ACName", objEmpACSettingsData.Accode);
+                ViewBag.ddlMandal = ToSelectList(dsPPAT.Tables[4], "MandalCode", "MandalName", objEmpACSettingsData.MandalCode);
+                ViewBag.ddlVillage = ToSelectList(dsPPAT.Tables[5], "VillageCode", "VillageName", objEmpACSettingsData.VillageCode);
+                ViewBag.PSCode = objEmpACSettingsData.Pscode;
+                ViewBag.PSName = objEmpACSettingsData.Psname;
+            }
+            else
+            {
+                ViewBag.ddlMeasuringApp = ToSelectList(dsPPAT.Tables[0], "MeasureAppMapId", "MeasureAppCode");
+                ViewBag.ddlStates = ToSelectList(dsPPAT.Tables[1], "StateCode", "StateName");
+                ViewBag.ddlParliament = ToSelectList(dsPPAT.Tables[2], "PCCode", "PCName");
+                ViewBag.ddlAssembly = ToSelectList(dsPPAT.Tables[3], "ACCode", "ACName");
+                ViewBag.ddlMandal = ToSelectList(dsPPAT.Tables[4], "MandalCode", "MandalName");
+                ViewBag.ddlVillage = ToSelectList(dsPPAT.Tables[5], "VillageCode", "VillageName");
+                ViewBag.PSCode = "";
+                ViewBag.PSName = "";
+            }
+
+            //ViewBag.ddlMeasuringApp = ToSelectList(dsPPAT.Tables[0], "MeasureAppMapId", "MeasureAppCode");
+            //ViewBag.ddlStates = ToSelectList(dsPPAT.Tables[1], "StateCode", "StateName");
+            //ViewBag.ddlParliament = ToSelectList(dsPPAT.Tables[2], "PCCode", "PCName");
+            //ViewBag.ddlAssembly = ToSelectList(dsPPAT.Tables[3], "ACCode", "ACName");
+            //ViewBag.ddlMandal = ToSelectList(dsPPAT.Tables[4], "MandalCode", "MandalName");
+            //ViewBag.ddlVillage = ToSelectList(dsPPAT.Tables[5], "VillageCode", "VillageName");
+            ViewBag.ddlEducation = ToSelectList(dsPPAT.Tables[6], "EducationCode", "EducationName");
+            ViewBag.ddlCommunity = ToSelectList(dsPPAT.Tables[7], "CommunityCode", "CommunityName");
+            ViewBag.ddlIFParty = ToSelectList(dsPPAT.Tables[8], "IFCode", "IFName");
+            ViewBag.ddlPPAT_SF = ToSelectList(dsPPAT.Tables[9], "PPAT_SFCode", "PPAT_SFName");
+            ViewBag.ddlPPAT_PRF = ToSelectList(dsPPAT.Tables[10], "PPAT_PRFCode", "PPAT_PRFName");
+            ViewBag.ddlPPAT_VPF = ToSelectList(dsPPAT.Tables[11], "PPAT_VPFCode", "PPAT_VPFName");
+            ViewBag.ddlPPAT_PIF = ToSelectList(dsPPAT.Tables[12], "PPAT_PIFCode", "PPAT_PIFName");
+
+            List<SelectListItem> ddlGender = new List<SelectListItem>()
+            {
+                new SelectListItem {Text="M",Value="M",Selected=true },
+                new SelectListItem {Text="F",Value="F" },
+                new SelectListItem {Text="OTH",Value="OTH"}
+            };
+            ViewBag.ddlGender = ddlGender;
+            return View("_PPAT");
+            //return View("_PPATForm");
         }
     }
 }

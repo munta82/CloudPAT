@@ -52,6 +52,12 @@ namespace Cloud.PPATSApp
             services.AddMvc();
 
             //services.AddHttpContextAccessor();
+            services.AddAuthentication("auth")
+            .AddCookie("auth", config =>
+            {
+                config.Cookie.Name = "cookie.name";
+                config.LoginPath = "/home/login";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -80,6 +86,7 @@ namespace Cloud.PPATSApp
                     name: "default",
                     pattern: "{controller=Home}/{action=Login}/{id?}");
             });
+            
 
             //app.UseStaticHttpContext();
         }

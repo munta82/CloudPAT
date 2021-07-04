@@ -17,10 +17,10 @@ namespace Cloud.PPATSApp.Core
         private static EmployeeInfoViewModel _CurrentUser;
         static DataBaseAPI databaseAPI = new DataBaseAPI();
 
-        //private Authorization()
-        //{
-
-        //}
+        static Authorization()
+        {
+            _CurrentUser = new EmployeeInfoViewModel();
+        }
 
         public static EmployeeInfoViewModel CurrentUser
         {
@@ -32,8 +32,9 @@ namespace Cloud.PPATSApp.Core
 
         public static void setCurrentUserInfo(DataSet dsEmpInfo)
         {
-            Authorization._CurrentUser.EmpId = Convert.ToInt16(dsEmpInfo.Tables[0].Rows[0]["EmpId"].ToString());
-            Authorization._CurrentUser.EmpFirstName = dsEmpInfo.Tables[0].Rows[0]["EmpFirstName"].ToString();
+            EmployeeInfoViewModel CurrentUser = new EmployeeInfoViewModel();
+            Authorization.CurrentUser.EmpId = Convert.ToInt16(dsEmpInfo.Tables[0].Rows[0]["EmpId"].ToString());
+            Authorization.CurrentUser.EmpFirstName = dsEmpInfo.Tables[0].Rows[0]["EmpFirstName"].ToString();
             Authorization._CurrentUser.EmpLastName = dsEmpInfo.Tables[0].Rows[0]["EmpLastName"].ToString();
             Authorization._CurrentUser.EmpAddress = dsEmpInfo.Tables[0].Rows[0]["EmpAddress"].ToString();
             Authorization._CurrentUser.EmpPhone = dsEmpInfo.Tables[0].Rows[0]["EmpPhone"].ToString();

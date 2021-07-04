@@ -15,6 +15,7 @@ using System.Data.Entity;
 using Cloud.PPATSApp.Models.BAL;
 using Cloud.PPATSApp.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
+ 
 
 namespace Cloud.PPATSApp.Controllers
 {
@@ -76,8 +77,9 @@ namespace Cloud.PPATSApp.Controllers
                             }
                             else
                             {
+                                //FormsAuthentication.SetAuthCookie(employeeInfo.EmpUsername, employeeInfo.EmpPassword);
                                 //Access code should be here
-                                //Authorization.setCurrentUserInfo(dsEmployeeInfo);
+                                Authorization.setCurrentUserInfo(dsEmployeeInfo);
 
                                 string LaunchingApp = dsEmployeeInfo.Tables[1].Rows[0].ItemArray[2].ToString();
                                 if (LaunchingApp == "PPAT")

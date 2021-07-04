@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Cloud.PPATSApp</title>
+    <title>Cloud.PPATSApp</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -45,6 +45,16 @@
 </head>
 <body>
     <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-2 logo"><img src="~/Images/site_logo.jpg" height="50px" width="50px" /></div>
+                <div class="col-8 banner"><img src="~/Images/baner_logo1.jpg" height="50px" width="300px" /></div>
+                <div class="col-2 greybg" style="align-content:flex-end; vertical-align:middle; align-items:right;">
+                    Welcome @Cloud.PPATSApp.Core.Authorization.CurrentUser.EmpFirstName<br /> <br />
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Login">Logout</a>
+                </div>
+            </div>
+        </div>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Cloud.PPATSApp</a>
@@ -54,30 +64,37 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="PPAT" asp-action="ConstituencySettings">AC Settings</a>
                         </li>
-                        @*@if (Cloud.PPATSApp.Core.Authorization.CurrentUser.EmpApplications.Contains("PPAT"))
-                        {*@
+                        @if (Cloud.PPATSApp.Core.Authorization.CurrentUser.EmpApplications.Contains("PPAT"))
+                        {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="PPAT" asp-action="Index">PPAT</a>
                             </li>
-                        @*}*@
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">PIG</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">SS</a>
-                        </li>
-                        @*@if (Cloud.PPATSApp.Core.Authorization.CurrentUser.EmpRoleName == "Admin"
-                           || Cloud.PPATSApp.Core.Authorization.CurrentUser.EmpRoleName == "TechSupport")
-                        {*@
+                        }
+                        @if (Cloud.PPATSApp.Core.Authorization.CurrentUser.EmpApplications.Contains("PIG"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">PIG</a>
+                            </li>
+                        }
+                        @if (Cloud.PPATSApp.Core.Authorization.CurrentUser.EmpApplications.Contains("SS"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">SS</a>
+                            </li>
+                        }
+                        @if (Cloud.PPATSApp.Core.Authorization.CurrentUser.EmpRoleName == "Admin"
+                    || Cloud.PPATSApp.Core.Authorization.CurrentUser.EmpRoleName == "TechSupport")
+                        {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AdminConfig">Admin</a>
                             </li>
-                        @*}*@
-
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="PPAT" asp-action="PPATMobile">PPAT Mobile</a>
+                        </li>
                     </ul>
                 </div>
             </div>
