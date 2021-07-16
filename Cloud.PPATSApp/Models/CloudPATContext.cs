@@ -28,17 +28,20 @@ namespace Cloud.PPATSApp.Models
         public virtual DbSet<EmployeeRole> EmployeeRoles { get; set; }
         public virtual DbSet<GenderLookUp> GenderLookUps { get; set; }
         public virtual DbSet<IfpartyLookUp> IfpartyLookUps { get; set; }
+        public virtual DbSet<IgDetail> IgDetails { get; set; }
         public virtual DbSet<MandalLookUp> MandalLookUps { get; set; }
         public virtual DbSet<MeasuringApplicationLookUp> MeasuringApplicationLookUps { get; set; }
         public virtual DbSet<MeasuringApplicationMapping> MeasuringApplicationMappings { get; set; }
         public virtual DbSet<MuncipalPollingStationLookUp> MuncipalPollingStationLookUps { get; set; }
         public virtual DbSet<MuncipalityLookUp> MuncipalityLookUps { get; set; }
         public virtual DbSet<ParliamentLookUp> ParliamentLookUps { get; set; }
+        public virtual DbSet<PigUserInfo> PigUserInfos { get; set; }
         public virtual DbSet<PpatPiflookUp> PpatPiflookUps { get; set; }
         public virtual DbSet<PpatPrflookUp> PpatPrflookUps { get; set; }
         public virtual DbSet<PpatSflookUp> PpatSflookUps { get; set; }
         public virtual DbSet<PpatVpflookUp> PpatVpflookUps { get; set; }
         public virtual DbSet<RolesLookUp> RolesLookUps { get; set; }
+        public virtual DbSet<SsDetail> SsDetails { get; set; }
         public virtual DbSet<StateLookUp> StateLookUps { get; set; }
         public virtual DbSet<SubCasteLookUp> SubCasteLookUps { get; set; }
         public virtual DbSet<UserInfo> UserInfos { get; set; }
@@ -558,6 +561,43 @@ namespace Cloud.PPATSApp.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
+            modelBuilder.Entity<IgDetail>(entity =>
+            {
+                entity.HasKey(e => e.IgId)
+                    .HasName("PK__IG_Detai__8131590A101AF1B3");
+
+                entity.ToTable("IG_Details");
+
+                entity.Property(e => e.IgId).HasColumnName("IG_Id");
+
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Igcode)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("IGCode");
+
+                entity.Property(e => e.Igname)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("IGName");
+
+                entity.Property(e => e.IsActive)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.ModifiedBy)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<MandalLookUp>(entity =>
             {
                 entity.HasNoKey();
@@ -830,6 +870,157 @@ namespace Cloud.PPATSApp.Models
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<PigUserInfo>(entity =>
+            {
+                entity.HasKey(e => e.PigUserId)
+                    .HasName("PK__PIG_User__BA1FAEC8BDEB249E");
+
+                entity.ToTable("PIG_UserInfo");
+
+                entity.Property(e => e.PigUserId).HasColumnName("PIG_UserId");
+
+                entity.Property(e => e.Accode)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ACCode");
+
+                entity.Property(e => e.AppCode)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsActive)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.MandalCode)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MeasureAppCode)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedBy)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Pccode)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PCCode");
+
+                entity.Property(e => e.PigCommunityCode)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PIG_CommunityCode");
+
+                entity.Property(e => e.PigEducationCode)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PIG_EducationCode");
+
+                entity.Property(e => e.PigGrade)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PIG_Grade");
+
+                entity.Property(e => e.PigIfcode)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PIG_IFCode");
+
+                entity.Property(e => e.PigIgcode)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("PIG_IGCode");
+
+                entity.Property(e => e.PigOccupation)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("PIG_Occupation");
+
+                entity.Property(e => e.PigPosition)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("PIG_Position");
+
+                entity.Property(e => e.PigRemarks)
+                    .HasMaxLength(250)
+                    .IsUnicode(false)
+                    .HasColumnName("PIG_Remarks");
+
+                entity.Property(e => e.PigScale)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PIG_Scale");
+
+                entity.Property(e => e.PigSubCasteCode)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PIG_SubCasteCode");
+
+                entity.Property(e => e.PigUserAge).HasColumnName("PIG_UserAge");
+
+                entity.Property(e => e.PigUserDisplayName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("PIG_UserDisplayName");
+
+                entity.Property(e => e.PigUserGender)
+                    .IsRequired()
+                    .HasMaxLength(8)
+                    .IsUnicode(false)
+                    .HasColumnName("PIG_UserGender");
+
+                entity.Property(e => e.PigUserMobile)
+                    .IsRequired()
+                    .HasMaxLength(25)
+                    .IsUnicode(false)
+                    .HasColumnName("PIG_UserMobile");
+
+                entity.Property(e => e.Pigcode)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PIGCode");
+
+                entity.Property(e => e.Pscode)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PSCode");
+
+                entity.Property(e => e.StateCode)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.VillageCode)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<PpatPiflookUp>(entity =>
             {
                 entity.HasNoKey();
@@ -1021,6 +1212,90 @@ namespace Cloud.PPATSApp.Models
                 entity.Property(e => e.RoleName)
                     .IsRequired()
                     .HasMaxLength(25)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<SsDetail>(entity =>
+            {
+                entity.HasKey(e => e.SsId)
+                    .HasName("PK__SS_Detai__456F9402FBB2210A");
+
+                entity.ToTable("SS_Details");
+
+                entity.Property(e => e.SsId).HasColumnName("SS_Id");
+
+                entity.Property(e => e.Accode)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ACCode");
+
+                entity.Property(e => e.AppCode)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsActive)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.MandalCode)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MeasureAppCode)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedBy)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Pccode)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PCCode");
+
+                entity.Property(e => e.Pscode)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PSCode");
+
+                entity.Property(e => e.Remarks)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.SsCommunityCode)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("SS_CommunityCode");
+
+                entity.Property(e => e.SsSubCasteCode)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("SS_SubCasteCode");
+
+                entity.Property(e => e.StateCode)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.VillageCode)
+                    .IsRequired()
+                    .HasMaxLength(50)
                     .IsUnicode(false);
             });
 

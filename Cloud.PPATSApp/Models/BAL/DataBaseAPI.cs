@@ -212,6 +212,8 @@ namespace Cloud.PPATSApp.Models.BAL
                     if (objAssembPollinData != null)
                     {
                         objAssembPollinData.Psname = objPSData.Psname;
+                        objAssembPollinData.ModifiedBy = objPSData.ModifiedBy;
+                        objAssembPollinData.ModifiedDate = DateTime.Now;
                         db.Entry(objAssembPollinData).State = EntityState.Modified;
                         db.SaveChanges();
                     }
@@ -229,6 +231,27 @@ namespace Cloud.PPATSApp.Models.BAL
                 string msg = ex.Message + " " + ex.InnerException;
             }
 
+        }
+
+        public EmployeeAcSetting GetEmployeeACSettings(int empId)
+        {
+            EmployeeAcSetting objEmpACSettingsData = new EmployeeAcSetting();
+            try
+            {
+                using (CloudPATContext db = new CloudPATContext())
+                {
+
+                    objEmpACSettingsData = db.EmployeeAcSettings
+                        .Where(a => a.EmpId == empId)
+                        .OrderByDescending(a => a.ModifiedDate)
+                        .FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message + " " + ex.InnerException;
+            }
+            return objEmpACSettingsData;
         }
 
         public EmployeeAcSetting GetEmployeeACSettings(int empId, string MainAppCode)
@@ -342,7 +365,26 @@ namespace Cloud.PPATSApp.Models.BAL
             return ds;
         }
 
-        public List<EmployeeInfo> GetEmpSearchData(string searchString)
+        public List<EmployeeAppAccess> GetEmpApplicationAccessInfo(int empId)
+        {
+            List<EmployeeAppAccess> lstEmpAppAccess = new List<EmployeeAppAccess>();
+            try
+            {
+                using (CloudPATContext db = new CloudPATContext())
+                {
+
+                    lstEmpAppAccess = db.EmployeeAppAccesses.Where(a=> a.EmpId == empId)
+                        .OrderBy(a => a.AppCode).ToList();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message + " " + ex.InnerException;
+            }
+            return lstEmpAppAccess;
+        }
+            public List<EmployeeInfo> GetEmpSearchData(string searchString)
         {
             List<EmployeeInfo> objEmp = new List<EmployeeInfo>();
             DataSet dsEmp = new DataSet();
@@ -679,6 +721,123 @@ namespace Cloud.PPATSApp.Models.BAL
         //    }
         //    return objList;
         //}
+
+
+        public DataSet GetPIGMasterInfo(string AppCode)
+        {
+            SqlParameter AppCodeParam = new SqlParameter("@AppCode", AppCode.ToString() ?? (object)DBNull.Value);
+
+            var dbConnection = dbContext.Database.GetDbConnection().ConnectionString;
+            DataSet ds = new DataSet();
+            using (var con = new SqlConnection(dbConnection))
+            {
+                using (SqlCommand cmd = new SqlCommand("prcGetPIGMasterInfo", con))
+                {
+                    using (var da = new SqlDataAdapter(cmd))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.Add(AppCodeParam);
+                        da.Fill(ds);
+                    }
+                }
+            }
+            return ds;
+        }
+
+        public List<ApplicationLookUp> GetMainApplications()
+        {
+            List<ApplicationLookUp> lstApplicationLookUp = new List<ApplicationLookUp>();
+            try
+            {
+                using (CloudPATContext db = new CloudPATContext())
+                {
+
+                    lstApplicationLookUp = db.ApplicationLookUps
+                        .OrderBy(a => a.AppName).ToList();
+                        
+                }
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message + " " + ex.InnerException;
+            }
+            return lstApplicationLookUp;
+        }
+
+        public List<MeasuringApplicationMapping> GetMeasuringApplicationMappings(string MainAppCode)
+        {
+            List<MeasuringApplicationMapping> lstMeasureAppMappings = new List<MeasuringApplicationMapping>();
+            try
+            {
+                using (CloudPATContext db = new CloudPATContext())
+                {
+
+                    lstMeasureAppMappings = db.MeasuringApplicationMappings
+                        .Where(m=> m.AppCode == MainAppCode)
+                        .OrderBy(a => a.MeasureAppCode).ToList();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message + " " + ex.InnerException;
+            }
+            return lstMeasureAppMappings;
+        }
+
+        public void SaveUpdatePIGUserInfo(PigUserInfo userInfoModel)
+        {
+            try
+            {
+                using (CloudPATContext db = new CloudPATContext())
+                {
+                    db.PigUserInfos.Add(userInfoModel);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message + " " + ex.InnerException;
+            }
+
+        }
+
+        public DataSet GetSSMasterInfo(string AppCode)
+        {
+            SqlParameter AppCodeParam = new SqlParameter("@AppCode", AppCode.ToString() ?? (object)DBNull.Value);
+
+            var dbConnection = dbContext.Database.GetDbConnection().ConnectionString;
+            DataSet ds = new DataSet();
+            using (var con = new SqlConnection(dbConnection))
+            {
+                using (SqlCommand cmd = new SqlCommand("prcGetSSMasterInfo", con))
+                {
+                    using (var da = new SqlDataAdapter(cmd))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.Add(AppCodeParam);
+                        da.Fill(ds);
+                    }
+                }
+            }
+            return ds;
+        }
+        public void SaveUpdateSSInfo(SsDetail SSDetailInfoModel)
+        {
+            try
+            {
+                using (CloudPATContext db = new CloudPATContext())
+                {
+                    db.SsDetails.Add(SSDetailInfoModel);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message + " " + ex.InnerException;
+            }
+
+        }
 
 
     }

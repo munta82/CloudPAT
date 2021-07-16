@@ -30,7 +30,7 @@ ID		Date		Change
 ----------------------------------------
 1		21-Jun-21	Initial Development
 
-prcGetMeasuringApplicationMappings 'PPAT'
+prcGetMeasuringApplicationMappings 'PIG'
 ***************************************/
 BEGIN 
 SELECT [MeasureAppMapId]
@@ -449,7 +449,13 @@ SELECT [PPAT_PIFId]
   Where [IsActive]='Y'
 
 
-
+  Select 
+AppId
+,AppCode
+,AppName
+,IsActive  
+FROM [CloudPAT].[dbo].[ApplicationLookUp]
+  Where [IsActive]='Y'
 
 
 END
@@ -603,14 +609,14 @@ END
 GO
  
  
-Alter Procedure prcExportUserDataToExcel
+Create Procedure prcExportUserDataToExcel
  
 AS 
 /***************************************
 ID		Date		Change
 ----------------------------------------
 1		25-Jun-21	Initial Development
-prcGetEmpSearchData 'ba'
+prcExportUserDataToExcel 'ba'
 ***************************************/
 BEGIN
 	Select 
@@ -650,5 +656,182 @@ from UserInfo U
 END
 
 
+
+GO
+
+
+Create Procedure prcGetPIGMasterInfo
+(
+	@AppCode varchar(25)
+)
+AS 
+/***************************************
+ID		Date		Change
+----------------------------------------
+1		21-Jun-21	Initial Development
+prcGetPIGMasterInfo 'PIG'
+***************************************/
+BEGIN
+	SELECT  [MeasureAppMapId]
+      ,[MeasureAppCode]
+      ,[AppCode]
+      ,[IsActive]      
+  FROM [CloudPAT].[dbo].[MeasuringApplicationMappings]
+  WHERE AppCode=@AppCode
+
+  SELECT DISTINCT --[StateId],
+      [StateCode]
+      ,[StateName]
+      --,[IsActive]      
+  FROM [CloudPAT].[dbo].[StateLookUp]
+  Where isActive='Y'
+
+SELECT  [PCId]
+      ,[PCCode]
+      ,[PCName]
+      ,[StateCode]
+      ,[IsActive]
+      
+  FROM [CloudPAT].[dbo].[ParliamentLookUp]
+  Where isActive='Y'
+
+SELECT [ACId]
+      ,[ACCode]
+      ,[ACName]
+      ,[PCCode]
+      ,[IsActive]
+  FROM [CloudPAT].[dbo].[AssemblyLookUp]
+  Where isActive='Y'
+
+SELECT [MDId]
+      ,[MandalCode]
+      ,[MandalName]
+      ,[ACCode]
+      ,[IsActive]      
+  FROM [CloudPAT].[dbo].[MandalLookUp]
+  Where isActive='Y'
+
+SELECT [VGId]
+      ,[VillageCode]
+      ,[VillageName]
+      ,[MandalCode]
+      ,[IsActive]
+  FROM [CloudPAT].[dbo].[VillageLookUp]
+   Where isActive='Y'
+
+SELECT  [EduId]
+      ,[EducationCode]
+      ,[EducationName]
+      ,[IsActive]
+  FROM [CloudPAT].[dbo].[EducationLookUp]
+  Where IsActive='Y'
+
+  SELECT  [ComId]
+      ,[CommunityCode]
+      ,[CommunityName]
+      ,[IsActive]     
+  FROM [CloudPAT].[dbo].[CommunityLookUp]
+  Where isActive='Y'
+
+SELECT [IFId]
+      ,[IFCode]
+      ,[IFName]
+      ,[IsActive]      
+  FROM [CloudPAT].[dbo].[IFPartyLookUp]
+  Where IsActive='Y'
+
+SELECT 
+  IGCode 
+	,IGName 
+	,IsActive
+	FROM [CloudPAT].[dbo].[IG_Details]
+  Where IsActive='Y'
+
+
+END
+
+GO
+
+Create Procedure prcGetSSMasterInfo
+(
+	@AppCode varchar(25)
+)
+AS 
+/***************************************
+ID		Date		Change
+----------------------------------------
+1		21-Jun-21	Initial Development
+prcGetSSMasterInfo 'SS'
+***************************************/
+BEGIN
+	SELECT  [MeasureAppMapId]
+      ,[MeasureAppCode]
+      ,[AppCode]
+      ,[IsActive]      
+  FROM [CloudPAT].[dbo].[MeasuringApplicationMappings]
+  WHERE AppCode=@AppCode
+
+  SELECT DISTINCT --[StateId],
+      [StateCode]
+      ,[StateName]
+      --,[IsActive]      
+  FROM [CloudPAT].[dbo].[StateLookUp]
+  Where isActive='Y'
+
+SELECT  [PCId]
+      ,[PCCode]
+      ,[PCName]
+      ,[StateCode]
+      ,[IsActive]
+      
+  FROM [CloudPAT].[dbo].[ParliamentLookUp]
+  Where isActive='Y'
+
+SELECT [ACId]
+      ,[ACCode]
+      ,[ACName]
+      ,[PCCode]
+      ,[IsActive]
+  FROM [CloudPAT].[dbo].[AssemblyLookUp]
+  Where isActive='Y'
+
+SELECT [MDId]
+      ,[MandalCode]
+      ,[MandalName]
+      ,[ACCode]
+      ,[IsActive]      
+  FROM [CloudPAT].[dbo].[MandalLookUp]
+  Where isActive='Y'
+
+SELECT [VGId]
+      ,[VillageCode]
+      ,[VillageName]
+      ,[MandalCode]
+      ,[IsActive]
+  FROM [CloudPAT].[dbo].[VillageLookUp]
+   Where isActive='Y'
+
+SELECT  [EduId]
+      ,[EducationCode]
+      ,[EducationName]
+      ,[IsActive]
+  FROM [CloudPAT].[dbo].[EducationLookUp]
+  Where IsActive='Y'
+
+  SELECT  [ComId]
+      ,[CommunityCode]
+      ,[CommunityName]
+      ,[IsActive]     
+  FROM [CloudPAT].[dbo].[CommunityLookUp]
+  Where isActive='Y'
+
+SELECT [IFId]
+      ,[IFCode]
+      ,[IFName]
+      ,[IsActive]      
+  FROM [CloudPAT].[dbo].[IFPartyLookUp]
+  Where IsActive='Y'
+
+END
 
 GO

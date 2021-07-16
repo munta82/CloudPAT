@@ -74,8 +74,8 @@ namespace Cloud.PPATSApp.Controllers
                 new SelectListItem {Text="OTH",Value="OTH"}
             };
             ViewBag.ddlGender = ddlGender;
-            //return View("_PPAT");
-            return View("_PPATForm");
+            return View("_PPAT");
+            //return View("_PPATForm");
         }
         public AssemblyPollingStationLookUp GetPPATPollingStationData(string PSCode)
         {
@@ -86,11 +86,11 @@ namespace Cloud.PPATSApp.Controllers
         public List<SubCasteLookUp> GetPPATSubCasteData(string searchString, string communityCode)
         {
             List<SubCasteLookUp> listSubCaste = new List<SubCasteLookUp>();
-            listSubCaste =  databaseAPI.GetPPATSubCasteData(searchString, communityCode);
+            listSubCaste = databaseAPI.GetPPATSubCasteData(searchString, communityCode);
             return listSubCaste;
         }
 
-        
+
         [HttpPost]
         public ActionResult SaveForm(PPATViewModel obj, IFormCollection form)//, IFormCollection form
         {
@@ -116,24 +116,24 @@ namespace Cloud.PPATSApp.Controllers
             userInfoModel.VillageCode = HttpContext.Request.Form["ddlVillage"].ToString();
             userInfoModel.Pscode = HttpContext.Request.Form["txtPSCode"].ToString();
             userInfoModel.MeasureAppCode = HttpContext.Request.Form["hdnMeasuringApp"].ToString();
-                //HttpContext.Request.Form["ddlMeasuringApp"].ToString();
+            //HttpContext.Request.Form["ddlMeasuringApp"].ToString();
             userInfoModel.AppCode = "PPAT";
-            userInfoModel.CreatedBy = HttpContext.Session.GetString("LoginUserName").ToString();
+            userInfoModel.CreatedBy = HttpContext.Session.GetString("LoginUserDisplayName").ToString();
             userInfoModel.CreatedDate = System.DateTime.Now;
 
             databaseAPI.SaveUpdateUserInfo(userInfoModel);
 
-            AssemblyPollingStationLookUp  objPSData = new AssemblyPollingStationLookUp();
+            AssemblyPollingStationLookUp objPSData = new AssemblyPollingStationLookUp();
             TryUpdateModelAsync(objPSData);
             objPSData.Pscode = HttpContext.Request.Form["txtPSCode"].ToString();
             objPSData.Psname = HttpContext.Request.Form["txtPSName"].ToString();
             databaseAPI.UpdateAssemblyPollingStationName(objPSData);
-          
+
             ViewBag.Message = "Customer saved successfully!";
 
             DataSet dsEmployeeInfo = new DataSet();
             dsEmployeeInfo = databaseAPI.GetEmployeeInfo(HttpContext.Session.GetString("LoginUserName").ToString(), -1);
-            
+
             //return View("Index", dsEmployeeInfo);
             return RedirectToAction("Index", "PPAT", dsEmployeeInfo);
         }
@@ -152,16 +152,53 @@ namespace Cloud.PPATSApp.Controllers
             return View("PPAT", obj);
         }
 
+        public List<MeasuringApplicationMapping> GetMeasuringApplicationMappings(string MainAppCode)
+        {
+            List<MeasuringApplicationMapping> lstMeasureAppMappings = new List<MeasuringApplicationMapping>();
+            lstMeasureAppMappings = databaseAPI.GetMeasuringApplicationMappings(MainAppCode);
+            return lstMeasureAppMappings;
+        }
+
+        [HttpGet]
         public IActionResult ConstituencySettings(IFormCollection form)
         {
+            List<ApplicationLookUp> lstApplicationLookUp = new List<ApplicationLookUp>();
+            lstApplicationLookUp = databaseAPI.GetMainApplications();
+            List<SelectListItem> ddlMainApps = new List<SelectListItem>();           
+
+            //var measureApp = HttpContext.Request.Form["ddlMeasuringApp"].ToString();
+            //var mainApp = HttpContext.Request.Form["ddlMainApps"].ToString();
+
             DataSet dsPPAT = new DataSet();
-            dsPPAT = databaseAPI.GetPPATMasterInfo("PPAT");
+           
 
             EmployeeAcSetting objEmpACSettingsData = new EmployeeAcSetting();
-            objEmpACSettingsData = databaseAPI.GetEmployeeACSettings(Convert.ToInt16(HttpContext.Session.GetString("LoginEmpId").ToString()), "PPAT");
+            objEmpACSettingsData = databaseAPI.GetEmployeeACSettings(Convert.ToInt16(HttpContext.Session.GetString("LoginEmpId").ToString()));
             if (objEmpACSettingsData != null)
             {
-                ViewBag.ddlMeasuringApp = ToSelectList(dsPPAT.Tables[0], "MeasureAppMapId", "MeasureAppCode", objEmpACSettingsData.MeasuringAppCode);
+                switch(objEmpACSettingsData.MainAppCode)
+                {
+                    case "PPAT":
+                        dsPPAT = databaseAPI.GetPPATMasterInfo("PPAT");
+                        break;
+                    case "PIG":
+                        dsPPAT = databaseAPI.GetPIGMasterInfo("PIG");
+                        break;
+                    case "SS":
+                        dsPPAT = databaseAPI.GetSSMasterInfo("SS");
+                        break;
+                }               
+
+                foreach (var item in lstApplicationLookUp)
+                {
+                    if (item.AppCode == objEmpACSettingsData.MainAppCode)
+                        ddlMainApps.Add(new SelectListItem { Text = item.AppCode, Value = item.AppCode, Selected = true });
+                    else
+                        ddlMainApps.Add(new SelectListItem { Text = item.AppCode, Value = item.AppCode });
+                }
+                ViewBag.ddlMainApps = ddlMainApps;
+                //ViewBag.ddlMainApps = ToSelectList(dsPPAT.Tables[13], "AppCode", "AppCode", objEmpACSettingsData.MainAppCode);
+                ViewBag.ddlMeasuringApp = ToSelectList(dsPPAT.Tables[0], "MeasureAppCode", "MeasureAppCode", objEmpACSettingsData.MeasuringAppCode);
                 ViewBag.ddlStates = ToSelectList(dsPPAT.Tables[1], "StateCode", "StateName", objEmpACSettingsData.StateCode);
                 ViewBag.ddlParliament = ToSelectList(dsPPAT.Tables[2], "PCCode", "PCName", objEmpACSettingsData.Pccode);
                 ViewBag.ddlAssembly = ToSelectList(dsPPAT.Tables[3], "ACCode", "ACName", objEmpACSettingsData.Accode);
@@ -172,12 +209,40 @@ namespace Cloud.PPATSApp.Controllers
             }
             else
             {
-                ViewBag.ddlMeasuringApp = ToSelectList(dsPPAT.Tables[0], "MeasureAppMapId", "MeasureAppCode");
+                List<EmployeeAppAccess> lstEmpAppAccess = new List<EmployeeAppAccess>();
+                lstEmpAppAccess = databaseAPI.GetEmpApplicationAccessInfo(Convert.ToInt16(HttpContext.Session.GetString("LoginEmpId").ToString()));
+                if(lstEmpAppAccess.Count > 0)
+                {
+                    string mainAppCode = lstEmpAppAccess[0].AppCode;
+                    switch (mainAppCode)
+                    {
+                        case "PPAT":
+                            dsPPAT = databaseAPI.GetPPATMasterInfo("PPAT");
+                            break;
+                        case "PIG":
+                            dsPPAT = databaseAPI.GetPIGMasterInfo("PIG");
+                            break;
+                        case "SS":
+                            dsPPAT = databaseAPI.GetSSMasterInfo("SS");
+                            break;
+                    }
+                }
+                foreach (var item in lstApplicationLookUp)
+                {
+                    ddlMainApps.Add(new SelectListItem { Text = item.AppCode, Value = item.AppCode });
+                }
+
+                ViewBag.ddlMainApps = ddlMainApps;
+                List<SelectListItem> ddlMeasuringApp = new List<SelectListItem>();
+                ddlMeasuringApp.Add(new SelectListItem { Text = "Select", Value = "Select" });
+                ViewBag.ddlMeasuringApp = ddlMeasuringApp; // ToSelectList(dsPPAT.Tables[0], "MeasureAppMapId", "MeasureAppCode");
                 ViewBag.ddlStates = ToSelectList(dsPPAT.Tables[1], "StateCode", "StateName");
                 ViewBag.ddlParliament = ToSelectList(dsPPAT.Tables[2], "PCCode", "PCName");
                 ViewBag.ddlAssembly = ToSelectList(dsPPAT.Tables[3], "ACCode", "ACName");
                 ViewBag.ddlMandal = ToSelectList(dsPPAT.Tables[4], "MandalCode", "MandalName");
                 ViewBag.ddlVillage = ToSelectList(dsPPAT.Tables[5], "VillageCode", "VillageName");
+
+
                 ViewBag.PSCode = "";
                 ViewBag.PSName = "";
             }
@@ -203,18 +268,18 @@ namespace Cloud.PPATSApp.Controllers
             empAcSettingModel.VillageCode = HttpContext.Request.Form["ddlVillage"].ToString();
             empAcSettingModel.Pscode = HttpContext.Request.Form["txtPSCode"].ToString();
             empAcSettingModel.Psname = HttpContext.Request.Form["txtPSName"].ToString();
-            empAcSettingModel.MeasuringAppCode = HttpContext.Request.Form["ddlMeasuringApp"].ToString(); 
+            empAcSettingModel.MeasuringAppCode = HttpContext.Request.Form["ddlMeasuringApp"].ToString();
             // HttpContext.Request.Form["hdnMeasuringApp"].ToString();
-            empAcSettingModel.MainAppCode = "PPAT";
+            empAcSettingModel.MainAppCode = HttpContext.Request.Form["hdnMainApp"].ToString();
             empAcSettingModel.CreatedBy = HttpContext.Session.GetString("LoginUserName").ToString();
             empAcSettingModel.CreatedDate = System.DateTime.Now;
             empAcSettingModel.EmpId = Convert.ToInt16(HttpContext.Session.GetString("LoginEmpId").ToString());
 
-            databaseAPI.UpdateEmployeeACSettingsData(empAcSettingModel);                 
+            databaseAPI.UpdateEmployeeACSettingsData(empAcSettingModel);
 
             return RedirectToAction("ConstituencySettings");
         }
-            public SelectList ToSelectList(DataTable table, string valueField, string textField, string selectText = "")
+        public SelectList ToSelectList(DataTable table, string valueField, string textField, string selectText = "")
         {
             List<SelectListItem> list = new List<SelectListItem>();
 
@@ -226,7 +291,7 @@ namespace Cloud.PPATSApp.Controllers
                     {
                         Text = row[textField].ToString(),
                         Value = row[valueField].ToString(),
-                        Selected= true
+                        Selected = true
                     });
                 }
                 else
@@ -238,13 +303,13 @@ namespace Cloud.PPATSApp.Controllers
                     });
                 }
             }
-            if(selectText != "")
+            if (selectText != "")
                 return new SelectList(list, "Value", "Text", selectText);
             else
                 return new SelectList(list, "Value", "Text");
         }
 
-        public IActionResult PPATMobile(DataSet dsEmployeeInfo)
+        public IActionResult PPATForm(DataSet dsEmployeeInfo)
         {
             DataSet dsPPAT = new DataSet();
             dsPPAT = databaseAPI.GetPPATMasterInfo("PPAT");
@@ -298,8 +363,8 @@ namespace Cloud.PPATSApp.Controllers
                 new SelectListItem {Text="OTH",Value="OTH"}
             };
             ViewBag.ddlGender = ddlGender;
-            return View("_PPAT");
-            //return View("_PPATForm");
+            //return View("_PPAT");
+            return View("_PPATForm");
         }
     }
 }

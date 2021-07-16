@@ -594,3 +594,87 @@ Create Table Employee_AC_Settings
 )
 
 GO
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'SS_Details') AND TYPE in(N'U'))
+DROP TABLE SS_Details
+GO
+Create Table SS_Details
+(
+	SS_Id	Int Identity(1,1) NOT NULL PRIMARY KEY
+	,SS_CommunityCode Varchar(10)
+	,SS_SubCasteCode Varchar(50)
+	,Voters INT
+	,Remarks Varchar(500)	
+	,StateCode Varchar(50) NOT NULL
+	,PCCode Varchar(50) NOT NULL
+	,ACCode Varchar(50) NOT NULL
+	,MandalCode Varchar(50) NOT NULL
+	,VillageCode Varchar(50) NOT NULL
+	,PSCode Varchar(50) NOT NULL
+	,MeasureAppCode Varchar(50) NOT NULL
+	,AppCode Varchar(10) NOT NULL
+	,IsActive Char(1) NULL
+	,CreatedDate DateTime NULL
+	,CreatedBy Varchar(100) Null
+	,ModifiedDate DateTime NULL
+	,ModifiedBy Varchar(100)
+)
+
+GO
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'IG_Details') AND TYPE in(N'U'))
+DROP TABLE IG_Details
+GO
+Create Table IG_Details
+(
+	IG_Id	Int Identity(1,1) NOT NULL PRIMARY KEY
+	,IGCode Varchar(10)
+	,IGName Varchar(50)	
+	,IsActive Char(1) NULL
+	,CreatedDate DateTime NULL
+	,CreatedBy Varchar(100) Null
+	,ModifiedDate DateTime NULL
+	,ModifiedBy Varchar(100)
+)
+
+GO
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'PIG_UserInfo') AND TYPE in(N'U'))
+DROP TABLE PIG_UserInfo
+GO
+Create Table PIG_UserInfo
+(
+ PIG_UserId Int Identity(1,1) NOT NULL
+,PIG_UserDisplayName Varchar(100) NULL
+,PIG_UserGender varchar(8) NOT NULL
+,PIG_UserAge INT NOT NULL
+,PIG_UserMobile Varchar(25) NOT NULL
+,PIG_Occupation Varchar(100) NULL
+,PIG_EducationCode Varchar(50) NOT NULL
+,PIG_CommunityCode Varchar(50) NOT NULL
+,PIG_SubCasteCode Varchar(50) NOT NULL
+,PIG_IFCode Varchar(50) NOT NULL
+,PIG_Scale Varchar(50) NOT NULL
+,PIG_Grade Varchar(50) NOT NULL
+,PIGCode Varchar(50) NOT NULL
+,PIG_Remarks Varchar(250) NULL
+,PIG_IGCode Varchar(20) NULL
+,PIG_Position Varchar(100) NULL
+,StateCode Varchar(50) NOT NULL
+,PCCode Varchar(50) NOT NULL
+,ACCode Varchar(50) NOT NULL
+,MandalCode Varchar(50) NOT NULL
+,VillageCode Varchar(50) NOT NULL
+,PSCode Varchar(50) NOT NULL
+,MeasureAppCode Varchar(50) NOT NULL
+,AppCode Varchar(10) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+,PRIMARY KEY(PIG_UserId)
+)
+
+GO
+

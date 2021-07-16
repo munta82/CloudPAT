@@ -3,7 +3,7 @@
     ViewData["Title"] = "ConstituencySettings";
 }
 
-<h1>ConstituencySettings</h1>
+<h4>Constituency Settings</h4>
 <script type="text/javascript">
     $(document).ready(function () {
         //Loading of page
@@ -79,6 +79,40 @@
         $("#ddlMeasuringApp").on("change", function () {
             $("#hdnMeasuringApp").val($(this).find("option:selected").text());
         });
+
+        $("#ddlMainApps").on("change", function () {            
+            var MainAppCodeVal = $(this).find("option:selected").text();
+            $("#hdnMainApp").val($(this).find("option:selected").text());
+
+            $("#ddlMeasuringApp").empty();
+
+            $.ajax({
+                type: "POST",
+                url: "/PPAT/GetMeasuringApplicationMappings",
+                dataType: "json",
+                cache: false,
+                async: false,
+                data: {
+                    MainAppCode: MainAppCodeVal
+                },
+                success: function (res) {
+                    //debugger;
+                    $.each(res, function (result, value) {
+                        //debugger;
+                        //measureAppMapId
+                        $("#ddlMeasuringApp").append($("<option></option>").val(value.measureAppCode).html(value.measureAppCode));
+                    });
+
+                    //console.log(data);
+                },
+                error: function (jqXhr, textStatus, errorMessage) {
+                    //debugger;
+
+                    //console.log("AJAX ERROR:", data);
+                }
+            });
+        });
+
     });
 </script>
 @using (Html.BeginForm())
@@ -89,20 +123,39 @@
                 <td>
                     @*@Html.ValidationSummary(true, "Please fix the following error and then submit the form")*@
                     <input type="hidden" id="hdnMeasuringApp" name="hdnMeasuringApp" value="" />
+                    <input type="hidden" id="hdnMainApp" name="hdnMainApp" value="" />
                     <table class="tblRoundCorner" style="width:100%">
                         <tr>
                             <td>
-                                Measuring Applications<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlMeasuringApp"
-                                                            data-valmsg-replace="true">*</span>
+                                Main Application<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlMeasuringApp"
+                                                      data-valmsg-replace="true">*</span>
                             </td>
                             <td>
-                                @Html.DropDownList("ddlMeasuringApp", (IEnumerable<SelectListItem>)ViewBag.ddlMeasuringApp, "Select",
+                                @Html.DropDownList("ddlMainApps", (IEnumerable<SelectListItem>)ViewBag.ddlMainApps, "Select",
                                 new
                                     {
                                         @class = "form-control valid PPATDropdownlist",
                                @data_val = "true",
                                         @data_val_required = " required"
                                     })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Measuring Applications<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlMeasuringApp"
+                                                            data-valmsg-replace="true">*</span>
+                            </td>
+                            @*(IEnumerable
+                <SelectListItem>
+                    )ViewBag.ddlMeasuringApp, "Select"*@
+                            <td>
+                                @Html.DropDownList("ddlMeasuringApp", (IEnumerable<SelectListItem>)ViewBag.ddlMeasuringApp,
+                                new
+                                {
+                                    @class = "form-control valid PPATDropdownlist",
+                                    @data_val = "true",
+                                    @data_val_required = " required"
+                                })
                             </td>
                         </tr>
                     </table>

@@ -120,8 +120,12 @@ namespace Cloud.PPATSApp.Controllers
                 new SelectListItem {Text="PIG",Value="PIG" },
                 new SelectListItem {Text="SS",Value="SS"}
             };
+            ViewBag.ddlMainApps = lstMainApplications;
+
             EmployeeInfoViewModel objEmployeeInfo = new EmployeeInfoViewModel();
             objEmployeeInfo.EmpAssignedApps = lstMainApplications;
+           
+
             List<SelectListItem> lstRoles = new List<SelectListItem>()
             {
                 new SelectListItem {Text="Not assigned",Value="0"},

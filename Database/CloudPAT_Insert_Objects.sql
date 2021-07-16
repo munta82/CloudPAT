@@ -722,6 +722,20 @@ INSERT INTO SubCasteLookUp Values(	'Dudekula ',	'Dudekula ',	'BC'	,'Y',Getdate()
 INSERT INTO SubCasteLookUp Values(	'Gandla ',	'Gandla ',	'BC'	,'Y',Getdate(),'SYSTEM',Getdate(),'SYSTEM')
 INSERT INTO SubCasteLookUp Values(	'Jandra',	'Jandra',	'BC'	,'Y',Getdate(),'SYSTEM',Getdate(),'SYSTEM')
 
+GO
+
+INSERT INTO IG_Details Values('OM','Opinion Maker''s','Y',Getdate(),'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO IG_Details Values('KV','Key Voters','Y',Getdate(),'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO IG_Details Values('LBL','Local Body Leaders','Y',Getdate(),'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO IG_Details Values('SHG','SHG','Y',Getdate(),'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO IG_Details Values('AnganWadi','Anganwadi','Y',Getdate(),'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO IG_Details Values('ASHA','ASHA','Y',Getdate(),'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO IG_Details Values('WOM','WOM','Y',Getdate(),'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO IG_Details Values('POM','POM','Y',Getdate(),'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO IG_Details Values('COM','COM','Y',Getdate(),'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO IG_Details Values('TUL','TUL','Y',Getdate(),'SYSTEM',Getdate(),'SYSTEM')
+
+GO
 
 
 

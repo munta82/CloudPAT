@@ -442,3 +442,5 @@ C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\bin\Debug\netcoreap
 C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\bin\Debug\netcoreapp3.1\ExcelNumberFormat.dll
 C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\bin\Debug\netcoreapp3.1\System.IO.Packaging.dll
 C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_PPATForm.cshtml.g.cs
+C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_SS.cshtml.g.cs
+C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_PIG.cshtml.g.cs

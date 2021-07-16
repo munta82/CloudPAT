@@ -131,8 +131,8 @@
 </script>
 @using (Html.BeginForm())
 {
-    <table>
-        <tr>            
+    <table border="0">
+        <tr>
             <td>
                 <table border="1">
                     <tbody>
@@ -312,10 +312,24 @@
                     </tbody>
                 </table>
             </td>
-            <td valign="top" style="margin-left:10px;">
-                <a href="@Url.Action("DownloadExcelDocument", "Admin", new { id = "1" })">
-                    <img src="~/Images/excel.jpg" style="width:20px;height:20px;"/>
-                </a>
+            <td width="9px"></td>
+            <td valign="top" style="margin-left:10px;" align="right">
+                <table>
+                    <tr>
+                        <td>
+                            @Html.DropDownList("ddlMainApps", (IEnumerable<SelectListItem>)ViewBag.ddlMainApps, "Select",
+                                                   new
+                                                       {
+                                                           @class = "form-control valid PPATDropdownlist"
+                                                       })
+                        </td>
+                        <td>
+                            <a href="@Url.Action("DownloadExcelDocument", "Admin", new { id = "1" })">
+                                <img src="~/Images/excel.jpg" style="width:20px;height:20px;" />
+                            </a>
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
     </table>
