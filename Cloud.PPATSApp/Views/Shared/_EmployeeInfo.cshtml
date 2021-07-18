@@ -5,7 +5,81 @@
 }
 @model Cloud.PPATSApp.Models.ViewModels.EmployeeInfoViewModel
 <script type="text/javascript">
+   
     $(document).ready(function () {
+        $("#txtempMobile").keydown(function (event) {
+            if (event.shiftKey) {
+                event.preventDefault();
+            }
+            if (event.keyCode == 46 || event.keyCode == 8) {
+            }
+            else {
+                if (event.keyCode < 95) {
+                    if (event.keyCode < 48 || event.keyCode > 57) {
+                        event.preventDefault();
+                    }
+                }
+                else {
+                    if (event.keyCode < 96 || event.keyCode > 105) {
+                        event.preventDefault();
+                    }
+                }
+            }
+        });
+
+        @*url:'@Url.Action("CheckUsername", "Admin", new { area = "Admin" })',//  this for calling the web method function in controller.*@
+
+        //$('#UserName').blur(function () {
+        //    var url = "/Admins/CheckUserName";
+        //    var name = $('#UserName').val();
+        //    $.get(url, { input: name }, function (data) {
+        //        if (data == "Available") {
+        //            $("#result").html("<span style='color:green'>Available</span>");
+        //            $("#UserName").css('background-color', '');
+        //        }
+        //        else {
+        //            $("#result").html("<span style='color:red'>Not Available</span>");
+        //            $("#UserName").css('background-color', '#e97878');
+        //        }
+        //    });
+        //})
+        $('#txtempUserName').blur(function () {
+        //$('#txtempUserName').on('change', function () {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/CheckUsername",
+                data:
+                {
+                    UserName: $("#txtempUserName").val()
+                },
+                cache: false,
+                async: false,
+                //contentType: "application/json; charset=utf-8",
+                //dataType: "json",
+                success: function (res_data) {
+                    //alert(res_data);
+                    //debugger;
+                    var msg = $("#lblStatus");
+                    //debugger;
+                    switch (res_data) {
+                        case "Exists":
+                            msg.show();
+                            msg.css("color", "red");
+                            msg.html("User Name already exists.");
+                            break;
+                        case "NotExists":
+                            msg.show();
+                            msg.css("color", "green");
+                            msg.html("User Name Available");
+                            break;
+                    }
+                   
+                },
+                failure: function (data) {
+                    alert(data);
+                }
+            });
+        });
 
         $("#txtSearchUser").autocomplete({
             source: function (request, response) {
@@ -126,6 +200,7 @@
             $("#txtSearchUser").val('');
             $("#hdnEmpId").val(0);
             $("#txtEmpId").val(0);
+            $("#divMsg").empty();
         });
     });//Document.ready
 </script>
@@ -194,7 +269,7 @@
                                         </td>
                                         <td>
                                             @Html.TextBox("txtempMobile", null,
-                                           new { @class = "form-control PPATtextbox", @data_val = "true", @data_val_required = " required" })
+                                           new { maxlength = "10", @class = "form-control PPATtextbox", @data_val = "true", @data_val_required = " required" })
                                         </td>
                                     </tr>
                                     <tr>
@@ -221,6 +296,7 @@
                                         <td>
                                             @Html.TextBox("txtempUserName", null,
                                            new { @class = "form-control PPATtextbox", @data_val = "true", @data_val_required = " required" })
+                                            <div id="lblStatus" />
                                         </td>
                                     </tr>
                                     <tr>
@@ -280,7 +356,9 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="height:5px;"></td>
+                            <td style="height:5px;">
+                                <div id="divMsg" style="color:red;">@ViewBag.dbMessage</div>
+                            </td>
                         </tr>
                         <tr>
                             <td>

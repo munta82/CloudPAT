@@ -198,7 +198,7 @@ GO
 Create Table SubCasteLookUp
 (
  SubCasteId Int Identity(1,1) NOT NULL  PRIMARY KEY
-,SubCasteCode Varchar(25) NOT NULL
+,SubCasteCode Varchar(100) NOT NULL
 ,SubCasteName Varchar(100) NOT NULL
 ,CommunityCode Varchar(25) NOT NULL
 ,IsActive Char(1) NULL
@@ -333,6 +333,81 @@ Create Table PPAT_PIFLookUp
 )
 
 GO
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'PPAT_EBFLookUp') AND TYPE in(N'U'))
+DROP TABLE PPAT_EBFLookUp
+GO
+Create Table PPAT_EBFLookUp
+(
+ PPAT_EBFId Int Identity(1,1) NOT NULL
+,PPAT_EBFCode Varchar(10) NOT NULL
+,PPAT_EBFName Varchar(25) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+,PRIMARY KEY(PPAT_EBFCode )
+)
+
+GO
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'PPAT_LLRFLookUp') AND TYPE in(N'U'))
+DROP TABLE PPAT_LLRFLookUp
+GO
+Create Table PPAT_LLRFLookUp
+(
+ PPAT_LLRFId Int Identity(1,1) NOT NULL
+,PPAT_LLRFCode Varchar(10) NOT NULL
+,PPAT_LLRFName Varchar(25) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+,PRIMARY KEY(PPAT_LLRFCode )
+)
+
+GO
+
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'PPAT_GradingLookUp') AND TYPE in(N'U'))
+DROP TABLE PPAT_GradingLookUp
+GO
+Create Table PPAT_GradingLookUp
+(
+ PPAT_GradingId Int Identity(1,1) NOT NULL
+,PPAT_GrdingCode Varchar(10) NOT NULL
+,PPAT_GradingName Varchar(25) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+,PRIMARY KEY(PPAT_GrdingCode )
+)
+
+GO
+
+
+IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'PPAT_SIFLookUp') AND TYPE in(N'U'))
+DROP TABLE PPAT_SIFLookUp
+GO
+Create Table PPAT_SIFLookUp
+(
+ PPAT_SIFId Int Identity(1,1) NOT NULL
+,PPAT_SIFCode Varchar(10) NOT NULL
+,PPAT_SIFName Varchar(25) NOT NULL
+,IsActive Char(1) NULL
+,CreatedDate DateTime NULL
+,CreatedBy Varchar(100) Null
+,ModifiedDate DateTime NULL
+,ModifiedBy Varchar(100)
+,PRIMARY KEY(PPAT_SIFCode )
+)
+
+GO
+
 
 IF EXISTS(Select 1 from SYS.OBJECTS WHERE OBJECT_ID = OBJECT_ID(N'ApplicationLookUp') AND TYPE in(N'U'))
 DROP TABLE ApplicationLookUp
@@ -548,6 +623,12 @@ Create Table UserInfo
 ,PRFCode Varchar(50) NOT NULL
 ,VPFCode Varchar(50) NOT NULL
 ,PIFCode Varchar(50) NOT NULL
+
+,EBFCode Varchar(50) NOT NULL
+,LLRFCode Varchar(50) NOT NULL
+,GradingCode Varchar(50) NOT NULL
+,SIFCode Varchar(50) NOT NULL
+
 ,Remarks Varchar(250) NULL
 ,StateCode Varchar(50) NOT NULL
 ,PCCode Varchar(50) NOT NULL

@@ -342,7 +342,7 @@ SELECT [PPAT_PIFId]
 
 GO
 
-Alter Procedure prcGetPPATMasterInfo
+Create Procedure prcGetPPATMasterInfo
 (@AppCode varchar(25))
 AS 
 /***************************************
@@ -457,12 +457,41 @@ AppId
 FROM [CloudPAT].[dbo].[ApplicationLookUp]
   Where [IsActive]='Y'
 
+  
+SELECT PPAT_EBFId
+      ,PPAT_EBFCode
+      ,PPAT_EBFName
+      ,[IsActive]      
+  FROM [CloudPAT].[dbo].[PPAT_EBFLookUp]
+  Where [IsActive]='Y'
+
+  SELECT PPAT_LLRFId
+      ,PPAT_LLRFCode
+      ,PPAT_LLRFName
+      ,[IsActive]      
+  FROM [CloudPAT].[dbo].[PPAT_LLRFLookUp]
+  Where [IsActive]='Y'
+
+    SELECT PPAT_GradingId
+      ,PPAT_GrdingCode
+      ,PPAT_GradingName
+      ,[IsActive]      
+  FROM [CloudPAT].[dbo].[PPAT_GradingLookUp]
+  Where [IsActive]='Y'
+
+      SELECT PPAT_SIFId
+      ,PPAT_SIFCode
+      ,PPAT_SIFName
+      ,[IsActive]      
+  FROM [CloudPAT].[dbo].[PPAT_SIFLookUp]
+  Where [IsActive]='Y'
+
 
 END
 
 GO
 
-Alter Procedure prcGetEmployeeInfo
+Create Procedure prcGetEmployeeInfo
 (
 @UserName varchar(25) = null,
 @EmpId INT = null
@@ -486,7 +515,7 @@ END
 
 GO
 
-ALTER Procedure prcCheckUserAuthentication
+Create Procedure prcCheckUserAuthentication
 (
 @UserName varchar(25),
 @Password varchar(25)
@@ -499,7 +528,7 @@ ID		Date		Change
 prcCheckUserAuthentication 'sa','sa'
 ***************************************/
 BEGIN
-if(@Password = '')
+
 	If Exists(Select 1 from EmployeeInfo Where EmpUsername=@UserName and EmpPassword=@Password)
 	BEGIN
 		Declare @EmpId as Int
@@ -520,7 +549,7 @@ END
 
 GO
 
-Alter Procedure prcGetEmployeeMasterInfo
+Create Procedure prcGetEmployeeMasterInfo
 (
 @EmpId INT
 )

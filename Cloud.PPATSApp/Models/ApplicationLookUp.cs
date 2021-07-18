@@ -10,6 +10,7 @@ namespace Cloud.PPATSApp.Models
         public ApplicationLookUp()
         {
             EmployeeAppAccesses = new HashSet<EmployeeAppAccess>();
+            MeasuringApplicationMappings = new HashSet<MeasuringApplicationMapping>();
         }
 
         public int AppId { get; set; }
@@ -22,5 +23,6 @@ namespace Cloud.PPATSApp.Models
         public string ModifiedBy { get; set; }
 
         public virtual ICollection<EmployeeAppAccess> EmployeeAppAccesses { get; set; }
+        public virtual ICollection<MeasuringApplicationMapping> MeasuringApplicationMappings { get; set; }
     }
 }

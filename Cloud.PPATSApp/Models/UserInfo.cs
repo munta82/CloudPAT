@@ -21,6 +21,10 @@ namespace Cloud.PPATSApp.Models
         public string Prfcode { get; set; }
         public string Vpfcode { get; set; }
         public string Pifcode { get; set; }
+        public string Ebfcode { get; set; }
+        public string Llrfcode { get; set; }
+        public string GradingCode { get; set; }
+        public string Sifcode { get; set; }
         public string Remarks { get; set; }
         public string StateCode { get; set; }
         public string Pccode { get; set; }

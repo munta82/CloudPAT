@@ -25,6 +25,7 @@ namespace Cloud.PPATSApp.Models.ViewModels
         public DateTime? ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
 
+        public Guid EmpSecureId { get; set; }
         public List<RolesLookUp> RolesLookUp { get; set; }
         public List<String> EmpApplications { get; set; }
         public IEnumerable<SelectListItem> EmpAssignedApps { get; set; }

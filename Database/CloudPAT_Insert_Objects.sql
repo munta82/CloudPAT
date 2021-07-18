@@ -487,7 +487,12 @@ INSERT INTO CommunityLookUp Values('OTH','Others', 'Y', Getdate(), 'SYSTEM',Getd
 
 GO
 
-INSERT INTO SubCasteLookUp Values('OTH','Others','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO SubCasteLookUp Values('OTH','Others','BC','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO SubCasteLookUp Values('OTH','Others','SC','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO SubCasteLookUp Values('OTH','Others','ST','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO SubCasteLookUp Values('OTH','Others','OC','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO SubCasteLookUp Values('OTH','Others','Minority','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO SubCasteLookUp Values('OTH','Others','OTH','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
 
 GO
 INSERT INTO GenderLookUp Values('M','Male', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
@@ -547,6 +552,32 @@ INSERT INTO PPAT_PIFLookUp Values('A','A', 'Y', Getdate(), 'SYSTEM',Getdate(),'S
 INSERT INTO PPAT_PIFLookUp Values('B','B', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
 INSERT INTO PPAT_PIFLookUp Values('C','C', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
 INSERT INTO PPAT_PIFLookUp Values('D','D', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+
+GO
+
+INSERT INTO PPAT_EBFLookUp Values('0','0', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_EBFLookUp Values('1','1', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_EBFLookUp Values('2','2', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_EBFLookUp Values('3','3', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+
+GO
+
+INSERT INTO PPAT_LLRFLookUp Values('0','0', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_LLRFLookUp Values('1','1', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_LLRFLookUp Values('2','2', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_LLRFLookUp Values('3','3', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+Go
+INSERT INTO PPAT_SIFLookUp Values('0','0', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_SIFLookUp Values('1','1', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_SIFLookUp Values('2','2', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_SIFLookUp Values('3','3', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_SIFLookUp Values('4','4', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+
+GO
+INSERT INTO PPAT_GradingLookUp Values('A','A', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_GradingLookUp Values('B','B', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_GradingLookUp Values('C','C', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
+INSERT INTO PPAT_GradingLookUp Values('D','D', 'Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
 
 GO
 
@@ -612,7 +643,7 @@ INSERT INTO MeasuringApplicationMappings Values('MBC-SAPGIR',	'SS','Y', Getdate(
 
 GO	
 
-Select NewID()
+--Select NewID()
 INSERT INTO EmployeeInfo Values('Satish','Kumar','9000000000','satish@yahoo.com','Hyd', 'satish','satish','9F7FDD9F-8089-4495-9562-89BBF1AA241D','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
 INSERT INTO EmployeeInfo Values('Shankar','Baba','9000000000','Shankar@yahoo.com','Hyd', 'shankar','shankar','014BCAA4-3240-48C6-B60B-72D5CD985252','Y', Getdate(), 'SYSTEM',Getdate(),'SYSTEM')
 
@@ -736,35 +767,4 @@ INSERT INTO IG_Details Values('COM','COM','Y',Getdate(),'SYSTEM',Getdate(),'SYST
 INSERT INTO IG_Details Values('TUL','TUL','Y',Getdate(),'SYSTEM',Getdate(),'SYSTEM')
 
 GO
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

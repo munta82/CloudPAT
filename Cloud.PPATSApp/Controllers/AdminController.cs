@@ -124,7 +124,7 @@ namespace Cloud.PPATSApp.Controllers
 
             EmployeeInfoViewModel objEmployeeInfo = new EmployeeInfoViewModel();
             objEmployeeInfo.EmpAssignedApps = lstMainApplications;
-           
+
 
             List<SelectListItem> lstRoles = new List<SelectListItem>()
             {
@@ -203,41 +203,70 @@ namespace Cloud.PPATSApp.Controllers
             }
             return objEmployeeInfo;
         }
+
+        [HttpPost]
+        public string CheckUsername(string UserName)
+        {
+            string retval = "";
+            using (CloudPATContext db = new CloudPATContext())
+            {
+                if (db.EmployeeInfos.Any(r => r.EmpUsername == UserName))
+                {
+                    retval = "Exists";
+                }
+                else
+                {
+                    retval = "NotExists";
+                }
+            }
+
+            return retval; // Json(retval, new Newtonsoft.Json.JsonSerializerSettings());
+        }
+
         [HttpPost]
         public ActionResult SaveUpdateEmployeeForm(EmployeeInfoViewModel obj, IFormCollection form)
         {
-            EmployeeInfoViewModel empInfoModel = new EmployeeInfoViewModel();
-            empInfoModel.EmpId = Convert.ToInt16(HttpContext.Request.Form["hdnEmpId"].ToString());
-            empInfoModel.EmpFirstName = HttpContext.Request.Form["txtempFirstName"].ToString();
-            empInfoModel.EmpLastName = HttpContext.Request.Form["txtempLastName"].ToString();
-            empInfoModel.EmpAddress = HttpContext.Request.Form["txtempAddress"].ToString();
-            empInfoModel.EmpPhone = HttpContext.Request.Form["txtempMobile"].ToString();
-            empInfoModel.EmpEmail = HttpContext.Request.Form["txtempEmail"].ToString();
-            empInfoModel.EmpUsername = HttpContext.Request.Form["txtempUserName"].ToString();
-            empInfoModel.EmpPassword = HttpContext.Request.Form["txtempPassword"].ToString();
-            empInfoModel.IsActive = HttpContext.Request.Form["chkActive"].ToString();
-            empInfoModel.CreatedBy = "Admin";
-            empInfoModel.CreatedDate = System.DateTime.Now;
-            empInfoModel.EmpRoleId = Convert.ToInt16(HttpContext.Request.Form["ddlRoles"].ToString());
+            try
+            {
+                EmployeeInfoViewModel empInfoModel = new EmployeeInfoViewModel();
+                empInfoModel.EmpId = Convert.ToInt16(HttpContext.Request.Form["hdnEmpId"].ToString());
+                empInfoModel.EmpFirstName = HttpContext.Request.Form["txtempFirstName"].ToString();
+                empInfoModel.EmpLastName = HttpContext.Request.Form["txtempLastName"].ToString();
+                empInfoModel.EmpAddress = HttpContext.Request.Form["txtempAddress"].ToString();
+                empInfoModel.EmpPhone = HttpContext.Request.Form["txtempMobile"].ToString();
+                empInfoModel.EmpEmail = HttpContext.Request.Form["txtempEmail"].ToString();
+                empInfoModel.EmpUsername = HttpContext.Request.Form["txtempUserName"].ToString();
+                empInfoModel.EmpPassword = HttpContext.Request.Form["txtempPassword"].ToString();
+                empInfoModel.IsActive = HttpContext.Request.Form["chkActive"].ToString();
 
-            List<String> EmpSelectedApps = new List<String>();
+                Guid g = Guid.NewGuid();
+                empInfoModel.EmpSecureId = Guid.NewGuid();
+                empInfoModel.CreatedBy = "Admin";
+                empInfoModel.CreatedDate = System.DateTime.Now;
+                empInfoModel.EmpRoleId = Convert.ToInt16(HttpContext.Request.Form["ddlRoles"].ToString());
 
-            if (HttpContext.Request.Form["chk_PPAT"].ToString() != "") EmpSelectedApps.Add(HttpContext.Request.Form["chk_PPAT"].ToString());
-            if (HttpContext.Request.Form["chk_PIG"].ToString() != "") EmpSelectedApps.Add(HttpContext.Request.Form["chk_PIG"].ToString());
-            if (HttpContext.Request.Form["chk_SS"].ToString() != "") EmpSelectedApps.Add(HttpContext.Request.Form["chk_SS"].ToString());
+                List<String> EmpSelectedApps = new List<String>();
 
-            empInfoModel.EmpApplications = EmpSelectedApps;
+                if (HttpContext.Request.Form["chk_PPAT"].ToString() != "") EmpSelectedApps.Add(HttpContext.Request.Form["chk_PPAT"].ToString());
+                if (HttpContext.Request.Form["chk_PIG"].ToString() != "") EmpSelectedApps.Add(HttpContext.Request.Form["chk_PIG"].ToString());
+                if (HttpContext.Request.Form["chk_SS"].ToString() != "") EmpSelectedApps.Add(HttpContext.Request.Form["chk_SS"].ToString());
 
-            databaseAPI.SaveUpdateEmployeeInfo(empInfoModel);
+                empInfoModel.EmpApplications = EmpSelectedApps;
 
-            //AssemblyPollingStationLookUp objPSData = new AssemblyPollingStationLookUp();
-            //TryUpdateModelAsync(objPSData);
+                databaseAPI.SaveUpdateEmployeeInfo(empInfoModel);
 
-            //ViewBag.Message = "Customer saved successfully!";
+                //AssemblyPollingStationLookUp objPSData = new AssemblyPollingStationLookUp();
+                //TryUpdateModelAsync(objPSData);
 
-            //DataSet dsEmployeeInfo = new DataSet();
-            //dsEmployeeInfo = databaseAPI.GetEmployeeInfo(HttpContext.Session.GetString("LoginUserName").ToString(), -1);
+                ViewBag.dbMessage = empInfoModel.EmpFirstName + " saved successfully!";
 
+                //DataSet dsEmployeeInfo = new DataSet();
+                //dsEmployeeInfo = databaseAPI.GetEmployeeInfo(HttpContext.Session.GetString("LoginUserName").ToString(), -1);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.dbMessage = ex.Message;
+            }
             return View("_EmployeeInfo", LoadEmployeeInfo());
             //return View("Index", dsEmployeeInfo);
             //return RedirectToAction("Index", "PPAT", dsEmployeeInfo);
@@ -418,5 +447,5 @@ namespace Cloud.PPATSApp.Controllers
 
     }//classs
 
-    
+
 }//namespace

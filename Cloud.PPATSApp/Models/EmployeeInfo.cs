@@ -21,6 +21,7 @@ namespace Cloud.PPATSApp.Models
         public string EmpAddress { get; set; }
         public string EmpUsername { get; set; }
         public string EmpPassword { get; set; }
+        public Guid EmpSecureId { get; set; }
         public string IsActive { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string CreatedBy { get; set; }

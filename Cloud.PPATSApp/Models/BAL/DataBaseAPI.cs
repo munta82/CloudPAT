@@ -444,7 +444,7 @@ namespace Cloud.PPATSApp.Models.BAL
                         objEmpInfo.IsActive = "Y";
                         objEmpInfo.CreatedBy = "Admin";
                         objEmpInfo.CreatedDate = System.DateTime.Now;
-
+                        objEmpInfo.EmpSecureId = objEmployeeInfo.EmpSecureId;
                         db.EmployeeInfos.Add(objEmpInfo);
                         db.SaveChanges();
 

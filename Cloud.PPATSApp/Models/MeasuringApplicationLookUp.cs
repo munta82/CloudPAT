@@ -7,6 +7,11 @@ namespace Cloud.PPATSApp.Models
 {
     public partial class MeasuringApplicationLookUp
     {
+        public MeasuringApplicationLookUp()
+        {
+            MeasuringApplicationMappings = new HashSet<MeasuringApplicationMapping>();
+        }
+
         public int MeasureAppId { get; set; }
         public string MeasureAppCode { get; set; }
         public string MeasureAppName { get; set; }
@@ -15,5 +20,7 @@ namespace Cloud.PPATSApp.Models
         public string CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
+
+        public virtual ICollection<MeasuringApplicationMapping> MeasuringApplicationMappings { get; set; }
     }
 }
