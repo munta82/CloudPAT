@@ -50,7 +50,9 @@ namespace Cloud.PPATSApp
                 options.Cookie.IsEssential = true;
             });
             services.AddMvc();
-
+            services.Configure<IISOptions>(options => {
+                
+            });
             //services.AddHttpContextAccessor();
             services.AddAuthentication("auth")
             .AddCookie("auth", config =>

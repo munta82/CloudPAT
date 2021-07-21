@@ -48,7 +48,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-2 logo"><img src="~/Images/site_logo.jpg" height="50px" width="50px" /></div>
-                <div class="col-8 banner"><img src="~/Images/baner_logo1.jpg" height="50px" width="300px" /></div>
+                <div class="col-8 banner"><img src="~/Images/baner_logo1.jpg" height="50px" width="250px" /></div>
                 <div class="col-2 greybg" style="align-content:flex-end; vertical-align:middle; align-items:right;">
                     Welcome @Cloud.PPATSApp.Core.Authorization.CurrentUser.EmpFirstName<br /> <br />
                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Login">Logout</a>
@@ -89,17 +89,23 @@
                             </li>
                         }
                         @if (Cloud.PPATSApp.Core.Authorization.CurrentUser.EmpRoleName == "Admin"
-             || Cloud.PPATSApp.Core.Authorization.CurrentUser.EmpRoleName == "TechSupport")
+|| Cloud.PPATSApp.Core.Authorization.CurrentUser.EmpRoleName == "TechSupport")
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AdminConfig">Admin</a>
                             </li>
                         }
-                        @if (Cloud.PPATSApp.Core.Authorization.CurrentUser.EmpApplications.Contains("PPAT"))
+                        @if (Cloud.PPATSApp.Core.Authorization.CurrentUser.EmpRoleName == "Admin"
+|| Cloud.PPATSApp.Core.Authorization.CurrentUser.EmpRoleName == "TechSupport")
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="PPAT" asp-action="PPATForm">PPAT Form</a>
                             </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="PPAT" asp-action="PPATTest">PPAT Test</a>
+                            </li>
+
                         }
                     </ul>
                 </div>
