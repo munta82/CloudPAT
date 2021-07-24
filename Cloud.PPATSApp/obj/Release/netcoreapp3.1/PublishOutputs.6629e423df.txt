@@ -9,8 +9,16 @@ C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\obj\Release\netcore
 C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\obj\Release\netcoreapp3.1\PubTmp\Out\wwwroot\Images\btn_go_blue.jpg
 C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\obj\Release\netcoreapp3.1\PubTmp\Out\wwwroot\Images\btn_go_blue1.jpg
 C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\obj\Release\netcoreapp3.1\PubTmp\Out\wwwroot\Images\excel.jpg
+C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\obj\Release\netcoreapp3.1\PubTmp\Out\wwwroot\Images\info-icon1.png
+C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\obj\Release\netcoreapp3.1\PubTmp\Out\wwwroot\Images\info-icon2.png
+C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\obj\Release\netcoreapp3.1\PubTmp\Out\wwwroot\Images\info-icon3.jpg
+C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\obj\Release\netcoreapp3.1\PubTmp\Out\wwwroot\Images\info-icon4.jpg
+C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\obj\Release\netcoreapp3.1\PubTmp\Out\wwwroot\Images\login1 - Copy - Copy.png
+C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\obj\Release\netcoreapp3.1\PubTmp\Out\wwwroot\Images\login1.png
+C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\obj\Release\netcoreapp3.1\PubTmp\Out\wwwroot\Images\password-icon.png
 C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\obj\Release\netcoreapp3.1\PubTmp\Out\wwwroot\Images\site_logo.jpg
 C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\obj\Release\netcoreapp3.1\PubTmp\Out\wwwroot\Images\site_logo_1.png
+C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\obj\Release\netcoreapp3.1\PubTmp\Out\wwwroot\Images\usrname-icon.png
 C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\obj\Release\netcoreapp3.1\PubTmp\Out\wwwroot\js\Application_main.js
 C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\obj\Release\netcoreapp3.1\PubTmp\Out\wwwroot\js\site.js
 C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\obj\Release\netcoreapp3.1\PubTmp\Out\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css

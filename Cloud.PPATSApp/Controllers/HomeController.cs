@@ -15,7 +15,7 @@ using System.Data.Entity;
 using Cloud.PPATSApp.Models.BAL;
 using Cloud.PPATSApp.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
- 
+using System.Threading;
 
 namespace Cloud.PPATSApp.Controllers
 {
@@ -45,11 +45,19 @@ namespace Cloud.PPATSApp.Controllers
         {
             return View("_Login");
         }
+        
+        [HttpPost]
+        public JsonResult LongRunningDemoProcess(EmployeeInfoViewModel employeeInfo)
+        {
+            Thread.Sleep(1000);
+            return Json(employeeInfo, "json");
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(EmployeeInfoViewModel employeeInfo)
         {
+            Thread.Sleep(1000);
             if (ModelState.IsValid)
             {
                 using (CloudPATContext db = new CloudPATContext())

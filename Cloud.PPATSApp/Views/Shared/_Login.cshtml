@@ -69,80 +69,97 @@
     });
 </script>
 <style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 400;
+        overflow-x: hidden;
+        overflow-y: auto;
+        font-style: normal;
+        font-variant: normal;
+        line-height: 12px;
+        font-size: 12px !important;
+        background-color: #e2d5d5;
+    }
 </style>
 @using (Html.BeginForm("Login", "Home", FormMethod.Post))
 {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
-    <table border="0" style="border:0px solid #DEDEDE;  margin-top:150px;" align="center" cellpadding="2" cellspacing="2">
-        <tr>
-            <td align="center">
-                <table>
-                    <tr>
-                        <td>
-                            <table border="0">
-                                <tr>
-                                    <td>Username</td>
-                                    <td>:</td>
-                                    @*<td><input id="txtUserName" name="txtUserName" value="" /></td>, new { @Value = "sa" } *@
-                                    <td>@Html.TextBoxFor(a => a.EmpUsername, new { @class = "form-control" })
-                                        @*<div class="form-floating mb-3">
+@Html.AntiForgeryToken()
+@Html.ValidationSummary(true)
+<table border="0" style="border:0px solid #DEDEDE;  margin-top:150px;" align="center" cellpadding="2" cellspacing="2">
+    <tr>
+        <td align="center">
+            <table>
+                <tr>
+                    <td style="padding-left:12px;">
+                        <img alt="go" src="~/Images/login1.png" height="95" width="214" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table border="0">
+                            <tr>
+                                <td>Username</td>
+                                <td>:</td>
+                                @*<td><input id="txtUserName" name="txtUserName" value="" /></td>, new { @Value = "sa" } *@
+                                <td>
+                                    @Html.TextBoxFor(a => a.EmpUsername, new { @class = "form-control" })
+                                    @*<div class="form-floating mb-3">
                                             <input type="email" class="form-control" id="floatingInput" placeholder="Username">
-                                            <input type="text" class="form-control" placeholder="Username" 
+                                            <input type="text" class="form-control" placeholder="Username"
                                                    aria-label="Username" aria-describedby="basic-addon1">
 
                                         </div>*@
-                                    </td>
-                                    <td>@Html.ValidationMessageFor(a => a.EmpUsername, null, new { @class = "field-validation-error" })</td>
-                                </tr>
-                                <tr>
-                                    <td>Password</td>
-                                    <td>:</td>
-                                    @*<td><input id="txtPassword" name="txtPassword" type="password" value="" /></td>, new { @Value = "sa" }*@
+                                </td>
+                                <td>@Html.ValidationMessageFor(a => a.EmpUsername, null, new { @class = "field-validation-error" })</td>
+                            </tr>
+                            <tr>
+                                <td>Password</td>
+                                <td>:</td>
+                                @*<td><input id="txtPassword" name="txtPassword" type="password" value="" /></td>, new { @Value = "sa" }*@
                                 <td>
                                     @Html.PasswordFor(a => a.EmpPassword, new { @class = "form-control" })
                                     @*<input type="password" class="form-control" placeholder="Password"
-                                           aria-label="Password" aria-describedby="basic-addon1">*@
+                                        aria-label="Password" aria-describedby="basic-addon1">*@
                                 </td>
-                                    <td>
-                                        @Html.ValidationMessageFor(a => a.EmpPassword, null, new { @class = "field-validation-error" })
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4" align="center" height="10px"></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td align="center">
-                                        <form method="post">
-                                            @*<button id="btnLogin" name="btnLogin" type="button" onclick="Login()">Login</button>*@
-                                            <input type="submit" value="Login" class="btn btn-primary" />
-                                        </form>
-                                    </td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4" align="center">
-                                        <div></div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td align="center">
-                <table>
-                    <tr>
-                        <td> <label id="lblMsg" name="lblMsg">@ViewBag.LoginMessage</label></td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
+                                <td>
+                                    @Html.ValidationMessageFor(a => a.EmpPassword, null, new { @class = "field-validation-error" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" align="center" height="10px"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td align="center">
+                                    <form method="post">
+                                        @*<button id="btnLogin" name="btnLogin" type="button" onclick="Login()">Login</button>*@
+                                        <input type="submit" value="Login" class="btn btn-primary" />
+                                    </form>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" align="center">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <table>
+                <tr>
+                    <td> <label id="lblMsg" name="lblMsg">@ViewBag.LoginMessage</label></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
 
 
 

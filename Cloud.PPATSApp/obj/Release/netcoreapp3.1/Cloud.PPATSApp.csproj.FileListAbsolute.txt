@@ -444,3 +444,4 @@ C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\obj\Release\netcore
 C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\obj\Release\netcoreapp3.1\Cloud.PPATSApp.dll
 C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\obj\Release\netcoreapp3.1\Cloud.PPATSApp.pdb
 C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\obj\Release\netcoreapp3.1\Cloud.PPATSApp.genruntimeconfig.cache
+C:\Users\Satish Kumar\Projects\Cloud.PPATSApp\Cloud.PPATSApp\obj\Release\netcoreapp3.1\Razor\Views\Shared\_PPATTest.cshtml.g.cs
