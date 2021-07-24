@@ -113,6 +113,17 @@
             });
         });
 
+        $("#btnClear").click(function () {
+            //$("input:text").val("");
+            //$("select#elem").prop('selectedIndex', 0);
+            //$("#divMsg").empty();
+            //$("#divMsgTop").empty();
+            $("select#ddlMainApps").prop('selectedIndex', 0);
+            $("select#ddlMeasuringApp").prop('selectedIndex', 0);
+
+            $("#txtPSCode").val("");
+            $("#txtPSName").val("");
+        })
     });
 </script>
 @using (Html.BeginForm())
@@ -246,7 +257,8 @@
                                     <td>
                                         @*<button id="btnClear" name="btnClear" class="btn-sm">Clear</button>*@
                                         @*<input type="submit" name="btnClear" value="Clear" formaction="ClearForm" formmethod="post" class="btn-sm" />*@
-                                        <input type="submit" id="btnClear" value="Clear" class="btn btn-primary cancel" />
+                                        
+                                        <input type="button" id="btnClear" value="Clear" class="btn btn-primary cancel" />
                                     </td>
                                 </tr>
                             </table>

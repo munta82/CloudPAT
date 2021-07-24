@@ -33,10 +33,12 @@ namespace Cloud.PPATSApp
             services.AddControllersWithViews();
             //direct connection string - Method 1
             var connection = @"Data Source=DESKTOP-9CRJRHJ\SS17;Initial Catalog=CloudPAT;Integrated Security=False;Persist Security Info=False;User ID=sa;Password=sa";
+            //var connection = @"Data Source=cloudpatsqlserver.database.windows.net;Initial Catalog=CloudPAT;Integrated Security=False;Persist Security Info=False;User ID=cloudpatadmin;Password=admin@2021";
+
             services.AddDbContext<CloudPATContext>(options => options.UseSqlServer(connection));
 
             //from app settings json - Method 2
-            services.AddDbContext<CloudPATContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<CloudPATContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             //from external file dataSettings .json - Method3
             //var settings = new DataSettingsManager().LoadSettings(); //Check dataasettings in dbcontenxt file

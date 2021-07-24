@@ -1,10 +1,12 @@
 ﻿<style>
-    .modal-dialog{
-        width:250px !important;
+    .modal-dialog {
+        width: 250px !important;
     }
-    #tblPreview td{
-        height:5px;
+
+    #tblPreview td {
+        height: 5px;
     }
+
     .ui-tooltip-content {
         text-align: left;
     }
@@ -27,7 +29,7 @@
                 effect: "slideDown",
                 delay: 250
             }
-        });        
+        });
 
         $("#ddlMeasuringApp").on("change", function () {
             $("#hdnMeasuringApp").val($(this).find("option:selected").text());
@@ -159,13 +161,13 @@
             $("#ddlAssembly").prop("disabled", false);
             $("#ddlMandal").prop("disabled", false);
             $("#ddlVillage").prop("disabled", false);
-            $("#txtPSName").prop("disabled", false);            
+            $("#txtPSName").prop("disabled", false);
 
             $("form").attr("action", "/PPAT/SaveForm");
         });
 
         $("#btnPreview").click(function () {
-            
+
             $("#ddlStates").prop("disabled", false);
             $("#ddlParliament").prop("disabled", false);
             $("#ddlAssembly").prop("disabled", false);
@@ -219,13 +221,33 @@
             //$("select#elem").prop('selectedIndex', 0);
             $("#divMsg").empty();
             $("#divMsgTop").empty();
+
+            $("#txtUserDisplayName").val("");
+            $("#txtUserAge").val("");
+            $("#txtMobile").val("");
+            $("#txtOccupation").val("");
+            $("#txtSubCaste").val("");
+            $("#txtRemarks").val("");
+
+            $("select#ddlGender").prop('selectedIndex', 0);
+            $("select#ddlEducation").prop('selectedIndex', 0);
+            $("select#ddlCommunity").prop('selectedIndex', 0);
+            $("select#ddlIFParty").prop('selectedIndex', 0);
+            $("select#ddlPPAT_SF").prop('selectedIndex', 0);
+            $("select#ddlPPAT_PRF").prop('selectedIndex', 0);
+            $("select#ddlPPAT_VPF").prop('selectedIndex', 0);
+            $("select#ddlPPAT_PIF").prop('selectedIndex', 0);
+            $("select#ddlPPAT_EBF").prop('selectedIndex', 0);
+            $("select#ddlPPAT_LLRF").prop('selectedIndex', 0);
+            $("select#ddlPPAT_Grading").prop('selectedIndex', 0);
+            $("select#ddlPPAT_SIF").prop('selectedIndex', 0);
         })
 
-        //keyboard maping array   
+        //keyboard maping array
         var keyboardMap = ["", "", "", "CANCEL", "", "", "HELP", "", "BACK_SPACE", "TAB", "", "", "CLEAR", "ENTER", "RETURN", "", "SHIFT", "CONTROL", "ALT", "PAUSE", "CAPS_LOCK", "KANA", "EISU", "JUNJA", "FINAL", "HANJA", "", "ESCAPE", "CONVERT", "NONCONVERT", "ACCEPT", "MODECHANGE", "SPACE", "PAGE_UP", "PAGE_DOWN", "END", "HOME", "LEFT", "UP", "RIGHT", "DOWN", "SELECT", "PRINT", "EXECUTE", "PRINTSCREEN", "INSERT", "DELETE", "", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "COLON", "SEMICOLON", "LESS_THAN", "EQUALS", "GREATER_THAN", "QUESTION_MARK", "AT", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "WIN", "", "CONTEXT_MENU", "", "SLEEP", "NUMPAD0", "NUMPAD1", "NUMPAD2", "NUMPAD3", "NUMPAD4", "NUMPAD5", "NUMPAD6", "NUMPAD7", "NUMPAD8", "NUMPAD9", "MULTIPLY", "ADD", "SEPARATOR", "SUBTRACT", "DECIMAL", "DIVIDE", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "F13", "F14", "F15", "F16", "F17", "F18", "F19", "F20", "F21", "F22", "F23", "F24", "", "", "", "", "", "", "", "", "NUM_LOCK", "SCROLL_LOCK", "WIN_OEM_FJ_JISHO", "WIN_OEM_FJ_MASSHOU", "WIN_OEM_FJ_TOUROKU", "WIN_OEM_FJ_LOYA", "WIN_OEM_FJ_ROYA", "", "", "", "", "", "", "", "", "", "CIRCUMFLEX", "EXCLAMATION", "DOUBLE_QUOTE", "HASH", "DOLLAR", "PERCENT", "AMPERSAND", "UNDERSCORE", "OPEN_PAREN", "CLOSE_PAREN", "ASTERISK", "PLUS", "PIPE", "HYPHEN_MINUS", "OPEN_CURLY_BRACKET", "CLOSE_CURLY_BRACKET", "TILDE", "", "", "", "", "VOLUME_MUTE", "VOLUME_DOWN", "VOLUME_UP", "", "", "", "", "COMMA", "", "PERIOD", "SLASH", "BACK_QUOTE", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "OPEN_BRACKET", "BACK_SLASH", "CLOSE_BRACKET", "QUOTE", "", "META", "ALTGR", "", "WIN_ICO_HELP", "WIN_ICO_00", "", "WIN_ICO_CLEAR", "", "", "WIN_OEM_RESET", "WIN_OEM_JUMP", "WIN_OEM_PA1", "WIN_OEM_PA2", "WIN_OEM_PA3", "WIN_OEM_WSCTRL", "WIN_OEM_CUSEL", "WIN_OEM_ATTN", "WIN_OEM_FINISH", "WIN_OEM_COPY", "WIN_OEM_AUTO", "WIN_OEM_ENLW", "WIN_OEM_BACKTAB", "ATTN", "CRSEL", "EXSEL", "EREOF", "PLAY", "ZOOM", "", "PA1", "WIN_OEM_CLEAR", ""];
-        //Allowed keys as per your requirement          
+        //Allowed keys as per your requirement
         var allowedKey = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "NUMPAD0", "NUMPAD1", "NUMPAD2", "NUMPAD3", "NUMPAD4", "NUMPAD5", "NUMPAD6", "NUMPAD7", "NUMPAD8", "NUMPAD9", "DELETE", "BACK_SPACE", "DECIMAL", "LEFT", "RIGHT", "TAB", "SUBTRACT", "PERIOD"];
-       
+
         //bind keydown to your element
         $("#txtMobile,#txtUserAge").on("keydown", function (e) {
             var key = e.charCode || e.keyCode || 0;
@@ -356,7 +378,7 @@
             <td style="height:5px;" align="center">
                 <div id="divMsgTop" style="color:red;">@TempData["dbMessage"]</div>
             </td>
-        </tr>       
+        </tr>
         <tr>
             <td>
                 <table border="1" style="width:100%" class="tblRoundCorner">
@@ -395,6 +417,28 @@
                     </tr>
                     <tr>
                         <td>
+                            Community<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlCommunity"
+                                           data-valmsg-replace="true">*</span><br />
+                            @Html.DropDownList("ddlCommunity", ViewBag.ddlCommunity as SelectList, "Select",
+                           new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
+                        </td>
+                        <td>
+                            @*<a id="show-option" href="http://jqueryui.com/demos/tooltip/#option-show" title="slide down on show">show</a>
+                                <input id="age" title="We ask for your age only for statistical purposes.">*@
+                            Sub Caste&nbsp;<img src="~/Images/info-icon1.png" data-toggle="tooltip" id="imgSubCaste"
+                                                data-placement="top"
+                                                title="Please enter atleast 2 characters to populate corresponding sub-caste for selected community"
+                                                alt="info" height="10" width="10" /><br />
+                            @Html.TextBox("txtSubCaste", null,
+                           new
+                                {
+                                    @class = "form-control PPATtextbox",
+                               @title = "Please enter atleast 2 characters to populate corresponding sub-caste for selected community"
+                                })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
                             Education<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlEducation"
                                            data-valmsg-replace="true">*</span><br />
                             @Html.DropDownList("ddlEducation", ViewBag.ddlEducation as SelectList, "Select",
@@ -405,28 +449,7 @@
                             @Html.TextBox("txtOccupation", null, new { @class = "form-control PPATtextbox" })
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            Community<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlCommunity"
-                                           data-valmsg-replace="true">*</span><br />
-                            @Html.DropDownList("ddlCommunity", ViewBag.ddlCommunity as SelectList, "Select",
-                           new { @class = "form-control PPATDropdownlist valid", @data_val = "true", @data_val_required = " required" })
-                        </td>
-                        <td>
-                            @*<a id="show-option" href="http://jqueryui.com/demos/tooltip/#option-show" title="slide down on show">show</a>
-                        <input id="age" title="We ask for your age only for statistical purposes.">*@
-                            Sub Caste&nbsp;<img src="~/Images/info-icon1.png" data-toggle="tooltip" id="imgSubCaste"
-                                                data-placement="top"
-                                                title="Please enter 2 characters to populate corresponding sub-caste for selected community"
-                                                alt="info" height="10" width="10" /><br />
-                            @Html.TextBox("txtSubCaste", null,
-                           new
-                                {
-                                    @class = "form-control PPATtextbox",
-                               @title = "Please enter 2 characters to populate corresponding sub-caste for selected community"
-                                })
-                        </td>
-                    </tr>
+
                     <tr>
                         <td>
                             IF<span class="field-validation-valid field-validation-error" data-valmsg-for="ddlIFParty"
@@ -536,11 +559,11 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             @*<div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnClosePreview">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>*@
+                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnClosePreview">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>*@
                             <div>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnClosePreview">
                                     <span aria-hidden="true">&times;</span>
@@ -692,6 +715,6 @@
                 </div>
             </td>
         </tr>
-        </tbody>
+    </tbody>
 </table>
 }

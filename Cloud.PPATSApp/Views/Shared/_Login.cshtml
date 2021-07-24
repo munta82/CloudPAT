@@ -5,6 +5,7 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="~/css/site.css" />
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
 <script type="text/javascript">
     //function Login() {
@@ -73,38 +74,53 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
-    <table border="0" style="border:0px solid #DEDEDE;margin-top:50px;" align="center" cellpadding="2" cellspacing="2">
+    <table border="0" style="border:0px solid #DEDEDE;  margin-top:150px;" align="center" cellpadding="2" cellspacing="2">
         <tr>
             <td align="center">
-                <table >
+                <table>
                     <tr>
                         <td>
-                            <table>
+                            <table border="0">
                                 <tr>
-                                    <td>UserName</td>
+                                    <td>Username</td>
                                     <td>:</td>
                                     @*<td><input id="txtUserName" name="txtUserName" value="" /></td>, new { @Value = "sa" } *@
-                                    <td>@Html.TextBoxFor(a => a.EmpUsername)</td>
-                                    <td>@Html.ValidationMessageFor(a => a.EmpUsername, null, new { @class = "field-validation-errorr" })</td>
+                                    <td>@Html.TextBoxFor(a => a.EmpUsername, new { @class = "form-control" })
+                                        @*<div class="form-floating mb-3">
+                                            <input type="email" class="form-control" id="floatingInput" placeholder="Username">
+                                            <input type="text" class="form-control" placeholder="Username" 
+                                                   aria-label="Username" aria-describedby="basic-addon1">
+
+                                        </div>*@
+                                    </td>
+                                    <td>@Html.ValidationMessageFor(a => a.EmpUsername, null, new { @class = "field-validation-error" })</td>
                                 </tr>
                                 <tr>
                                     <td>Password</td>
                                     <td>:</td>
                                     @*<td><input id="txtPassword" name="txtPassword" type="password" value="" /></td>, new { @Value = "sa" }*@
+                                <td>
+                                    @Html.PasswordFor(a => a.EmpPassword, new { @class = "form-control" })
+                                    @*<input type="password" class="form-control" placeholder="Password"
+                                           aria-label="Password" aria-describedby="basic-addon1">*@
+                                </td>
                                     <td>
-                                        @Html.PasswordFor(a => a.EmpPassword)
-                                    </td>
-                                    <td>
-                                        @Html.ValidationMessageFor(a => a.EmpPassword, null, new { @class = "field-validation-errorr" })
+                                        @Html.ValidationMessageFor(a => a.EmpPassword, null, new { @class = "field-validation-error" })
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="4" align="center">
+                                    <td colspan="4" align="center" height="10px"></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td align="center">
                                         <form method="post">
                                             @*<button id="btnLogin" name="btnLogin" type="button" onclick="Login()">Login</button>*@
                                             <input type="submit" value="Login" class="btn btn-primary" />
                                         </form>
                                     </td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td colspan="4" align="center">
@@ -127,7 +143,7 @@
             </td>
         </tr>
     </table>
-    
-  
+
+
 
 }
